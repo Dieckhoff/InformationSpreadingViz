@@ -3,13 +3,14 @@ $(function() {
 	var i = 0;
 	var paper = Raphael('draw', 30, 0, 0, 0);
 	
-	var line = paper.path("M100,60L320,60");
+	/*var line = paper.path("M100,60L320,60");
 		line.attr({
 			opacity: 0.4,
 			stroke: "black"
 		})
+	*/
 	
-	var c = paper.circle(50, 60, 50);
+	var c = paper.circle(150, 60, 50);
 	c.attr({
 		fill: 'steelblue',
 		cursor: 'pointer',
@@ -28,7 +29,7 @@ $(function() {
 	
 	
 	
-	var hoverIn = function() {
+	/*var hoverIn = function() {
         b.attr({"fill": "green"});
 		line.attr({opacity: 1})
     };
@@ -39,5 +40,16 @@ $(function() {
     }
 	
 	  c.hover(hoverIn, hoverOut, c, c);
+	 */
+	  
+	  var s = c.click(function() {
+		i += 1;
+		if ((i % 2) == 1){
+		b.animate({r: 10, fill: 'green'}, 1000, "backIn")	
+		}
+		else{
+		b.animate({r: 40, fill: 'blue'}, 5000, "elastic");
+		}
+		});
 	
 });
