@@ -3,31 +3,50 @@ function Post(paper, title, url, importance, time){
 	this.title = title;
 	this.url = url;
 	this.importance = importance;
+	this.size = this.importance * 2;
 	this.time = time;
 	this.x = time;
 	this.y = 60;
 	
-	this.circle = draw_circle(this.paper, this.importance, this.time);
-	this.label = draw_label(this.paper, this.title, this.x, this.y);
+	this.label = this.draw_label(this.paper, this.title, this.x, this.y);
+	this.label.hide();
+	this.circle = this.draw_circle(this.paper, this.size, this.time);
 	
-	this.hover = hover_func();	
+	this.hover = this.hover_func(this.circle, this.label);	
 }
 
-function draw_circle(paper, importance, time){
+Post.prototype.draw_circle = function (paper, importance, time){
 	var circle = paper.circle(time, 60, importance * 2);
 	circle.attr({
 		fill: 'steelblue',
 		cursor: 'pointer',
 		opacity: 0.5,
 	});
+	return(circle);
 };
 
-function draw_label(paper, title, x, y){
-	var label = paper.text(x, y, this.title);
+Post.prototype.draw_label = function (paper, title, x, y){
+	var label = paper.text(x, y, title);
+	return(label);
 };
 
+Post.prototype.hover_func = function (circle, label) {	
+	function hoverIn(circle, label) {
+		circle.attr({
+			fill: 'green',
+		});
+		label.show();
+    };
+	
+	function hoverOut(circle, label){
+        circle.attr({
+			fill: 'steelblue',
+		});
+		label.hide();		
+    };
 
-
+	circle.hover(hoverIn(circle, label), hoverOut(circle, label), label, label);
+}
 
 
 
@@ -66,6 +85,6 @@ $(function() {
 	var posts = JSON.parse(posts_example);
 	for (i = 0; i < posts.length; ++i) {
 		//drawPost(posts[i]);
-		var post = new Post(paper, posts[i].title, posts[i].url, posts[i].importance, posts[i].postlastupdate);
+		var post = new Post(paper, posts[i].title, posts[i].url, posts[i].score, posts[i].postlastupdate);
 	};
 });
