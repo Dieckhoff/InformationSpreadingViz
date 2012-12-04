@@ -1,55 +1,46 @@
+function drawPost(post) {
+	var paper = Raphael('draw', 30, 0, 0, 0);
+	var importance = post.score;
+	var time = post.postlastupdate;
+	var post = paper.circle(time, 60, importance * 2);
+	
+	post.attr({
+		fill: 'steelblue',
+		cursor: 'pointer',
+		opacity: 0.5,
+	});
+	
+	function hoverIn(url, title) {
+		post.attr({
+			fill: "green",
+		});
+		var label = paper.text(30, 10, title);
+    };
+	
+	//var label = paper.text(post.x, post.y, text);
+	
+	function hoverOut(){
+        post.attr({"fill": "steelblue"});		
+    }
+	var func = function(post){
+		hoverIn(post.score, post.title);
+	};
+	post.hover(func, hoverOut, post, label);	 
+}
+
 $(function() {
 
 	var i = 0;
 	var paper = Raphael('draw', 30, 0, 0, 0);
 	
-	/*var line = paper.path("M100,60L320,60");
-		line.attr({
-			opacity: 0.4,
-			stroke: "black"
-		})
-	*/
+	var posts_example = '[' +
+		'{ "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"123" },' +
+		'{ "title":"jsdf" , "score":"13" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"100" },' +
+		'{ "title":"gsgdg" , "score":"1" , "blogtitle":"ghhtre" , "url":"www.gdfds.de/blog" , "type":"Twitter" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"20" } ]';
 	
-	var c = paper.circle(150, 60, 50);
-	c.attr({
-		fill: 'steelblue',
-		cursor: 'pointer',
-		opacity: 0.5,
-		stroke: 'white'
-	});	
-	c.node.id = 'red_circle';
-	
-	var b = paper.circle(350, 60, 30);
-	b.attr({
-		fill: 'grey',
-		opacity: 0.5,
-		stroke: 'white'
-	});
-	
-	
-	
-	
-	/*var hoverIn = function() {
-        b.attr({"fill": "green"});
-		line.attr({opacity: 1})
-    };
-	
-	  var hoverOut = function() {
-        b.attr({"fill": "grey"});  
-		line.attr({opacity: 0.5})		
-    }
-	
-	  c.hover(hoverIn, hoverOut, c, c);
-	 */
-	  
-	  var s = c.click(function() {
-		i += 1;
-		if ((i % 2) == 1){
-		b.animate({r: 10, fill: 'green'}, 1000, "backIn")	
-		}
-		else{
-		b.animate({r: 40, fill: 'blue'}, 5000, "elastic");
-		}
-		});
-	
+	var posts = JSON.parse(posts_example);
+	drawPost(posts[0]);
+	for (i = 0; i < posts.length; ++i) {
+		drawPost(posts[i]);
+	};
 });
