@@ -8,11 +8,9 @@ function Post(paper, title, url, importance, time){
 	this.x = time;
 	this.y = 60;
 	
-	this.label = this.draw_label(this.paper, this.title, this.x, this.y);
+	this.label = this.draw_label(this.paper, this.title, this.importance, this.x, this.y-20);
 	this.label.hide();
 	this.circle = this.draw_circle(this.paper, this.size, this.time);
-	
-	this.hover = this.hover_func(this.circle, this.label);	
 }
 
 Post.prototype.draw_circle = function (paper, importance, time){
@@ -25,66 +23,54 @@ Post.prototype.draw_circle = function (paper, importance, time){
 	return(circle);
 };
 
-Post.prototype.draw_label = function (paper, title, x, y){
-	var label = paper.text(x, y, title);
+Post.prototype.draw_label = function (paper, title, importance, x, y){
+var text = "Titel: " + title + "\n Wichtigkeit: " + importance
+	var label = paper.text(x, y, text);
 	return(label);
 };
 
-Post.prototype.hover_func = function (circle, label) {	
-	function hoverIn(circle, label) {
-		circle.attr({
-			fill: 'green',
-		});
-		label.show();
-    };
-	
-	function hoverOut(circle, label){
-        circle.attr({
-			fill: 'steelblue',
-		});
-		label.hide();		
-    };
-
-	circle.hover(hoverIn(circle, label), hoverOut(circle, label), label, label);
-}
-
-
-
-
-/*
-	this.label_title = paper.text(45, 45, this.title);
-	this.label_title.hide();
-	
-	function hoverIn() {
-		this.circle.attr({
-			fill: "green",
-		});
-		this.label_title.show();
-    };
-	
-	function hoverOut(){
-        this.circle.attr({"fill": "steelblue"});
-		this.label_title.hide();		
-    }
-
-	this.circle.hover(hoverIn(), hoverOut, this.circle, this.circle);
-*/
-
-
-
-
-
 $(function() {
 	var paper = Raphael('draw', 30, 0, 0, 0);
+	arr = new Array();
 	
 	var posts_example = '[' +
-		'{ "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"123" },' +
-		'{ "title":"jsdf" , "score":"13" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"100" },' +
-		'{ "title":"gsgdg" , "score":"1" , "blogtitle":"ghhtre" , "url":"www.gdfds.de/blog" , "type":"Twitter" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"20" } ]';
+		'{ "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"150" },' +
+		'{ "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"100" },' +
+		'{ "title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"200" },' +
+		'{ "title":"Quarz" , "score":"1" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"125" },' +
+		'{ "title":"Wie gehts?" , "score":"2" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"78" },' +
+		'{ "title":"na du" , "score":"5" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"999" },' +
+		'{ "title":"was los?" , "score":"1" , "blogtitle":"ghhtre" , "url":"www.gdfds.de/blog" , "type":"Twitter" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"20" } ]';
 	
 	var posts = JSON.parse(posts_example);
-	for (i = 0; i < posts.length; ++i) {
+	for (var i = 0; i < posts.length; ++i) {
 		//drawPost(posts[i]);
-		var post = new Post(paper, posts[i].title, posts[i].url, posts[i].score, posts[i].postlastupdate);
-	};
+		var post = new Post(paper, posts[i].title, posts[i].url, posts[i].score, posts[i].postlastupdate);		
+		arr.push(post);
+	};	
+	
+	for(var i = 0; i < arr.length; i++) {
+		var post = arr[i];
+		(function(post) {
+			post.circle.attr({"fill":"steelblue", "stroke-width": 0, "fill-opacity": .5, 'stroke': 'green'});
+			post.circle.mouseover(
+				function () {
+					this.animate({"fill-opacity": .7}, 200);
+					post.label.show();
+				}).mouseout(function () {
+					this.animate({"fill-opacity": .5}, 200);
+					post.label.hide();
+				});
+				post.circle.click(function(){
+					clearAll();
+					this.attr({"stroke-width": 1});
+				});
+			})(post);
+		}
+
+		function clearAll(){
+			for(var i = 0; i < arr.length; i++) {
+			post.circle.attr({"stroke-width": 0});
+		}
+	}	
 });
