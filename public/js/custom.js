@@ -24,7 +24,7 @@ Post.prototype.draw_circle = function (paper, importance, time){
 };
 
 Post.prototype.draw_label = function (paper, title, importance, x, y){
-var text = "Titel: " + title + "\n Wichtigkeit: " + importance
+	var text = "Titel: " + title + "\n Wichtigkeit: " + importance;
 	var label = paper.text(x, y, text);
 	return(label);
 };
@@ -43,12 +43,12 @@ $(function() {
 		'{ "title":"was los?" , "score":"1" , "blogtitle":"ghhtre" , "url":"www.gdfds.de/blog" , "type":"Twitter" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"20" } ]';
 	
 	var posts = JSON.parse(posts_example);
+	
 	for (var i = 0; i < posts.length; ++i) {
-		//drawPost(posts[i]);
 		var post = new Post(paper, posts[i].title, posts[i].url, posts[i].score, posts[i].postlastupdate);		
 		arr.push(post);
-	};	
-	
+	};
+		
 	for(var i = 0; i < arr.length; i++) {
 		var post = arr[i];
 		(function(post) {
@@ -75,4 +75,6 @@ $(function() {
 			}
 		}		
 	}
+	
+	paper.setViewBox(0, 0, 300, 150, false);	//good for zooming
 });
