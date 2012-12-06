@@ -60,17 +60,19 @@ $(function() {
 				}).mouseout(function () {
 					this.animate({"fill-opacity": .5}, 200);
 					post.label.hide();
-				});
-				post.circle.click(function(){
-					clearAll();
-					this.attr({"stroke-width": 1});
-				});
-			})(post);
-		}
-
+				}
+			);
+			post.circle.click(function(){
+				clearAll();
+				this.attr({"stroke-width": .7});
+				//this.glow();
+			});
+		})(post);
+			
 		function clearAll(){
 			for(var i = 0; i < arr.length; i++) {
-			post.circle.attr({"stroke-width": 0});
-		}
-	}	
+				arr[i].circle.attr({"stroke-width": 0});
+			}
+		}		
+	}
 });
