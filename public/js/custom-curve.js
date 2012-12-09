@@ -34,7 +34,11 @@ $(function() {
 	var bx = b.attr('cx')
 	var by = b.attr('cy')
 	//var p = paper.path("M"+cx+" "+cy+"L"+bx+" "+by "C10,20 ");
-	var p = paper.path("M"+cx+" "+cy+"C200,30 300,30 350,60"); //cx,cy Startpunkt; C200,30 erster Kontrollpkt, 300,30 2. Kontrollunkt. 350,60 Zielpunkt
+	var p = paper.path("M"+cx+" "+cy);
+	p.animate({path:"M"+cx+" "+cy+"C200,30 300,30 "+bx+" ,"+by}, 300, "easeIn")
+
+	p.attr({'arrow-end': 'classic-wide-long'});
+ //cx,cy Startpunkt; C200,30 erster Kontrollpkt, 300,30 2. Kontrollunkt. 350,60 Zielpunkt
 	
 	
 	
