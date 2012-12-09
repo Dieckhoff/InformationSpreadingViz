@@ -35,10 +35,36 @@ $(function() {
 	var by = b.attr('cy')
 	//var p = paper.path("M"+cx+" "+cy+"L"+bx+" "+by "C10,20 ");
 	var p = paper.path("M"+cx+" "+cy);
-	p.animate({path:"M"+cx+" "+cy+"C200,30 300,30 "+bx+" ,"+by}, 300, "easeIn")
+	p.animate({path:"M"+cx+" "+cy+"C200,20 300,20 "+bx+" ,"+by}, 300, "easeIn")
 
 	p.attr({'arrow-end': 'classic-wide-long'});
  //cx,cy Startpunkt; C200,30 erster Kontrollpkt, 300,30 2. Kontrollunkt. 350,60 Zielpunkt
+
+	 var x = paper.circle(350, 150, 20);
+		x.attr({
+			fill: 'steelblue',
+			cursor: 'pointer',
+			opacity: 0.5,
+			stroke: 'white'
+		});	
+		x.node.id = 'red_circle';
+		
+		var y = paper.circle(450, 150, 30);
+		y.attr({
+			fill: 'grey',
+			opacity: 0.5,
+			stroke: 'white'
+		});
+
+		var xx=x.attr('cx')
+		var xy=x.attr('cy')
+
+		var yx=y.attr('cx')
+		var yy=y.attr('cy')
+
+		var xp = paper.path ("M"+x.attr("cx")+" "+x.attr("cy"));
+		xp.animate({path:"M"+xx+" "+xy+"C375,130 425,130 "+yx+" "+yy},300)
+		xp.attr({'arrow-end': 'classic-wide-long'});
 	
 	
 	
@@ -56,14 +82,23 @@ $(function() {
 	  c.hover(hoverIn, hoverOut, c, c);
 	 */
 	  
-	  var s = c.click(function() {
-		i += 1;
-		if ((i % 2) == 1){
-		b.animate({r: 10, fill: 'green'}, 1000, "backIn")	
-		}
-		else{
-		b.animate({r: 40, fill: 'blue'}, 5000, "elastic");
-		}
-		});
+	 //  var s = c.click(function() {
+		// i += 1;
+		// if ((i % 2) == 1){
+		// b.animate({r: 10, fill: 'green'}, 1000, "backIn")	
+		// }
+		// else{
+		// b.animate({r: 40, fill: 'blue'}, 5000, "elastic");
+		// }
+		// });
 	
 });
+
+/* ALGORTITHMUS: Ausgangslage Mittelpunkte der Kreise M1 und M2.
+				Bezierkurve braucht 2 Kontrollpunkte.  
+					1. Kontrollpunkt P1: (M1.x + M1.x * 1/4 , M1.y + M1.y * 1/5)
+					2. Kontrollpunkt P2: (M2.x - M2.x * 1/4 , M2.y - M2.y * 1/5)
+
+			Raphael path wird dann wie folgt angegeben: 
+				"M M1,M2 CP1.x,P1.y P2.x,P2.y M2.x,M2.y"  // M gibt Anfangspunkt an, C steht für Curve mittels 2 Kontrollpunkten und Endpunkt
+
