@@ -101,4 +101,4 @@ $(function() {
 
 			Raphael path wird dann wie folgt angegeben: 
 				"M M1,M2 CP1.x,P1.y P2.x,P2.y M2.x,M2.y"  // M gibt Anfangspunkt an, C steht für Curve mittels 2 Kontrollpunkten und Endpunkt
-
+*/
