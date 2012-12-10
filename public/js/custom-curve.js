@@ -100,8 +100,8 @@ $(function() {
 
 /* ALGORITHMUS: Ausgangslage Mittelpunkte der Kreise M1 und M2 und deren x Abstand A
 				Bezierkurve braucht 2 Kontrollpunkte.  
-					1. Kontrollpunkt P1: (M1.x + A * 1/4 , M1.y + A * 1/5)
-					2. Kontrollpunkt P2: (M2.x - A * 1/4 , M2.y + A * 1/5)
+					1. Kontrollpunkt P1: (M1.x - A * 1/4 , M1.y + A * 1/5)
+					2. Kontrollpunkt P2: (M2.x + A * 1/4 , M2.y + A * 1/5)
 
 			Raphael path wird dann wie folgt angegeben: 
 				"M M1,M2 CP1.x,P1.y P2.x,P2.y M2.x,M2.y"  // M gibt Anfangspunkt an, C steht für Curve mittels 2 Kontrollpunkten und Endpunkt
