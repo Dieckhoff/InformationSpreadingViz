@@ -56,14 +56,18 @@ $(function() {
 			stroke: 'white'
 		});
 
-		var xx=x.attr('cx')
-		var xy=x.attr('cy')
 
-		var yx=y.attr('cx')
-		var yy=y.attr('cy')
+		var a = y.attr("cx") - x.attr("cx");
 
-		var xp = paper.path ("M"+x.attr("cx")+" "+x.attr("cy"));
-		xp.animate({path:"M"+xx+" "+xy+"C375,130 425,130 "+yx+" "+yy},300)
+		var xx=x.attr('cx') + a * 0.25 ;
+		var xy=x.attr('cy') + a * 0.2;
+
+		var yx=y.attr('cx') - a *0.25;
+		var yy=y.attr('cy') + a *0.2;
+
+
+		var xp = paper.path ("M"+y.attr("cx")+" "+y.attr("cy")+"C"+yx+","+yy+" "+xx+","+xy+" "+x.attr('cx')+" "+x.attr('cy'));
+		//xp.animate({path:"M"+y.attr("cx")+" "+y.attr("cy")+"C425,170 375,170 "+x.attr('cx')+" "+x.attr('cy')},300)
 		xp.attr({'arrow-end': 'classic-wide-long'});
 	
 	
@@ -94,10 +98,10 @@ $(function() {
 	
 });
 
-/* ALGORTITHMUS: Ausgangslage Mittelpunkte der Kreise M1 und M2.
+/* ALGORITHMUS: Ausgangslage Mittelpunkte der Kreise M1 und M2 und deren x Abstand A
 				Bezierkurve braucht 2 Kontrollpunkte.  
-					1. Kontrollpunkt P1: (M1.x + M1.x * 1/4 , M1.y + M1.y * 1/5)
-					2. Kontrollpunkt P2: (M2.x - M2.x * 1/4 , M2.y - M2.y * 1/5)
+					1. Kontrollpunkt P1: (M1.x + A * 1/4 , M1.y + A * 1/5)
+					2. Kontrollpunkt P2: (M2.x - A * 1/4 , M2.y + A * 1/5)
 
 			Raphael path wird dann wie folgt angegeben: 
 				"M M1,M2 CP1.x,P1.y P2.x,P2.y M2.x,M2.y"  // M gibt Anfangspunkt an, C steht für Curve mittels 2 Kontrollpunkten und Endpunkt
