@@ -7,18 +7,20 @@ function Post(id, paper, title, url, importance, time, tourl, fromurl){
 	this.time = time;
 	this.x = parseInt(time);
 	this.y = 60;
+	this.Uuid = id;
 
 	this.toUrl = tourl;
 	this.fromurl = fromurl;
 
 	
-	this.label = this.draw_label(this.paper, this.title, this.importance, this.x, this.y-20);
-	this.label.hide();
-	this.circle = this.draw_circle(this.paper, this.size, this.time);
+	// this.label = this.draw_label(this.paper, this.title, this.importance, this.x, this.y-20);
+	// this.label.hide();
+	this.circle = this.draw_circle(this.paper, this.size, this.time, this.Uuid);
 }
 
-Post.prototype.draw_circle = function (paper, importance, time){
+Post.prototype.draw_circle = function (paper, importance, time, id){
 	var circle = paper.circle(time, 60, importance * 2);
+	circle.id = id;
 	circle.attr({
 		fill: 'steelblue',
 		cursor: 'pointer',
@@ -38,14 +40,14 @@ $(function() {
 	arr = new Array();
 	
 	var posts_example = '[' +
-		'{ "id":"1" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"2" , "fromurl":"3" , "postlastupdate":"150" },' +
-		'{ "id":"2" ,"title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"3" , "fromurl":"1" , "postlastupdate":"100" },' +
-		'{ "id":"3", "title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"1" , "fromurl":"2" , "postlastupdate":"200" }]';
+		'{ "Uuid":"1" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"2" , "fromurl":"1" , "postlastupdate":"150" },' +
+		'{ "Uuid":"2" ,"title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"3" , "fromurl":"1" , "postlastupdate":"100" },' +
+		'{ "Uuid":"3", "title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"1" , "fromurl":"2" , "postlastupdate":"200" }]';
 	
 	var posts = JSON.parse(posts_example);
 	
 	for (var i = 0; i < posts.length; ++i) {
-		var post = new Post(posts[i].id, paper, posts[i].title, posts[i].url, posts[i].score, posts[i].postlastupdate, posts[i].tourl, posts[i].fromurl);		
+		var post = new Post(posts[i].Uuid, paper, posts[i].title, posts[i].url, posts[i].score, posts[i].postlastupdate, posts[i].tourl, posts[i].fromurl);		
 		arr.push(post);
 	};
 		
@@ -57,7 +59,8 @@ $(function() {
 			post.circle.mouseover(
 				function () {
 					this.animate({"fill-opacity": .7}, 200);
-					post.label.show();
+					// post.label.show();
+					console.log(post.Uuid);
 					var arrowTo = paper.getById(post.toUrl);
 					console.log(arrowTo);
 					draw_arrows(post, arrowTo);
@@ -65,7 +68,7 @@ $(function() {
 
 				}).mouseout(function () {
 					this.animate({"fill-opacity": .5}, 200);
-					post.label.hide();
+					// post.label.hide();
 					xp.remove(); 
 				}
 			);
@@ -87,22 +90,14 @@ $(function() {
 		function draw_arrows(start, end) {
 
 			var xdiff = start.x - parseInt(end.attr("cx")) ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
-			console.log(start);
-			console.log(end);
 
 
 			var xx = start.x - xdiff * 0.25;
 			var xy = start.y + xdiff * 0.2;
 
-			console.log(xx);
-			console.log(xy);
-
 			var yx = parseInt(end.attr("cx")) + xdiff *0.25;
 			var yy = parseInt(end.attr("cy")) + xdiff *0.2;
 
-			console.log(parseInt(end.attr("x")));
-			console.log(yx);
-			console.log(yy);
 
 			xp = paper.path ("M" + start.x + " " + start.y + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + parseInt(end.attr("cy")));
 
