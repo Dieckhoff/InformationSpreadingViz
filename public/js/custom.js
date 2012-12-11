@@ -40,11 +40,7 @@ $(function() {
 	var posts_example = '[' +
 		'{ "id":"1" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"2" , "fromurl":"3" , "postlastupdate":"150" },' +
 		'{ "id":"2" ,"title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"3" , "fromurl":"1" , "postlastupdate":"100" },' +
-		'{ "id":"3", "title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"1" , "fromurl":"2" , "postlastupdate":"200" },' +
-		'{ "id":"4","title":"Quarz" , "score":"1" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"125" },' +
-		'{ "id":"5","title":"Wie gehts?" , "score":"2" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"78" },' +
-		'{ "id":"6","title":"na du" , "score":"5" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"999" },' +
-		'{ "id":"7","title":"was los?" , "score":"1" , "blogtitle":"ghhtre" , "url":"www.gdfds.de/blog" , "type":"Twitter" , "tourl":"something" , "fromurl":"something" , "postlastupdate":"20" } ]';
+		'{ "id":"3", "title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"1" , "fromurl":"2" , "postlastupdate":"200" }]';
 	
 	var posts = JSON.parse(posts_example);
 	
@@ -63,6 +59,7 @@ $(function() {
 					this.animate({"fill-opacity": .7}, 200);
 					post.label.show();
 					var arrowTo = paper.getById(post.toUrl);
+					console.log(arrowTo);
 					draw_arrows(post, arrowTo);
 
 
@@ -90,12 +87,13 @@ $(function() {
 		function draw_arrows(start, end) {
 
 			var xdiff = start.x - parseInt(end.attr("cx")) ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
+			console.log(start);
+			console.log(end);
 
 
 			var xx = start.x - xdiff * 0.25;
 			var xy = start.y + xdiff * 0.2;
 
-			console.log(start.x);
 			console.log(xx);
 			console.log(xy);
 
