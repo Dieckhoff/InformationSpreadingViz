@@ -13,13 +13,13 @@ function Post(id, paper, title, url, importance, time, tourl, fromurl){
 	this.fromurl = fromurl;
 
 	
-	// this.label = this.draw_label(this.paper, this.title, this.importance, this.x, this.y-20);
-	// this.label.hide();
+	this.label = this.draw_label(this.paper, this.title, this.importance, this.x, this.y-20);
+	this.label.hide();
 	this.circle = this.draw_circle(this.paper, this.size, this.time, this.Uuid);
 }
 
 Post.prototype.draw_circle = function (paper, importance, time, id){
-	var circle = paper.circle(time, 60, importance * 2);
+	var circle = paper.circle(time, 60, importance);
 	circle.id = id;
 	circle.attr({
 		fill: 'steelblue',
@@ -40,9 +40,9 @@ $(function() {
 	arr = new Array();
 	
 	var posts_example = '[' +
-		'{ "Uuid":"1" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"2" , "fromurl":"1" , "postlastupdate":"150" },' +
-		'{ "Uuid":"2" ,"title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"3" , "fromurl":"1" , "postlastupdate":"100" },' +
-		'{ "Uuid":"3", "title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"1" , "fromurl":"2" , "postlastupdate":"200" }]';
+		'{ "Uuid":"hallo" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"jsdf" , "fromurl":"hallo" , "postlastupdate":"150" },' +
+		'{ "Uuid":"jsdf" ,"title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"Qwertz" , "fromurl":"hallo" , "postlastupdate":"100" },' +
+		'{ "Uuid":"Qwertz", "title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"hallo" , "fromurl":"jsdf" , "postlastupdate":"200" }]';
 	
 	var posts = JSON.parse(posts_example);
 	
@@ -59,17 +59,20 @@ $(function() {
 			post.circle.mouseover(
 				function () {
 					this.animate({"fill-opacity": .7}, 200);
-					// post.label.show();
-					console.log(post.Uuid);
+					post.label.show();
+
 					var arrowTo = paper.getById(post.toUrl);
-					console.log(arrowTo);
-					draw_arrows(post, arrowTo);
+					var arrowFrom = paper.getById(post.fromurl);
+
+					draw_toArrow(post, arrowTo);
+					draw_fromArrow(arrowFrom, post);
 
 
 				}).mouseout(function () {
 					this.animate({"fill-opacity": .5}, 200);
-					// post.label.hide();
+					post.label.hide();
 					xp.remove(); 
+					p.remove();
 				}
 			);
 
@@ -87,7 +90,9 @@ $(function() {
 			}
 		}
 
-		function draw_arrows(start, end) {
+		function draw_toArrow(start, end) {
+
+			console.log("draw_toArrow");
 
 			var xdiff = start.x - parseInt(end.attr("cx")) ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
@@ -102,6 +107,30 @@ $(function() {
 			xp = paper.path ("M" + start.x + " " + start.y + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + parseInt(end.attr("cy")));
 
 			xp.attr({'arrow-end': 'classic-wide-long'});
+		}
+
+		function draw_fromArrow(start, end) {
+
+			console.log(start);
+			console.log(end);
+
+
+			var xdiff = parseInt(start.attr("cx")) - end.x ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
+
+
+			var xx = parseInt(start.attr("cx")) - xdiff * 0.25;
+			var xy = parseInt(start.attr("cy")) + xdiff * 0.2;
+
+			var yx = end.x + xdiff *0.25;
+			var yy = end.y + xdiff *0.2;
+
+			var startpoint = parseInt(start.attr("cy")) - parseInt(start.attr("r"))
+			var endpoint = end.y - end.size;
+
+
+			p = paper.path ("M" + parseInt(start.attr("cx")) + " " + startpoint + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endpoint);
+
+			p.attr({'arrow-end': 'classic-wide-long'});
 		}
 	}
 
