@@ -12,6 +12,9 @@ function Post(id, paper, title, url, importance, time, tourl, fromurl){
 	this.toUrl = tourl;
 	this.fromurl = fromurl;
 
+	this.pathTo;
+	this.pathFrom;
+
 	
 	this.label = this.draw_label(this.paper, this.title, this.importance, this.x, this.y-20);
 	this.label.hide();
@@ -40,9 +43,9 @@ $(function() {
 	arr = new Array();
 	
 	var posts_example = '[' +
-		'{ "Uuid":"hallo" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"jsdf" , "fromurl":"hallo" , "postlastupdate":"150" },' +
-		'{ "Uuid":"jsdf" ,"title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"Qwertz" , "fromurl":"hallo" , "postlastupdate":"100" },' +
-		'{ "Uuid":"Qwertz", "title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"hallo" , "fromurl":"jsdf" , "postlastupdate":"200" }]';
+		'{ "Uuid":"hallo" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"jsdf" , "fromurl":"Qwertz" , "postlastupdate":"150" },' +
+		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"" , "postlastupdate":"200" },' +
+		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"" , "postlastupdate":"100" }]';
 	
 	var posts = JSON.parse(posts_example);
 	
@@ -64,15 +67,22 @@ $(function() {
 					var arrowTo = paper.getById(post.toUrl);
 					var arrowFrom = paper.getById(post.fromurl);
 
-					draw_toArrow(post, arrowTo);
-					draw_fromArrow(arrowFrom, post);
+					if (arrowTo.id != 0)
+						draw_toArrow(post, arrowTo);
+					if(arrowFrom.id !=0)
+						draw_fromArrow(arrowFrom, post);
 
 
 				}).mouseout(function () {
 					this.animate({"fill-opacity": .5}, 200);
 					post.label.hide();
-					xp.remove(); 
-					p.remove();
+					if(typeof post.pathFrom !== "undefined"){
+						post.pathFrom.remove();
+					}
+					if(typeof post.pathTo !== "undefined"){
+						console.log(post.pathTo);
+						post.pathTo.remove();
+					}
 				}
 			);
 
@@ -92,45 +102,39 @@ $(function() {
 
 		function draw_toArrow(start, end) {
 
-			console.log("draw_toArrow");
-
 			var xdiff = start.x - parseInt(end.attr("cx")) ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
+			var startpointy = start.y + start.size;
+			var endpointy = parseInt(end.attr("cy")) + parseInt(end.attr("r"))
 
 			var xx = start.x - xdiff * 0.25;
-			var xy = start.y + xdiff * 0.2;
+			var xy = startpointy + xdiff * 0.2;
 
 			var yx = parseInt(end.attr("cx")) + xdiff *0.25;
-			var yy = parseInt(end.attr("cy")) + xdiff *0.2;
+			var yy = endpointy + xdiff *0.2;
 
 
-			xp = paper.path ("M" + start.x + " " + start.y + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + parseInt(end.attr("cy")));
+			start.pathTo = paper.path ("M" + start.x + " " + startpointy + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endpointy);
 
-			xp.attr({'arrow-end': 'classic-wide-long'});
+			start.pathTo.attr({'arrow-end': 'classic-wide-long'});
 		}
 
 		function draw_fromArrow(start, end) {
 
-			console.log(start);
-			console.log(end);
-
-
 			var xdiff = parseInt(start.attr("cx")) - end.x ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
-
+			
+			var startpointy = parseInt(start.attr("cy")) - parseInt(start.attr("r"))
+			var endpointy = end.y - end.size;
 
 			var xx = parseInt(start.attr("cx")) - xdiff * 0.25;
-			var xy = parseInt(start.attr("cy")) + xdiff * 0.2;
+			var xy = startpointy - xdiff * 0.2;
 
 			var yx = end.x + xdiff *0.25;
-			var yy = end.y + xdiff *0.2;
+			var yy = endpointy- xdiff *0.2;
 
-			var startpoint = parseInt(start.attr("cy")) - parseInt(start.attr("r"))
-			var endpoint = end.y - end.size;
+			end.pathFrom = paper.path ("M" + parseInt(start.attr("cx")) + " " + startpointy + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endpointy);
 
-
-			p = paper.path ("M" + parseInt(start.attr("cx")) + " " + startpoint + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endpoint);
-
-			p.attr({'arrow-end': 'classic-wide-long'});
+			end.pathFrom.attr({'arrow-end': 'classic-wide-long'});
 		}
 	}
 
