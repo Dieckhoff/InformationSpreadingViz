@@ -1,6 +1,7 @@
-function Post(id, paper, title, url, importance, time, tourl, fromurl){
+function Post(id, paper, title, type, url, importance, time, tourl, fromurl){
 	this.paper = paper;
 	this.title = title;
+	this.type = type;
 	this.url = url;
 	this.importance = importance;
 	this.size = this.importance * 2;
@@ -14,20 +15,30 @@ function Post(id, paper, title, url, importance, time, tourl, fromurl){
 
 	this.pathTo;
 	this.pathFrom;
-
 	
 	this.label = this.draw_label(this.paper, this.title, this.importance, this.x, this.y-20);
 	this.label.hide();
-	this.circle = this.draw_circle(this.paper, this.size, this.time, this.Uuid);
+	this.circle = this.draw_circle(this.paper, this.size, this.time, this.Uuid, this.type);
 }
 
-Post.prototype.draw_circle = function (paper, importance, time, id){
+Post.prototype.draw_circle = function (paper, importance, time, id, type){
 	var circle = paper.circle(time, 60, importance);
 	circle.id = id;
+	var color;
+	if (type == "News"){
+		color = 'steelblue';
+	}
+	else if (type == "Facebook"){
+		color = 'lightgreen';
+	}
+	else{
+		color = 'orange';
+	}
 	circle.attr({
-		fill: 'steelblue',
+		fill: color,
 		cursor: 'pointer',
 		opacity: 0.5,
+		"stroke-width": 0,
 	});
 	return(circle);
 };
@@ -44,15 +55,15 @@ $(function() {
 	
 	var posts_example = '[' +
 		'{ "Uuid":"hallo" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"jsdf" , "fromurl":"Qwertz" , "postlastupdate":"150" },' +
-		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"q" , "fromurl":"" , "postlastupdate":"200" },' +
+		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"8" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"q" , "fromurl":"" , "postlastupdate":"200" },' +
 		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"x" , "postlastupdate":"50" },' +
-		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"" , "postlastupdate":"300" },' +
-		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"" , "postlastupdate":"100" }]';
+		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"" , "postlastupdate":"250" },' +
+		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Twitter" , "tourl":"" , "fromurl":"" , "postlastupdate":"100" }]';
 	
 	var posts = JSON.parse(posts_example);
 	
 	for (var i = 0; i < posts.length; ++i) {
-		var post = new Post(posts[i].Uuid, paper, posts[i].title, posts[i].url, posts[i].score, posts[i].postlastupdate, posts[i].tourl, posts[i].fromurl);		
+		var post = new Post(posts[i].Uuid, paper, posts[i].title, posts[i].type, posts[i].url, posts[i].score, posts[i].postlastupdate, posts[i].tourl, posts[i].fromurl);		
 		arr.push(post);
 	};
 		
@@ -60,7 +71,6 @@ $(function() {
 		var xp;
 		var post = arr[i];
 		(function(post) {
-			post.circle.attr({"fill":"steelblue", "stroke-width": 0, "fill-opacity": .5, 'stroke': 'green'});
 			post.circle.mouseover(
 				function () {
 					this.animate({"fill-opacity": .7}, 200);
@@ -70,12 +80,10 @@ $(function() {
 					post.label.hide();	
 				}
 			);
-
 			
 			post.circle.click(function(){
 				clearAll();
-				this.attr({"stroke-width": .9});
-				//this.glow();			
+				this.attr({"stroke-width": 3.0});			
 				var arrowTo = paper.getById(post.toUrl);
 				var arrowFrom = paper.getById(post.fromurl);
 
@@ -88,7 +96,7 @@ $(function() {
 			
 		function clearAll(){
 			for(var i = 0; i < arr.length; i++) {
-				arr[i].circle.attr({"stroke-width": 0});
+				arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
 				if(typeof arr[i].pathFrom !== "undefined"){
 					arr[i].pathFrom.remove();
 				}
@@ -110,8 +118,8 @@ $(function() {
 			var xx = start.x - xdiff * 0.25;
 			var xy = startpointy + xdiff * 0.2;
 
-			var yx = parseInt(end.attr("cx")) + xdiff *0.25;
-			var yy = endpointy + xdiff *0.2;
+			var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
+			var yy = endpointy + xdiff * 0.2;
 
 			start.pathTo = paper.path ("M" + start.x + " " + startpointy + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endpointy);
 
@@ -128,8 +136,8 @@ $(function() {
 			var xx = parseInt(start.attr("cx")) - xdiff * 0.25;
 			var xy = startpointy - xdiff * 0.2;
 
-			var yx = end.x + xdiff *0.25;
-			var yy = endpointy- xdiff *0.2;
+			var yx = end.x + xdiff * 0.25;
+			var yy = endpointy - xdiff * 0.2;
 
 			end.pathFrom = paper.path ("M" + parseInt(start.attr("cx")) + " " + startpointy + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endpointy);
 
