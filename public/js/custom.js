@@ -12,13 +12,24 @@ function Post(id, paper, title, type, url, importance, time, tourl, fromurl){
 
 	this.toUrl = tourl;
 	this.fromurl = fromurl;
+	
+	this.to = get_links_to_here();
+	this.from = get_links_from_here();
 
 	this.pathTo;
 	this.pathFrom;
 	
-	this.label = this.draw_label(this.paper, this.title, this.importance, this.x, this.y-20);
+	this.label = this.draw_label(this.paper, this.title, this.importance, this.x, this.y - 20);
 	this.label.hide();
 	this.circle = this.draw_circle(this.paper, this.size, this.time, this.Uuid, this.type);
+}
+
+function get_links_from_here(uuid){
+	
+}
+
+function get_links_to_here(uuid){
+	
 }
 
 Post.prototype.draw_circle = function (paper, importance, time, id, type){
@@ -46,6 +57,7 @@ Post.prototype.draw_circle = function (paper, importance, time, id, type){
 Post.prototype.draw_label = function (paper, title, importance, x, y){
 	var text = "Titel: " + title + "\n Wichtigkeit: " + importance;
 	var label = paper.text(x, y, text);
+	label.attr({"font-family": "Arial, Helvetica, sans-serif"});
 	return(label);
 };
 
@@ -58,9 +70,21 @@ $(function() {
 		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"8" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"q" , "fromurl":"" , "postlastupdate":"200" },' +
 		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"x" , "postlastupdate":"50" },' +
 		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"" , "postlastupdate":"250" },' +
-		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Twitter" , "tourl":"" , "fromurl":"" , "postlastupdate":"100" }]';
+		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Twitter" , "tourl":"" , "fromurl":"x" , "postlastupdate":"100" }' +
+	']';
+	
+	var links_example = '[' +
+		'{ "from":"hallo", "to":"jsdf" },' +
+		'{ "from":"Qwert", "to":"q" },' +
+		'{ "from":"x", "to":"q" },' +
+		'{ "from":"x", "to":"jsdf" },' +
+		'{ "from":"x", "to":"Qwertz" },' +
+		'{ "from":"hallo", "to":"q" },' +
+		'{ "from":"hallo", "to":"x" }' +
+	']';
 	
 	var posts = JSON.parse(posts_example);
+	var links = JSON.parse(links_example);
 	
 	for (var i = 0; i < posts.length; ++i) {
 		var post = new Post(posts[i].Uuid, paper, posts[i].title, posts[i].type, posts[i].url, posts[i].score, posts[i].postlastupdate, posts[i].tourl, posts[i].fromurl);		
@@ -73,7 +97,7 @@ $(function() {
 		(function(post) {
 			post.circle.mouseover(
 				function () {
-					this.animate({"fill-opacity": .7}, 200);
+					this.animate({"fill-opacity": .8}, 200);
 					post.label.show();
 				}).mouseout(function () {
 					this.animate({"fill-opacity": .5}, 200);
@@ -104,12 +128,10 @@ $(function() {
 					console.log(arr[i].pathTo);
 					arr[i].pathTo.remove();						
 				}
-			}				
-
+			}
 		}
 
 		function draw_toArrow(start, end) {
-
 			var xdiff = start.x - parseInt(end.attr("cx")) ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
 			var startpointy = start.y + start.size;
@@ -143,8 +165,6 @@ $(function() {
 
 			end.pathFrom.attr({'arrow-end': 'classic-wide-long'});
 		}
-	}
-
-	
+	}	
 	paper.setViewBox(0, 0, 300, 150, false);	//good for zooming
 });
