@@ -47,9 +47,9 @@ Post.prototype.draw_circle = function (paper, importance, time, id, type){
 		color = 'orange';
 	}
 	circle.attr({
-		fill: color,
+		fill: "r(0.75, 0.05)#fff-"+color+":150",
 		cursor: 'pointer',
-		opacity: 0.7,
+		opacity: 0.5,
 		"stroke-width": 0,
 	});
 	return(circle);
@@ -100,10 +100,10 @@ $(function() {
 		(function(post) {
 			post.circle.mouseover(
 				function () {
-					this.animate({"fill-opacity": .9}, 200);
+					this.animate({"opacity": .8}, 200);
 					post.label.show();
 				}).mouseout(function () {
-					this.animate({"fill-opacity": .7}, 200);
+					this.animate({"opacity": .5}, 200);
 					post.label.hide();
 				}
 			);
