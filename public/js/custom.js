@@ -19,9 +19,23 @@ function Post(id, paper, title, type, url, importance, time, tourl, fromurl){
 	this.pathTo;
 	this.pathFrom;
 
+	this.color;
+	if (this.type == 'Facebook'){
+		this.color = 'steelblue';
+	}
+	else if (this.type == 'Twitter'){
+		this.color = 'purple';
+	}
+	else if (this.type == 'News'){
+		this.color = 'orange';
+	}
+	else{
+		this.color = 'grey';
+	}
+
 	this.label = this.draw_label(this.paper, this.title, this.importance, this.x, this.y - 20);
 	this.label.hide();
-	this.circle = this.draw_circle(this.paper, this.size, this.time, this.Uuid, this.type);
+	this.circle = this.draw_circle(this.paper, this.size, this.time, this.Uuid, this.color);
 }
 
 function get_links_from_here(uuid){
@@ -32,26 +46,23 @@ function get_links_to_here(uuid){
 
 }
 
-Post.prototype.draw_circle = function (paper, importance, time, id, type){
+Post.prototype.draw_circle = function (paper, importance, time, id, color){
 	var circle = paper.circle(time, 60, importance);
 	circle.id = id;
 
-	var color;
-	if (type == "News"){
-		color = 'steelblue';
-	}
-	else if (type == "Facebook"){
-		color = 'green';
-	}
-	else{
-		color = 'orange';
-	}
 	circle.attr({
 		fill: "r(0.75, 0.05)#fff-"+color+":150",
 		cursor: 'pointer',
 		opacity: 0.5,
 		"stroke-width": 0,
 	});
+
+	circle.glow({
+		width: '10',	// size of the glow, default is 10
+		fill: 'true',	// will it be filled, default is false
+		color: String(color),	// glow colour, default is black
+	});
+
 	return(circle);
 };
 
@@ -68,11 +79,19 @@ $(function() {
 	var paper = Raphael('draw', 0, 0);
 	arr = new Array();
 
+	var timeline = paper.path(["M15,60H300"]);
+	timeline.attr({
+		stroke: 'grey',
+		opacity: .7,
+		'stroke-width': 3.0,
+		'arrow-end': 'classic-wide-long',
+	});
+
 	var posts_example = '[' +
 		'{ "Uuid":"hallo" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"jsdf" , "fromurl":"Qwertz" , "postlastupdate":"150" },' +
 		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"8" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"q" , "fromurl":"" , "postlastupdate":"200" },' +
 		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"x" , "postlastupdate":"50" },' +
-		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"" , "postlastupdate":"250" },' +
+		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"blabla" , "tourl":"" , "fromurl":"" , "postlastupdate":"250" },' +
 		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Twitter" , "tourl":"" , "fromurl":"x" , "postlastupdate":"100" }' +
 	']';
 
@@ -110,7 +129,8 @@ $(function() {
 
 			post.circle.click(function(){
 				clearAll();
-				this.attr({"stroke-width": 3.0});
+				//this.attr({"stroke-width": 3.0});
+
 				var arrowTo = paper.getById(post.toUrl);
 				var arrowFrom = paper.getById(post.fromurl);
 
@@ -148,7 +168,11 @@ $(function() {
 
 			start.pathTo = paper.path ("M" + start.x + " " + startpointy + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endpointy);
 
-			start.pathTo.attr({'arrow-end': 'classic-wide-long'});
+			start.pathTo.attr({
+				'arrow-end': 'classic-wide-long',
+				'arrow-end': String(start.color),
+				'stroke': String(start.color),
+			});
 		}
 
 		function draw_fromArrow(start, end) {
@@ -166,7 +190,11 @@ $(function() {
 
 			end.pathFrom = paper.path ("M" + parseInt(start.attr("cx")) + " " + startpointy + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endpointy);
 
-			end.pathFrom.attr({'arrow-end': 'classic-wide-long'});
+			end.pathFrom.attr({
+				'arrow-end': 'classic-wide-long',
+				'arrow-end': String(end.color),
+				'stroke': String(end.color),
+			});
 		}
 	}
 	paper.setViewBox(0, 0, 300, 150, false);	//good for zooming

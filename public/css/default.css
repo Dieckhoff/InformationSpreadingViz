@@ -7,7 +7,7 @@
 @import 'misc.css';
 
 body {
-	background: #F1F1F1;
+	background-image: url("../../graphics/bg_blue.jpg");
 	font: 16px Helvetica Neue, Arial, Helvetica, sans-serif;
 	line-height: 140%;
 }
@@ -24,7 +24,7 @@ body {
 }
 
 #content {
-	background-image: url("../../graphics/bg_blue.jpg");
+	background: "#FFFFFF";
 	padding: 10px;
 	min-height: 200px;
 }
