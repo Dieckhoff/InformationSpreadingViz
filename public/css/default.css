@@ -7,7 +7,7 @@
 @import 'misc.css';
 
 body {
-	background: #FFFFFF;
+	background: #F1F1F1;
 	font: 16px Helvetica Neue, Arial, Helvetica, sans-serif;
 	line-height: 140%;
 }
@@ -20,16 +20,13 @@ body {
 
 #header {
 	padding: 20px;
-	background: #589000;
-	color: #fff;
-	font-size: 25px;
+	background: #F1F1F1;
 }
 
 #content {
-	background: #fff;
+	background-image: url("../../graphics/bg_blue.jpg");
 	padding: 10px;
 	min-height: 200px;
-
 }
 
 #footer {
