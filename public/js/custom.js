@@ -35,12 +35,13 @@ function get_links_to_here(uuid){
 Post.prototype.draw_circle = function (paper, importance, time, id, type){
 	var circle = paper.circle(time, 60, importance);
 	circle.id = id;
+	
 	var color;
 	if (type == "News"){
 		color = 'steelblue';
 	}
 	else if (type == "Facebook"){
-		color = 'lightgreen';
+		color = 'green';
 	}
 	else{
 		color = 'orange';
@@ -48,7 +49,7 @@ Post.prototype.draw_circle = function (paper, importance, time, id, type){
 	circle.attr({
 		fill: color,
 		cursor: 'pointer',
-		opacity: 0.5,
+		opacity: 0.7,
 		"stroke-width": 0,
 	});
 	return(circle);
@@ -57,7 +58,9 @@ Post.prototype.draw_circle = function (paper, importance, time, id, type){
 Post.prototype.draw_label = function (paper, title, importance, x, y){
 	var text = "Titel: " + title + "\n Wichtigkeit: " + importance;
 	var label = paper.text(x, y, text);
-	label.attr({"font-family": "Arial, Helvetica, sans-serif"});
+	label.attr({
+		"font-family": "Arial, Helvetica, sans-serif"
+	});
 	return(label);
 };
 
@@ -97,10 +100,10 @@ $(function() {
 		(function(post) {
 			post.circle.mouseover(
 				function () {
-					this.animate({"fill-opacity": .8}, 200);
+					this.animate({"fill-opacity": .9}, 200);
 					post.label.show();
 				}).mouseout(function () {
-					this.animate({"fill-opacity": .5}, 200);
+					this.animate({"fill-opacity": .7}, 200);
 					post.label.hide();	
 				}
 			);
