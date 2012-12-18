@@ -7,7 +7,7 @@ function Post(id, paper, title, type, url, importance, time, tourl, fromurl){
 	this.size = this.importance * 2;
 	this.time = time;
 	this.x = parseInt(time);
-	this.y = 60;
+	this.y = 40;
 	this.Uuid = id;
 
 	this.toUrl = tourl;
@@ -63,65 +63,62 @@ function get_links_to_here(uuid, links){
 }
 
 Post.prototype.draw_links = function (){
-///////////////////////////////////////////////
-// function draw_toArrow(start, end) {
-	// from_links = this.from;
-	// to_links = this.to;
-	// start = document.getElementById(this.id);
-	// alert(this.Uuid);
-	// if (start != null){
-	// 			alert(this.id);
-	// 	for (var i = 0; i < to_links.length; ++i){
-	// 		end = document.getElementById(to_links[i]);
-	// 		if (end != null){
-	// 			var xdiff = start.x - parseInt(end.attr("cx"));	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
-	// 			var startpointy = start.y + start.size;
-	// 			var endpointy = parseInt(end.attr("cy")) + parseInt(end.attr("r"));
-	// 			var xx = start.x - xdiff * 0.25;
-	// 			var xy = startpointy + xdiff * 0.2;
+	from_links = this.from;
+	to_links = this.to;
+	var end;
+	var start = this;
+	for (var i = 0; i < to_links.length; ++i){
+		end = this.paper.getById(to_links[i]);
+		if (end != null){
+			var xdiff = start.x - parseInt(end.attr("cx"));	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
+			var starty = start.y + start.size;
+			var endpointy = parseInt(end.attr("cy")) + parseInt(end.attr("r"));
 
-	// 			var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
-	// 			var yy = endpointy + xdiff * 0.2;
-	// 			start.pathTo = paper.path ("M" + start.x + " " + startpointy + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endpointy);
+			var xx = start.x - xdiff * 0.25;
+			var xy = starty + xdiff * 0.2;
 
-	// 			start.pathTo.attr({
-	// 				'arrow-end': 'classic-wide-long',
-	// 				'arrow-end': String(start.color),
-	// 				'stroke': String(start.color),
-	// 			});
-	// 		}
-	// 	}
-	// }
+			var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
+			var yy = endpointy + xdiff * 0.2;
 
-	// 	// }
+			start.pathTo = this.paper.path ("M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endpointy);
 
-	// 	function draw_fromArrow(start, end) {
+			start.pathTo.attr({
+				'arrow-end': 'classic-wide-long',
+				'arrow-end': String(start.color),
+				'stroke': String(start.color),
+			});
+		}
+	}
 
-	// 		var xdiff = parseInt(start.attr("cx")) - end.x ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
+	end = this;
+	for (var i = 0; i < from_links.length; ++i){
+		var start = this.paper.getById(from_links[i]);
+		if (start != null){
+			var xdiff = parseInt(start.attr("cx")) - end.x ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
-	// 		var startpointy = parseInt(start.attr("cy")) - parseInt(start.attr("r"))
-	// 		var endpointy = end.y - end.size;
+			var starty = parseInt(start.attr("cy")) - parseInt(start.attr("r"))
+			var endpointy = end.y - end.size;
 
-	// 		var xx = parseInt(start.attr("cx")) - xdiff * 0.25;
-	// 		var xy = startpointy - xdiff * 0.2;
+			var xx = parseInt(start.attr("cx")) - xdiff * 0.25;
+			var xy = starty - xdiff * 0.2;
 
-	// 		var yx = end.x + xdiff * 0.25;
-	// 		var yy = endpointy - xdiff * 0.2;
+			var yx = end.x + xdiff * 0.25;
+			var yy = endpointy - xdiff * 0.2;
 
-	// 		end.pathFrom = paper.path ("M" + parseInt(start.attr("cx")) + " " + startpointy + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endpointy);
+			end.pathFrom = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endpointy);
 
-	// 		end.pathFrom.attr({
-	// 			'arrow-end': 'classic-wide-long',
-	// 			'arrow-end': String(end.color),
-	// 			'stroke': String(end.color),
-	// 		});
-	// 	}
-///////////////////////////////////////////////
+			end.pathFrom.attr({
+				'arrow-end': 'classic-wide-long',
+				'arrow-end': String(end.color),
+				'stroke': String(end.color),
+			});
+		}
+	}
 };
 
 Post.prototype.draw_circle = function (){
 	var circle = this.paper.circle(this.time, 60, this.importance);
-	circle.id = this.id;
+	circle.id = this.Uuid;
 
 	circle.attr({
 		fill: "r(0.75, 0.05)#fff-"+this.color+":150",
@@ -141,7 +138,7 @@ Post.prototype.draw_circle = function (){
 
 Post.prototype.draw_label = function (){
 	var text = "Titel: " + this.title + "\n Wichtigkeit: " + this.importance;
-	var label = this.paper.text(this.x, this.y - 20, text);
+	var label = this.paper.text(this.x, this.y, text);
 	label.attr({
 		"font-family": "Arial, Helvetica, sans-serif"
 	});
@@ -226,49 +223,6 @@ $(function() {
 				}
 			}
 		}
-
-		// function draw_toArrow(start, end) {
-		// 	var xdiff = start.x - parseInt(end.attr("cx")) ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
-
-		// 	var startpointy = start.y + start.size;
-		// 	var endpointy = parseInt(end.attr("cy")) + parseInt(end.attr("r"))
-
-		// 	var xx = start.x - xdiff * 0.25;
-		// 	var xy = startpointy + xdiff * 0.2;
-
-		// 	var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
-		// 	var yy = endpointy + xdiff * 0.2;
-
-		// 	start.pathTo = paper.path ("M" + start.x + " " + startpointy + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endpointy);
-
-		// 	start.pathTo.attr({
-		// 		'arrow-end': 'classic-wide-long',
-		// 		'arrow-end': String(start.color),
-		// 		'stroke': String(start.color),
-		// 	});
-		// }
-
-		// function draw_fromArrow(start, end) {
-
-		// 	var xdiff = parseInt(start.attr("cx")) - end.x ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
-
-		// 	var startpointy = parseInt(start.attr("cy")) - parseInt(start.attr("r"))
-		// 	var endpointy = end.y - end.size;
-
-		// 	var xx = parseInt(start.attr("cx")) - xdiff * 0.25;
-		// 	var xy = startpointy - xdiff * 0.2;
-
-		// 	var yx = end.x + xdiff * 0.25;
-		// 	var yy = endpointy - xdiff * 0.2;
-
-		// 	end.pathFrom = paper.path ("M" + parseInt(start.attr("cx")) + " " + startpointy + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endpointy);
-
-		// 	end.pathFrom.attr({
-		// 		'arrow-end': 'classic-wide-long',
-		// 		'arrow-end': String(end.color),
-		// 		'stroke': String(end.color),
-		// 	});
-		// }
 	}
 	// function simulateClick() {
 	// 	var evt = document.createEvent("MouseEvents");
