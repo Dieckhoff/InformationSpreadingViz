@@ -1,4 +1,4 @@
-function Post(id, paper, title, type, url, importance, time, tourl, fromurl){
+function Post(id, paper, title, type, url, importance, time){
 	this.paper = paper;
 	this.title = title;
 	this.type = type;
@@ -10,14 +10,8 @@ function Post(id, paper, title, type, url, importance, time, tourl, fromurl){
 	this.y = 60;
 	this.Uuid = id;
 
-	this.toUrl = tourl;
-	this.fromurl = fromurl;
-
 	this.to = get_links_to_here(this.Uuid, links);
 	this.from = get_links_from_here(this.Uuid, links);
-
-	this.pathTo;
-	this.pathFrom;
 
 	this.color;
 	if (this.type == 'Facebook'){
@@ -36,8 +30,8 @@ function Post(id, paper, title, type, url, importance, time, tourl, fromurl){
 	this.label = this.draw_label();
 	this.label.hide();
 	this.circle = this.draw_circle();
-	this.links = this.draw_links();
-	this.links.hide();
+	this.links;
+	// this.links.hide();
 }
 
 function get_links_from_here(uuid, links){
@@ -83,21 +77,23 @@ Post.prototype.draw_links = function (){
 			var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
 			var yy = endy + xdiff * 0.2;
 
-			start.pathTo = this.paper.path ("M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy);
+			var path = this.paper.path ("M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy);
 
-			start.pathTo.attr({
+			path.attr({
 				'stroke-width': .9,
 				'arrow-end': 'classic-wide-long',
-				'arrow-end': '#000',
 				'stroke': String(start.color),
-			});
-		};
-	};
+			})
+		}
+	}
 
 // to here
 	end = this;
+	var start;
 	for (var i = 0; i < to_links.length; ++i){
-		var start = this.paper.getById(to_links[i]);
+		start = this.paper.getById(to_links[i]);
+		// console.log(start);
+		// window.debug = this.paper;
 		if (start != null){
 			var xdiff = parseInt(start.attr("cx")) - end.x ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
@@ -110,15 +106,14 @@ Post.prototype.draw_links = function (){
 			var yx = end.x + xdiff * 0.25;
 			var yy = endy - xdiff * 0.2;
 
-			end.pathFrom = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy);
+			var path = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy);
 
-			end.pathFrom.attr({
+			path.attr({
 				'arrow-end': 'classic-wide-long',
-				'arrow-end': '#000',
 				'stroke': String(end.color),
-			});
-		};
-	};
+			})
+		}
+	}
 	return( this.paper.setFinish() );
 };
 
@@ -164,11 +159,11 @@ $(function() {
 	});
 
 	var posts_example = '[' +
-		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"x" , "postlastupdate":"50" },' +
-		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Twitter" , "tourl":"" , "fromurl":"x" , "postlastupdate":"100" },' +
-		'{ "Uuid":"hallo" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"jsdf" , "fromurl":"Qwertz" , "postlastupdate":"150" },' +
-		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"8" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"q" , "fromurl":"" , "postlastupdate":"200" },' +
-		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"blabla" , "tourl":"" , "fromurl":"" , "postlastupdate":"250" }' +
+		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"50" },' +
+		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Twitter" , "postlastupdate":"100" },' +
+		'{ "Uuid":"hallo" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postlastupdate":"150" },' +
+		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"8" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"200" },' +
+		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"blabla" , "postlastupdate":"250" }' +
 	']';
 
 	var links_example = '[' +
@@ -185,7 +180,7 @@ $(function() {
 	links = JSON.parse(links_example);
 
 	for (var i = 0; i < posts.length; ++i) {
-		var post = new Post(posts[i].Uuid, paper, posts[i].title, posts[i].type, posts[i].url, posts[i].score, posts[i].postlastupdate, posts[i].tourl, posts[i].fromurl);
+		var post = new Post(posts[i].Uuid, paper, posts[i].title, posts[i].type, posts[i].url, posts[i].score, posts[i].postlastupdate);
 		arr.push(post);
 	};
 
@@ -205,7 +200,8 @@ $(function() {
 
 			post.circle.click(function(){
 				clearAll();
-				post.links.show();
+				post.links = post.draw_links();
+				// post.links.show();
 				//this.attr({"stroke-width": 3.0});
 
 				// var arrowTo = paper.getById(post.toUrl);
@@ -221,7 +217,7 @@ $(function() {
 		function clearAll(){
 			for(var i = 0; i < arr.length; i++) {
 				arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
-				arr[i].links.hide();
+				// arr[i].links.hide();
 			}
 		}
 	}
