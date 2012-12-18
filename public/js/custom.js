@@ -7,7 +7,7 @@ function Post(id, paper, title, type, url, importance, time, tourl, fromurl){
 	this.size = this.importance * 2;
 	this.time = time;
 	this.x = parseInt(time);
-	this.y = 40;
+	this.y = 60;
 	this.Uuid = id;
 
 	this.toUrl = tourl;
@@ -37,7 +37,7 @@ function Post(id, paper, title, type, url, importance, time, tourl, fromurl){
 	this.label.hide();
 	this.circle = this.draw_circle();
 	this.links = this.draw_links();
-	// this.links.hide();
+	this.links.hide();
 }
 
 function get_links_from_here(uuid, links){
@@ -63,61 +63,67 @@ function get_links_to_here(uuid, links){
 }
 
 Post.prototype.draw_links = function (){
+	this.paper.setStart();
 	from_links = this.from;
 	to_links = this.to;
+
+// from here
 	var end;
 	var start = this;
-	for (var i = 0; i < to_links.length; ++i){
-		end = this.paper.getById(to_links[i]);
+	for (var i = 0; i < from_links.length; ++i){
+		end = this.paper.getById(from_links[i]);
 		if (end != null){
 			var xdiff = start.x - parseInt(end.attr("cx"));	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
-			var starty = start.y + start.size;
-			var endpointy = parseInt(end.attr("cy")) + parseInt(end.attr("r"));
+			var starty = start.y + start.size / 2.0;
+			var endy = parseInt(end.attr("cy")) + parseInt(end.attr("r"));
 
 			var xx = start.x - xdiff * 0.25;
 			var xy = starty + xdiff * 0.2;
 
 			var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
-			var yy = endpointy + xdiff * 0.2;
+			var yy = endy + xdiff * 0.2;
 
-			start.pathTo = this.paper.path ("M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endpointy);
+			start.pathTo = this.paper.path ("M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy);
 
 			start.pathTo.attr({
+				'stroke-width': .9,
 				'arrow-end': 'classic-wide-long',
-				'arrow-end': String(start.color),
+				'arrow-end': '#000',
 				'stroke': String(start.color),
 			});
-		}
-	}
+		};
+	};
 
+// to here
 	end = this;
-	for (var i = 0; i < from_links.length; ++i){
-		var start = this.paper.getById(from_links[i]);
+	for (var i = 0; i < to_links.length; ++i){
+		var start = this.paper.getById(to_links[i]);
 		if (start != null){
 			var xdiff = parseInt(start.attr("cx")) - end.x ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
 			var starty = parseInt(start.attr("cy")) - parseInt(start.attr("r"))
-			var endpointy = end.y - end.size;
+			var endy = end.y - end.size / 2.0;
 
 			var xx = parseInt(start.attr("cx")) - xdiff * 0.25;
 			var xy = starty - xdiff * 0.2;
 
 			var yx = end.x + xdiff * 0.25;
-			var yy = endpointy - xdiff * 0.2;
+			var yy = endy - xdiff * 0.2;
 
-			end.pathFrom = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endpointy);
+			end.pathFrom = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy);
 
 			end.pathFrom.attr({
 				'arrow-end': 'classic-wide-long',
-				'arrow-end': String(end.color),
+				'arrow-end': '#000',
 				'stroke': String(end.color),
 			});
-		}
-	}
+		};
+	};
+	return( this.paper.setFinish() );
 };
 
 Post.prototype.draw_circle = function (){
-	var circle = this.paper.circle(this.time, 60, this.importance);
+	var circle = this.paper.circle(this.x, this.y, this.importance);
 	circle.id = this.Uuid;
 
 	circle.attr({
@@ -158,11 +164,11 @@ $(function() {
 	});
 
 	var posts_example = '[' +
+		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"x" , "postlastupdate":"50" },' +
+		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Twitter" , "tourl":"" , "fromurl":"x" , "postlastupdate":"100" },' +
 		'{ "Uuid":"hallo" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "tourl":"jsdf" , "fromurl":"Qwertz" , "postlastupdate":"150" },' +
 		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"8" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"q" , "fromurl":"" , "postlastupdate":"200" },' +
-		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "tourl":"" , "fromurl":"x" , "postlastupdate":"50" },' +
-		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"blabla" , "tourl":"" , "fromurl":"" , "postlastupdate":"250" },' +
-		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Twitter" , "tourl":"" , "fromurl":"x" , "postlastupdate":"100" }' +
+		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"blabla" , "tourl":"" , "fromurl":"" , "postlastupdate":"250" }' +
 	']';
 
 	var links_example = '[' +
@@ -172,7 +178,7 @@ $(function() {
 		'{ "from":"x", "to":"jsdf" },' +
 		'{ "from":"x", "to":"Qwertz" },' +
 		'{ "from":"hallo", "to":"q" },' +
-		'{ "from":"hallo", "to":"x" }' +
+		'{ "from":"hallo", "to":"jsdf" }' +
 	']';
 
 	var posts = JSON.parse(posts_example);
@@ -199,6 +205,7 @@ $(function() {
 
 			post.circle.click(function(){
 				clearAll();
+				post.links.show();
 				//this.attr({"stroke-width": 3.0});
 
 				// var arrowTo = paper.getById(post.toUrl);
@@ -214,13 +221,7 @@ $(function() {
 		function clearAll(){
 			for(var i = 0; i < arr.length; i++) {
 				arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
-				if (typeof arr[i].pathFrom !== "undefined"){
-					arr[i].pathFrom.remove();
-				}
-				if (typeof arr[i].pathTo !== "undefined"){
-					console.log(arr[i].pathTo);
-					arr[i].pathTo.remove();
-				}
+				arr[i].links.hide();
 			}
 		}
 	}
