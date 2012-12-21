@@ -31,7 +31,6 @@ function Post(id, paper, title, type, url, importance, time){
 	this.label.hide();
 	this.circle = this.draw_circle();
 	this.links;
-	// this.links.hide();
 }
 
 function get_links_from_here(uuid, links){
@@ -92,8 +91,6 @@ Post.prototype.draw_links = function (){
 	var start;
 	for (var i = 0; i < to_links.length; ++i){
 		start = this.paper.getById(to_links[i]);
-		// console.log(start);
-		// window.debug = this.paper;
 		if (start != null){
 			var xdiff = parseInt(start.attr("cx")) - end.x ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
@@ -129,9 +126,9 @@ Post.prototype.draw_circle = function (){
 	});
 
 	circle.glow({
-		width: '10',	// size of the glow, default is 10
-		fill: 'true',	// will it be filled, default is false
-		color: String(this.color),	// glow colour, default is black
+		width: '10',
+		fill: 'true',
+		color: String(this.color),
 	});
 
 	return(circle);
@@ -201,23 +198,14 @@ $(function() {
 			post.circle.click(function(){
 				clearAll();
 				post.links = post.draw_links();
-				// post.links.show();
-				//this.attr({"stroke-width": 3.0});
-
-				// var arrowTo = paper.getById(post.toUrl);
-				// var arrowFrom = paper.getById(post.fromurl);
-
-				// if (arrowTo.id != 0)
-				// 	draw_toArrow(post, arrowTo);
-				// if(arrowFrom.id !=0)
-				// draw_fromArrow(arrowFrom, post);
 			});
 		})(post);
 
 		function clearAll(){
 			for(var i = 0; i < arr.length; i++) {
 				arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
-				// arr[i].links.hide();
+				if (arr[i].links != undefined)
+					arr[i].links.hide();
 			}
 		}
 	}
