@@ -1,17 +1,19 @@
-function Post(id, paper, title, type, url, importance, time){
+function Post(id, paper, title, type, url, blog, importance, time){
 	this.paper = paper;
 	this.title = title;
 	this.type = type;
 	this.url = url;
+	this.blog = blog;
 	this.importance = importance;
 	this.size = this.importance * 2;
 	this.time = time;
 	this.x = parseInt(time);
 	this.y = 60;
 	this.Uuid = id;
+	this.image_source = "graphics/Newpost.JPG"	//to be individualized...
 
-	this.to = get_links_to_here(this.Uuid, links);
-	this.from = get_links_from_here(this.Uuid, links);
+	this.to = this.get_links_to_here();
+	this.from = this.get_links_from_here();
 
 	this.color;
 	if (this.type == 'Facebook'){
@@ -29,26 +31,33 @@ function Post(id, paper, title, type, url, importance, time){
 
 	this.label = this.draw_label();
 	this.label.hide();
+	this.preview_image = this.show_preview();
+	this.preview_image.hide();
 	this.circle = this.draw_circle();
 	this.links;
 }
 
-function get_links_from_here(uuid, links){
+Post.prototype.show_preview = function(){
+	image = this.paper.image(this.image_source, this.x - 40, this.y - 100, 80, 80);
+	return(image);
+}
+
+Post.prototype.get_links_from_here = function(){
 	var list = [];
 	for (var i = 0; i < links.length; ++i){
 		var link = links[i];
-		if (link.from == uuid){
+		if (link.from == this.Uuid){
 			list.push(link.to);
 		}
 	}
 	return(list);
 }
 
-function get_links_to_here(uuid, links){
+Post.prototype.get_links_to_here = function(){
 	var list = [];
 	for (var i = 0; i < links.length; ++i){
 		var link = links[i];
-		if (link.to == uuid){
+		if (link.to == this.Uuid){
 			list.push(link.from);
 		}
 	}
@@ -76,12 +85,11 @@ Post.prototype.draw_links = function (){
 			var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
 			var yy = endy + xdiff * 0.2;
 
-			var path = this.paper.path ("M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy);
+			var arrow = this.paper.path ("M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy);
 
-			path.attr({
-				'stroke-width': .9,
+			arrow.attr({
 				'arrow-end': 'classic-wide-long',
-				'stroke': String(start.color),
+				'stroke':String(start.color),
 			})
 		}
 	}
@@ -135,11 +143,39 @@ Post.prototype.draw_circle = function (){
 };
 
 Post.prototype.draw_label = function (){
-	var text = "Titel: " + this.title + "\n Wichtigkeit: " + this.importance;
-	var label = this.paper.text(this.x, this.y, text);
-	label.attr({
-		"font-family": "Arial, Helvetica, sans-serif"
+	// var text = this.title + "\n" + this.blog + "\n" + this.url;
+
+	this.paper.setStart();
+
+	var title = this.paper.text(this.x + 45, this.y - 42, this.title);
+	title.attr({
+		"font-family": "Arial, Helvetica, sans-serif",
+		origin: 'baseline',
+		'text-anchor': 'start',
+		fill: 'steelblue',
+		'font-size': 16,
 	});
+
+	var blog = this.paper.text(this.x + 55, this.y - 30, this.blog);
+	blog.attr({
+		"font-family": "Arial, Helvetica, sans-serif",
+		origin: 'baseline',
+		'text-anchor': 'start',
+		fill: 'black',
+		'font-size': 9,
+	});
+
+	var url = this.paper.text(this.x + 55, this.y - 22, this.url);
+	url.attr({
+		"font-family": "Arial, Helvetica, sans-serif",
+		origin: 'baseline',
+		'text-anchor': 'start',
+		fill: 'black',
+		'font-size': 9,
+		href: this.url,
+	});
+
+	var label = this.paper.setFinish();
 	return(label);
 };
 
@@ -153,14 +189,15 @@ $(function() {
 		opacity: .7,
 		'stroke-width': 3.0,
 		'arrow-end': 'classic-wide-long',
+		'arrow-end': 'grey',
 	});
 
 	var posts_example = '[' +
-		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"12" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"50" },' +
-		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Twitter" , "postlastupdate":"100" },' +
+		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"12" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"50" },' +
+		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postlastupdate":"100" },' +
 		'{ "Uuid":"hallo" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postlastupdate":"150" },' +
-		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"8" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"200" },' +
-		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"b" , "url":"www.df.de/blog" , "type":"blabla" , "postlastupdate":"250" }' +
+		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"8" , "blogtitle":"buuuh" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"200" },' +
+		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postlastupdate":"250" }' +
 	']';
 
 	var links_example = '[' +
@@ -170,14 +207,23 @@ $(function() {
 		'{ "from":"x", "to":"jsdf" },' +
 		'{ "from":"x", "to":"Qwertz" },' +
 		'{ "from":"hallo", "to":"q" },' +
+		'{ "from":"x", "to":"hallo" },' +
 		'{ "from":"hallo", "to":"jsdf" }' +
 	']';
+
+	var y = paper.path(["m 122.63558,382.77648 c 116.83215,-44.88571 334.66839,-86.30974 366.55992,-85.6863 -30.86238,58.03134 -30.79248,59.28044 -3.19104,126.1786 C 382.30762,351.4424 294.49155,349.5653 122.63558,382.77648 z"]);
+	y.attr({
+		stroke: 'grey',
+		opacity: .7,
+		'stroke-width': 3.0,
+		fill: 'orange',
+	});
 
 	var posts = JSON.parse(posts_example);
 	links = JSON.parse(links_example);
 
 	for (var i = 0; i < posts.length; ++i) {
-		var post = new Post(posts[i].Uuid, paper, posts[i].title, posts[i].type, posts[i].url, posts[i].score, posts[i].postlastupdate);
+		var post = new Post(posts[i].Uuid, paper, posts[i].title, posts[i].type, posts[i].url, posts[i].blogtitle, posts[i].score, posts[i].postlastupdate);
 		arr.push(post);
 	};
 
@@ -189,9 +235,11 @@ $(function() {
 				function () {
 					this.animate({"opacity": .8}, 200);
 					post.label.show();
+					post.preview_image.show();
 				}).mouseout(function () {
 					this.animate({"opacity": .5}, 200);
 					post.label.hide();
+					post.preview_image.hide();
 				}
 			);
 
