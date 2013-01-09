@@ -1,14 +1,15 @@
 function Post(id, paper, title, type, url, blog, importance, time){
+
 	this.paper = paper;
 	this.title = title;
 	this.type = type;
 	this.url = url;
 	this.blog = blog;
 	this.importance = importance;
-	this.size = this.importance * 2;
+	this.size = importance * 2;
 	this.time = time;
 	this.x = parseInt(time);
-	this.y = 60;
+	this.y = 150;
 	this.Uuid = id;
 	this.image_source = "graphics/Newpost.JPG"	//to be individualized...
 
@@ -123,7 +124,8 @@ Post.prototype.draw_links = function (){
 };
 
 Post.prototype.draw_circle = function (){
-	var circle = this.paper.circle(this.x, this.y, this.importance);
+	var circle = this.paper.circle(this.x, this.y, this.size);
+	console.log(this.size);
 	circle.id = this.Uuid;
 
 	circle.attr({
@@ -215,7 +217,16 @@ $(function() {
 	links = JSON.parse(links_example);
 
 	for (var i = 0; i < posts.length; ++i) {
-		var post = new Post(posts[i].Uuid, paper, posts[i].title, posts[i].type, posts[i].url, posts[i].blogtitle, posts[i].score, posts[i].postlastupdate);
+		var post = new Post(
+							posts[i].Uuid,
+							paper,
+							posts[i].title,
+							posts[i].type,
+							posts[i].url,
+							posts[i].blogtitle,
+							posts[i].score,
+							posts[i].postlastupdate
+						);
 		arr.push(post);
 	};
 
