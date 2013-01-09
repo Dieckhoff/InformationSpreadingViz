@@ -9,7 +9,7 @@ function Post(id, paper, title, type, url, blog, importance, time){
 	this.size = importance * 2;
 	this.time = time;
 	this.x = parseInt(time);
-	this.y = 150;
+	this.y = 200;
 	this.Uuid = id;
 	this.image_source = "graphics/Newpost.JPG"	//to be individualized...
 
@@ -39,7 +39,7 @@ function Post(id, paper, title, type, url, blog, importance, time){
 }
 
 Post.prototype.show_preview = function(){
-	image = this.paper.image(this.image_source, this.x - 40, this.y - 100, 80, 80);
+	image = this.paper.image(this.image_source, this.x + 5, 7, 80, 80);
 	return(image);
 }
 
@@ -90,7 +90,8 @@ Post.prototype.draw_links = function (){
 
 			arrow.attr({
 				'arrow-end': 'classic-wide-long',
-				'stroke':String(start.color),
+				'stroke': String(start.color),
+				'stroke-width': 1.5,
 			})
 		}
 	}
@@ -101,7 +102,7 @@ Post.prototype.draw_links = function (){
 	for (var i = 0; i < to_links.length; ++i){
 		start = this.paper.getById(to_links[i]);
 		if (start != null){
-			var xdiff = parseInt(start.attr("cx")) - end.x ;//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
+			var xdiff = parseInt(start.attr("cx")) - end.x;	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
 			var starty = parseInt(start.attr("cy")) - parseInt(start.attr("r"))
 			var endy = end.y - end.size / 2.0;
@@ -117,6 +118,7 @@ Post.prototype.draw_links = function (){
 			path.attr({
 				'arrow-end': 'classic-wide-long',
 				'stroke': String(end.color),
+				'stroke-width': 1.5,
 			})
 		}
 	}
@@ -149,34 +151,34 @@ Post.prototype.draw_label = function (){
 
 	this.paper.setStart();
 
-	var box = this.paper.rect(this.x - 10, this.y - 150, 250, 90, 2);
+	var box = this.paper.rect(this.x - 10, 5, 250, 100, 2);
 	box.attr({});
 
-	var title = this.paper.text(this.x + 45, this.y - 100, this.title);
+	var title = this.paper.text(this.x + 100, 20, this.title);
 	title.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
 		'text-anchor': 'start',
 		fill: 'steelblue',
-		'font-size': 16,
+		'font-size': 24,
 	});
 
-	var blog = this.paper.text(this.x + 55, this.y - 30, this.blog);
+	var blog = this.paper.text(this.x + 115, 42, this.blog);
 	blog.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
 		'text-anchor': 'start',
 		fill: 'black',
-		'font-size': 9,
+		'font-size': 16,
 	});
 
-	var url = this.paper.text(this.x + 55, this.y - 22, this.url);
+	var url = this.paper.text(this.x + 115, 60, this.url);
 	url.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
 		'text-anchor': 'start',
 		fill: 'black',
-		'font-size': 9,
+		'font-size': 16,
 		href: this.url,
 	});
 
@@ -188,11 +190,11 @@ $(function() {
 	var paper = Raphael('draw', 0, 0);
 	arr = new Array();
 
-	var timeline = paper.path(["M15,60H500"]);
+	var timeline = paper.path(["M15,200H500"]);
 	timeline.attr({
 		stroke: 'grey',
 		opacity: .7,
-		'stroke-width': 3.0,
+		'stroke-width': 4.0,
 		'arrow-end': 'classic-wide-long',
 		'arrow-end': 'grey',
 	});
