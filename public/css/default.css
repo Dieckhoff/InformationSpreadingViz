@@ -24,7 +24,6 @@ body {
 }
 
 #content {
-	background: "#FFFFFF";
 	padding: 10px;
 	min-height: 200px;
 }
@@ -33,6 +32,11 @@ body {
 	padding: 20px;
 	background: #589000;
 	color: #fff;
+}
+
+#draw {
+	padding: 10px;
+	min-height: 200px;
 }
 
 /** Links **/

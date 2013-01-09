@@ -149,7 +149,10 @@ Post.prototype.draw_label = function (){
 
 	this.paper.setStart();
 
-	var title = this.paper.text(this.x + 45, this.y - 42, this.title);
+	var box = this.paper.rect(this.x - 10, this.y - 150, 250, 90, 2);
+	box.attr({});
+
+	var title = this.paper.text(this.x + 45, this.y - 100, this.title);
 	title.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
