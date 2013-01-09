@@ -183,7 +183,7 @@ $(function() {
 	var paper = Raphael('draw', 0, 0);
 	arr = new Array();
 
-	var timeline = paper.path(["M15,60H300"]);
+	var timeline = paper.path(["M15,60H500"]);
 	timeline.attr({
 		stroke: 'grey',
 		opacity: .7,
@@ -202,7 +202,7 @@ $(function() {
 
 	var links_example = '[' +
 		'{ "from":"hallo", "to":"jsdf" },' +
-		'{ "from":"Qwert", "to":"q" },' +
+		'{ "from":"Qwertz", "to":"q" },' +
 		'{ "from":"x", "to":"q" },' +
 		'{ "from":"x", "to":"jsdf" },' +
 		'{ "from":"x", "to":"Qwertz" },' +
@@ -210,14 +210,6 @@ $(function() {
 		'{ "from":"x", "to":"hallo" },' +
 		'{ "from":"hallo", "to":"jsdf" }' +
 	']';
-
-	var y = paper.path(["m 122.63558,382.77648 c 116.83215,-44.88571 334.66839,-86.30974 366.55992,-85.6863 -30.86238,58.03134 -30.79248,59.28044 -3.19104,126.1786 C 382.30762,351.4424 294.49155,349.5653 122.63558,382.77648 z"]);
-	y.attr({
-		stroke: 'grey',
-		opacity: .7,
-		'stroke-width': 3.0,
-		fill: 'orange',
-	});
 
 	var posts = JSON.parse(posts_example);
 	links = JSON.parse(links_example);
@@ -277,6 +269,6 @@ $(function() {
 	// 	}
 	// }
 
-	paper.setViewBox(0, 0, 300, 150, false);	//good for zooming
+	//paper.setViewBox(0, 0, 300, 150, false);	//good for zooming
 	// simulateClick()
 });
