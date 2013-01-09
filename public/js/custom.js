@@ -127,7 +127,6 @@ Post.prototype.draw_links = function (){
 
 Post.prototype.draw_circle = function (){
 	var circle = this.paper.circle(this.x, this.y, this.size);
-	console.log(this.size);
 	circle.id = this.Uuid;
 
 	circle.attr({
@@ -152,7 +151,11 @@ Post.prototype.draw_label = function (){
 	this.paper.setStart();
 
 	var box = this.paper.rect(this.x - 10, 5, 250, 100, 2);
-	box.attr({});
+	box.attr({
+		fill: 'lightgrey',
+		opacity: .7,
+		stroke: 'grey',
+	});
 
 	var title = this.paper.text(this.x + 100, 20, this.title);
 	title.attr({
@@ -236,7 +239,6 @@ $(function() {
 	};
 
 	for(var i = 0; i < arr.length; i++) {
-		var xp;
 		var post = arr[i];
 		(function(post) {
 			post.circle.mouseover(
@@ -249,22 +251,22 @@ $(function() {
 					post.label.hide();
 					post.preview_image.hide();
 				}
-			);
-
+			)
 			post.circle.click(function(){
 				clearAll();
 				post.links = post.draw_links();
-			});
+			})
 		})(post);
+	};
 
-		function clearAll(){
-			for(var i = 0; i < arr.length; i++) {
-				arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
-				if (arr[i].links != undefined)
-					arr[i].links.hide();
-			}
+	function clearAll(){
+		for(var i = 0; i < arr.length; i++) {
+			arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
+			if (arr[i].links != undefined)
+				arr[i].links.hide();
 		}
-	}
+	};
+
 	// function simulateClick() {
 	// 	var evt = document.createEvent("MouseEvents");
 	// 	evt.initMouseEvent(
