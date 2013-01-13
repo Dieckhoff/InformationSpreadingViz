@@ -11,7 +11,7 @@ function Post(id, paper, title, type, url, blog, importance, time){
 	this.x = parseInt(time);
 	this.y = 200;
 	this.Uuid = id;
-	this.image_source = "graphics/Newpost.JPG"	//to be individualized...
+	this.image_source = "static/graphics/Newpost.JPG"	//to be individualized...
 
 	this.to = this.get_links_to_here();
 	this.from = this.get_links_from_here();
