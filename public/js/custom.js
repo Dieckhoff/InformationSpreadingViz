@@ -1,40 +1,26 @@
-function Post(id, paper, title, type, url, blog, importance, time){
+function Post(id){
 
-	this.paper = paper;
-	this.title = title;
-	this.type = type;
-	this.url = url;
-	this.blog = blog;
-	this.importance = importance;
-	this.size = importance * 2;
-	this.time = time;
-	this.x = parseInt(time);
-	this.y = 200;
 	this.Uuid = id;
+	this.paper;
+	this.title;
+	this.type;
+	this.url;
+	this.blog;
+	this.importance;
+	this.size;
+	this.time;
+	this.x;
+	this.y;
 	this.image_source = "graphics/Newpost.JPG"	//to be individualized...
 
-	this.to = this.get_links_to_here();
-	this.from = this.get_links_from_here();
+	this.to;
+	this.from;
 
 	this.color;
-	if (this.type == 'Facebook'){
-		this.color = 'steelblue';
-	}
-	else if (this.type == 'Twitter'){
-		this.color = 'purple';
-	}
-	else if (this.type == 'News'){
-		this.color = 'orange';
-	}
-	else{
-		this.color = 'grey';
-	}
 
-	this.label = this.draw_label();
-	this.label.hide();
-	this.preview_image = this.show_preview();
-	this.preview_image.hide();
-	this.circle = this.draw_circle();
+	this.label;
+	this.preview_image;
+	this.circle;
 	this.links;
 }
 
@@ -74,6 +60,7 @@ Post.prototype.draw_links = function (){
 	var end;
 	var start = this;
 	for (var i = 0; i < from_links.length; ++i){
+		id = from_links[i];
 		end = this.paper.getById(from_links[i]);
 		if (end != null){
 			var xdiff = start.x - parseInt(end.attr("cx"));	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
@@ -88,9 +75,11 @@ Post.prototype.draw_links = function (){
 
 			var arrow = this.paper.path ("M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy);
 
+			var color = end.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
 			arrow.attr({
+				'stroke': color,
 				'arrow-end': 'classic-wide-long',
-				'stroke': String(start.color),
+				'arrow-end': 'green',
 				'stroke-width': 1.5,
 			})
 		}
@@ -138,7 +127,7 @@ Post.prototype.draw_circle = function (){
 
 	circle.glow({
 		width: '7',
-		fill: 'true',
+		fill: 'false',
 		color: String(this.color),
 	});
 
@@ -147,7 +136,6 @@ Post.prototype.draw_circle = function (){
 
 Post.prototype.draw_label = function (){
 	// var text = this.title + "\n" + this.blog + "\n" + this.url;
-
 	this.paper.setStart();
 
 	var box = this.paper.rect(this.x - 10, 5, 250, 100, 2);
@@ -225,16 +213,43 @@ $(function() {
 	links = JSON.parse(links_example);
 
 	for (var i = 0; i < posts.length; ++i) {
-		var post = new Post(
-							posts[i].Uuid,
-							paper,
-							posts[i].title,
-							posts[i].type,
-							posts[i].url,
-							posts[i].blogtitle,
-							posts[i].score,
-							posts[i].postlastupdate
-						);
+		var post = new Post(posts[i].Uuid);
+		// var post = new Post(posts[i].Uuid);
+
+		post.paper = paper;
+		post.title = posts[i].title;
+		post.type = posts[i].type;
+		post.url = posts[i].url;
+		post.blog = posts[i].blogtitle;
+		post.importance = posts[i].score;
+		post.size = post.importance * 2;
+		post.time = posts[i].postlastupdate;
+		post.x = parseInt(post.time);
+		post.y = 200;
+
+
+		if (post.type == 'Facebook'){
+			post.color = 'steelblue';
+		}
+		else if (post.type == 'Twitter'){
+			post.color = 'purple';
+		}
+		else if (post.type == 'News'){
+			post.color = 'orange';
+		}
+		else{
+			post.color = 'grey';
+		}
+
+		post.label = post.draw_label();
+		post.label.hide();
+		post.preview_image = post.show_preview();
+		post.preview_image.hide();
+		post.circle = post.draw_circle();
+
+		post.to = post.get_links_to_here();
+		post.from = post.get_links_from_here();
+
 		arr.push(post);
 	};
 
