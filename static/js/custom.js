@@ -77,7 +77,7 @@ Post.prototype.draw_links = function (){
 		end = this.paper.getById(from_links[i]);
 		if (end != null){
 			var xdiff = start.x - parseInt(end.attr("cx"));	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
-			var starty = start.y + start.size / 2.0;
+			var starty = start.y + start.size;
 			var endy = parseInt(end.attr("cy")) + parseInt(end.attr("r"));
 
 			var xx = start.x - xdiff * 0.25;
@@ -105,7 +105,7 @@ Post.prototype.draw_links = function (){
 			var xdiff = parseInt(start.attr("cx")) - end.x;	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
 			var starty = parseInt(start.attr("cy")) - parseInt(start.attr("r"))
-			var endy = end.y - end.size / 2.0;
+			var endy = end.y - end.size;
 
 			var xx = parseInt(start.attr("cx")) - xdiff * 0.25;
 			var xy = starty - xdiff * 0.2;
@@ -137,7 +137,7 @@ Post.prototype.draw_circle = function (){
 	});
 
 	circle.glow({
-		width: '10',
+		width: '7',
 		fill: 'true',
 		color: String(this.color),
 	});
