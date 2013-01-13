@@ -1,7 +1,6 @@
 import os
 from flask import Flask
 from app.controllers.applicationController import index
-from app.controllers.postController import post
 
 app = Flask(__name__, template_folder="app/templates/")
 app.debug = True
@@ -34,7 +33,6 @@ def init_db():
     ##return response
 
 app.register_blueprint(index)
-app.register_blueprint(post)
 
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
