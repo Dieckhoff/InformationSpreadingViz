@@ -12,11 +12,11 @@ $(function() {
 	});
 
 	var posts_example = '[' +
-		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"12" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"50" },' +
-		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postlastupdate":"100" },' +
-		'{ "Uuid":"hallo" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postlastupdate":"150" },' +
-		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"8" , "blogtitle":"buuuh" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"200" },' +
-		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postlastupdate":"250" }' +
+		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"0.0004" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"50" },' +
+		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"0.0007" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postlastupdate":"100" },' +
+		'{ "Uuid":"hallo" , "title":"hallo" , "score":"0.0006" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postlastupdate":"150" },' +
+		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"0.0008" , "blogtitle":"buuuh" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"200" },' +
+		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"0.0009" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postlastupdate":"250" }' +
 	']';
 
 	var links_example = '[' +
@@ -30,8 +30,8 @@ $(function() {
 		'{ "from":"hallo", "to":"jsdf" }' +
 	']';
 
-	var max_importance = parseFloat(60.0651283264);
-	var min_importance = parseFloat(2.6138337727018646E-15);
+	var max_importance = parseFloat(0.0009);
+	var min_importance = parseFloat(0.0004);
 
 	var posts = JSON.parse(posts_example);
 	links = JSON.parse(links_example);
@@ -45,8 +45,8 @@ $(function() {
 		post.url = posts[i].url;
 		post.blog = posts[i].blogtitle;
 
-		post.importance = posts[i].score;
-		post.size = normalize_size(max_importance, min_importance, post.importance) * 200;
+		post.importance = parseFloat(posts[i].score);
+		post.size = normalize_size(max_importance, min_importance, post.importance) * 50;
 		console.log(post.size);
 
 		post.time = posts[i].postlastupdate;
