@@ -12,11 +12,11 @@ $(function() {
 	});
 
 	var posts_example = '[' +
-		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"0.0004" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"50" },' +
-		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"0.0007" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postlastupdate":"100" },' +
-		'{ "Uuid":"hallo" , "title":"hallo" , "score":"0.0006" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postlastupdate":"150" },' +
-		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"0.0008" , "blogtitle":"buuuh" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"200" },' +
-		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"0.0009" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postlastupdate":"250" }' +
+		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"0.0004" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"1603798471000" },' +
+		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"0.0007" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postlastupdate":"1094755997000" },' +
+		'{ "Uuid":"hallo" , "title":"hallo" , "score":"0.0006" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postlastupdate":"109475599700" },' +
+		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"0.0008" , "blogtitle":"buuuh" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"1094755993000" },' +
+		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"0.0009" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postlastupdate":"1004755997000" }' +
 	']';
 
 	var links_example = '[' +
@@ -32,6 +32,9 @@ $(function() {
 
 	var max_importance = parseFloat(0.0009);
 	var min_importance = parseFloat(0.0004);
+
+	var max_date = new Date(1603798471000);
+	var min_date = new Date(109475599700);
 
 	var posts = JSON.parse(posts_example);
 	links = JSON.parse(links_example);
@@ -49,10 +52,9 @@ $(function() {
 		post.size = normalize_size(max_importance, min_importance, post.importance) * 50;
 		console.log(post.size);
 
-		post.time = posts[i].postlastupdate;
+		post.time = new Date(posts[i].postlastupdate);
 		post.x = parseInt(post.time);
 		post.y = 200;
-
 
 		if (post.type == 'Facebook'){
 			post.color = 'steelblue';
