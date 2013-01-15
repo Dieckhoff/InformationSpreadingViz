@@ -2,7 +2,7 @@ $(function() {
 	var paper = Raphael('draw', 0, 0);
 	arr = new Array();
 
-	var timeline = paper.path(["M15,200H1000"]);
+	var timeline = paper.path(["M15,200H1200"]);
 	timeline.attr({
 		stroke: 'grey',
 		opacity: .7,
@@ -12,29 +12,28 @@ $(function() {
 	});
 
 	var posts_example = '[' +
-		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"0.0004" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"1603798471000" },' +
-		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"0.0007" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postlastupdate":"1094755997000" },' +
-		'{ "Uuid":"hallo" , "title":"hallo" , "score":"0.0006" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postlastupdate":"109475599700" },' +
+		'{ "Uuid":"hallo" , "title":"hallo" , "score":"0.0006" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postlastupdate":"1003755997000" },' +
+		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"0.0009" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postlastupdate":"1004755997000" },' +
 		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"0.0008" , "blogtitle":"buuuh" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"1094755993000" },' +
-		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"0.0009" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postlastupdate":"1004755997000" }' +
+		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"0.0007" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postlastupdate":"1094755997000" },' +
+		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"0.0004" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"1603798471000" }' +
 	']';
 
 	var links_example = '[' +
-		'{ "from":"hallo", "to":"jsdf" },' +
-		'{ "from":"Qwertz", "to":"q" },' +
-		'{ "from":"x", "to":"q" },' +
-		'{ "from":"x", "to":"jsdf" },' +
-		'{ "from":"x", "to":"Qwertz" },' +
-		'{ "from":"hallo", "to":"q" },' +
-		'{ "from":"x", "to":"hallo" },' +
-		'{ "from":"hallo", "to":"jsdf" }' +
+		'{ "from":"jsdf", "to":"hallo" },' +
+		'{ "from":"q", "to":"Quertz" },' +
+		'{ "from":"q", "to":"x" },' +
+		'{ "from":"jsdf", "to":"x" },' +
+		'{ "from":"Quertz", "to":"x" },' +
+		'{ "from":"q", "to":"hallo" },' +
+		'{ "from":"jsdf", "to":"Quertz" }' +
 	']';
 
 	var max_importance = parseFloat(0.0009);
 	var min_importance = parseFloat(0.0004);
 
 	var max_date = 1603798471000;
-	var min_date = 109475599700;
+	var min_date = 1003755997000;
 
 	var posts = JSON.parse(posts_example);
 	links = JSON.parse(links_example);
@@ -49,11 +48,14 @@ $(function() {
 		post.blog = posts[i].blogtitle;
 
 		post.importance = parseFloat(posts[i].score);
-		post.size = normalize_size(max_importance, min_importance, post.importance) * 50;
-		console.log(post.size);
+		post.size = normalize_size(max_importance, min_importance, post.importance);
 
-		post.time = new Date(posts[i].postlastupdate);
-		post.x = calculate_position(min_date, max_date, post.time);
+		post.time = new Date(parseInt(posts[i].postlastupdate));
+		post.x = calculate_position(max_date, min_date, posts[i].postlastupdate);
+		console.log(posts[i].postlastupdate);
+		console.log(post.time);
+		console.log(post.x);
+		console.log(post.size);
 		post.y = 200;
 
 		if (post.type == 'Facebook'){
@@ -112,11 +114,12 @@ $(function() {
 
 
 	function normalize_size(max, min, score){
-		return ( (score - min) * ( 1 / (max - min) ) )
+		return ( (score - min) * ( (70 - 20) / (max - min) ) + 20 );
 	}
 
-	function calculate_position(min, max, time){
-		return ( (time - min) * (1000))
+	function calculate_position(max, min, time){
+		var result = ( (time - min) * ((1000 - 30) / (max - min)) + 30 );
+		return parseInt(result);
 	}
 
 	// function simulateClick() {
