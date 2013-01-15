@@ -14,7 +14,8 @@ body {
 
 /** Structure **/
 #wrap {
-	width: 100 auto;
+	width: auto;
+	padding: auto;
 	margin: auto;
 }
 
