@@ -20,7 +20,6 @@ $(function() {
 	']';
 
 	var links_example = '[' +
-		'{ "from":"hallo", "to":"jsdf" },' +
 		'{ "from":"Qwertz", "to":"q" },' +
 		'{ "from":"x", "to":"q" },' +
 		'{ "from":"x", "to":"jsdf" },' +

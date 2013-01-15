@@ -60,8 +60,10 @@ Post.prototype.draw_links = function (){
 		end = this.paper.getById(from_links[i]);
 		if (end != null){
 			var xdiff = start.x - parseInt(end.attr("cx"));	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
+
 			var starty = start.y + start.size;
 			var endy = parseInt(end.attr("cy")) + parseInt(end.attr("r"));
+			var endx = end.attr("cx");
 
 			var xx = start.x - xdiff * 0.25;
 			var xy = starty + xdiff * 0.2;
@@ -73,21 +75,27 @@ Post.prototype.draw_links = function (){
 			arrow.animate({path:"M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy},300, "easeOut")
 			
 			var color = end.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
+
+			console.log(color);
 			arrow.attr({
 				'stroke': color,
-				'arrow-end': 'classic-wide-long',
-				'arrow-end': 'green',
 				'stroke-width': 1.5,
 			})
+
+			var arrowSet1 = this.paper.arrowSet(endx-8,endy-2,endx-1, endy-1,4);
+			arrowSet1[0].attr({ "fill" : arrow.attr("stroke"), "stroke-width" : "0" });
 		}
 	}
 
 // to here
 	end = this;
 	var start;
+	var pathId; 
 	for (var i = 0; i < to_links.length; ++i){
 		start = this.paper.getById(to_links[i]);
+
 		if (start != null){
+
 			var xdiff = parseInt(start.attr("cx")) - end.x;	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
 			var starty = parseInt(start.attr("cy")) - parseInt(start.attr("r"))
@@ -100,11 +108,31 @@ Post.prototype.draw_links = function (){
 			var yy = endy - xdiff * 0.2;
 
 			var path = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty);
-			path.animate({path:"M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy},300,"easeOut")
+
+			var endx_1 = end.x -2;
+			var endx5 = end.x -1;
+
+			var endy10 = endy -2;
+			var endy_1 = endy -1;
+			var endy5 = endy -1;
+			var endy_5 = endy +1;
+
+
+
+			
+
+
+
+			path.animate({path:"M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy},100,"easeOut");
+			var color = String(end.color) ;
+
+			var arrowSet = this.paper.arrowSet(end.x-20,endy-5,end.x-1 , endy-1,3);
+			arrowSet[0].attr({ "fill" : color, "stroke-width" : "0" });
+
+
 			path.attr({
-				'arrow-end': 'classic-wide-long',
-				'stroke': String(end.color),
-				'stroke-width': 1.5,
+				'stroke': color,
+				'stroke-width': 1.0,
 			})
 		}
 	}
