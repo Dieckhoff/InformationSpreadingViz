@@ -73,7 +73,7 @@ Post.prototype.draw_links = function (){
 
 			var arrow = this.paper.path ("M" + start.x + " " + starty);
 			arrow.animate({path:"M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy},300, "easeOut")
-			
+
 			var color = end.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
 
 			console.log(color);

@@ -12,22 +12,30 @@ $(function() {
 	});
 
 	var posts_example = '[' +
-		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"12" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"50" },' +
-		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"7" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postlastupdate":"100" },' +
-		'{ "Uuid":"hallo" , "title":"hallo" , "score":"6" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postlastupdate":"150" },' +
-		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"8" , "blogtitle":"buuuh" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"200" },' +
-		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"9" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postlastupdate":"250" }' +
+		'{ "Uuid":"hallo" , "title":"hallo" , "score":"0.0006" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postpubdate":"1003755997000" },' +
+		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"0.0009" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postpubdate":"1070755997000" },' +
+		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"0.0008" , "blogtitle":"buuuh" , "url":"www.df.de/blog" , "type":"Facebook" , "postpubdate":"1094755993000" },' +
+		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"0.0007" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postpubdate":"1304756997000" },' +
+		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"0.0004" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postpubdate":"1603798471000" }' +
 	']';
 
 	var links_example = '[' +
-		'{ "from":"Qwertz", "to":"q" },' +
-		'{ "from":"x", "to":"q" },' +
-		'{ "from":"x", "to":"jsdf" },' +
-		'{ "from":"x", "to":"Qwertz" },' +
-		'{ "from":"hallo", "to":"q" },' +
-		'{ "from":"x", "to":"hallo" },' +
-		'{ "from":"hallo", "to":"jsdf" }' +
+		'{ "from":"jsdf", "to":"hallo" },' +
+		'{ "from":"q", "to":"Quertz" },' +
+		'{ "from":"q", "to":"x" },' +
+		'{ "from":"jsdf", "to":"x" },' +
+		'{ "from":"Quertz", "to":"x" },' +
+		'{ "from":"q", "to":"hallo" },' +
+		'{ "from":"jsdf", "to":"Quertz" }' +
 	']';
+
+	var max_importance = parseFloat(0.0009);
+	var min_importance = parseFloat(0.0004);
+
+	var max_date = 1603798471000;
+	var min_date = 1003755997000;
+	var max_date_diff = 600000001000;
+	var min_date_diff = 1094755994000;
 
 	var posts = JSON.parse(posts_example);
 	links = JSON.parse(links_example);
@@ -41,10 +49,12 @@ $(function() {
 		post.type = posts[i].type;
 		post.url = posts[i].url;
 		post.blog = posts[i].blogtitle;
-		post.importance = posts[i].score;
-		post.size = post.importance * 2;
-		post.time = posts[i].postlastupdate;
-		post.x = parseInt(post.time);
+
+		post.importance = parseFloat(posts[i].score);
+		post.size = normalize_size(max_importance, min_importance, post.importance);
+
+		post.time = new Date(parseInt(posts[i].postpubdate));
+		post.x = normalize_position(max_date, min_date, posts[i].postpubdate);
 		post.y = 200;
 
 
@@ -101,6 +111,22 @@ $(function() {
 				arr[i].links.hide();
 		}
 	};
+
+
+	function normalize_size(max, min, score){
+		return ( (score - min) * ( (50 - 20) / (max - min) ) + 20 );
+	}
+
+	function normalize_position(max, min, time){
+		var result = ( (time - min) * ((1000 - 30) / (max - min)) + 30 );
+		return parseInt(result);
+	}
+
+	function calculate_position(max_pos_diff, min_pos_diff, current_pos){
+		if ((max_pos_diff < 20) && (max_pos_diff > 300)){
+		}
+		else return current_pos;
+	}
 
 	// function simulateClick() {
 	// 	var evt = document.createEvent("MouseEvents");

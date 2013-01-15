@@ -2,7 +2,7 @@
  *	@url			http://jream.com/lab
  *	@license		Public Domain
  */
- 
+
 @import 'reset.css';
 @import 'misc.css';
 
@@ -14,8 +14,9 @@ body {
 
 /** Structure **/
 #wrap {
-	width: 980px;
-	margin: 20px auto;
+	width: auto;
+	padding: auto;
+	margin: auto;
 }
 
 #header {
@@ -25,7 +26,7 @@ body {
 
 #content {
 	padding: 10px;
-	min-height: 200px;
+	min-height: 400px;
 }
 
 #footer {
@@ -88,12 +89,12 @@ table tr td {
 form {}
 form br {clear: left;}
 
-form label { 
+form label {
 	display: block;
-	float: left; 
-	width: 100px; 
+	float: left;
+	width: 100px;
 	margin: 9px 0 0;
-	text-align: right; 
+	text-align: right;
 }
 
 form input, form select {
