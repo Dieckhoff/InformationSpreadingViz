@@ -2,7 +2,7 @@
  *	@url			http://jream.com/lab
  *	@license		Public Domain
  */
- 
+
 @import 'reset.css';
 @import 'misc.css';
 
@@ -88,12 +88,12 @@ table tr td {
 form {}
 form br {clear: left;}
 
-form label { 
+form label {
 	display: block;
-	float: left; 
-	width: 100px; 
+	float: left;
+	width: 100px;
 	margin: 9px 0 0;
-	text-align: right; 
+	text-align: right;
 }
 
 form input, form select {
