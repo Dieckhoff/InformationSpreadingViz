@@ -7,7 +7,7 @@
 @import 'misc.css';
 
 body {
-	background-image: url("../../graphics/bg_blue.jpg");
+	background-image: url("../graphics/bg_blue.jpg");
 	font: 16px Helvetica Neue, Arial, Helvetica, sans-serif;
 	line-height: 140%;
 }
