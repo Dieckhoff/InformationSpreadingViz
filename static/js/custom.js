@@ -30,20 +30,25 @@ $(function() {
 		'{ "from":"hallo", "to":"jsdf" }' +
 	']';
 
+	var max_importance = parseFloat(60.0651283264);
+	var min_importance = parseFloat(2.6138337727018646E-15);
+
 	var posts = JSON.parse(posts_example);
 	links = JSON.parse(links_example);
 
 	for (var i = 0; i < posts.length; ++i) {
 		var post = new Post(posts[i].Uuid);
-		// var post = new Post(posts[i].Uuid);
 
 		post.paper = paper;
 		post.title = posts[i].title;
 		post.type = posts[i].type;
 		post.url = posts[i].url;
 		post.blog = posts[i].blogtitle;
+
 		post.importance = posts[i].score;
-		post.size = post.importance * 2;
+		post.size = normalize_size(max_importance, min_importance, post.importance) * 200;
+		console.log(post.size);
+
 		post.time = posts[i].postlastupdate;
 		post.x = parseInt(post.time);
 		post.y = 200;
@@ -102,6 +107,11 @@ $(function() {
 				arr[i].links.hide();
 		}
 	};
+
+
+	function normalize_size(max, min, score){
+		return (score - min) * ( 1 / (max - min) )
+	}
 
 	// function simulateClick() {
 	// 	var evt = document.createEvent("MouseEvents");
