@@ -12,11 +12,11 @@ $(function() {
 	});
 
 	var posts_example = '[' +
-		'{ "Uuid":"hallo" , "title":"hallo" , "score":"0.0006" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postlastupdate":"1003755997000" },' +
-		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"0.0009" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postlastupdate":"1004755997000" },' +
-		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"0.0008" , "blogtitle":"buuuh" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"1094755993000" },' +
-		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"0.0007" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postlastupdate":"1094755997000" },' +
-		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"0.0004" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postlastupdate":"1603798471000" }' +
+		'{ "Uuid":"hallo" , "title":"hallo" , "score":"0.0006" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postpubdate":"1003755997000" },' +
+		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"0.0009" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postpubdate":"1070755997000" },' +
+		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"0.0008" , "blogtitle":"buuuh" , "url":"www.df.de/blog" , "type":"Facebook" , "postpubdate":"1094755993000" },' +
+		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"0.0007" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postpubdate":"1304756997000" },' +
+		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"0.0004" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postpubdate":"1603798471000" }' +
 	']';
 
 	var links_example = '[' +
@@ -34,6 +34,8 @@ $(function() {
 
 	var max_date = 1603798471000;
 	var min_date = 1003755997000;
+	var max_date_diff = 600000001000;
+	var min_date_diff = 1094755994000;
 
 	var posts = JSON.parse(posts_example);
 	links = JSON.parse(links_example);
@@ -50,12 +52,8 @@ $(function() {
 		post.importance = parseFloat(posts[i].score);
 		post.size = normalize_size(max_importance, min_importance, post.importance);
 
-		post.time = new Date(parseInt(posts[i].postlastupdate));
-		post.x = calculate_position(max_date, min_date, posts[i].postlastupdate);
-		console.log(posts[i].postlastupdate);
-		console.log(post.time);
-		console.log(post.x);
-		console.log(post.size);
+		post.time = new Date(parseInt(posts[i].postpubdate));
+		post.x = normalize_position(max_date, min_date, posts[i].postpubdate);
 		post.y = 200;
 
 		if (post.type == 'Facebook'){
@@ -114,12 +112,18 @@ $(function() {
 
 
 	function normalize_size(max, min, score){
-		return ( (score - min) * ( (70 - 20) / (max - min) ) + 20 );
+		return ( (score - min) * ( (50 - 20) / (max - min) ) + 20 );
 	}
 
-	function calculate_position(max, min, time){
+	function normalize_position(max, min, time){
 		var result = ( (time - min) * ((1000 - 30) / (max - min)) + 30 );
 		return parseInt(result);
+	}
+
+	function calculate_position(max_pos_diff, min_pos_diff, current_pos){
+		if ((max_pos_diff < 20) && (max_pos_diff > 300)){
+		}
+		else return current_pos;
 	}
 
 	// function simulateClick() {
