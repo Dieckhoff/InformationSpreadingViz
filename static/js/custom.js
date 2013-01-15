@@ -1,5 +1,4 @@
 function Post(id){
-
 	this.Uuid = id;
 	this.paper;
 	this.title;
@@ -11,14 +10,10 @@ function Post(id){
 	this.time;
 	this.x;
 	this.y;
-
 	this.image_source = "static/graphics/Newpost.JPG"	//to be individualized...
-
 	this.to;
 	this.from;
-
 	this.color;
-
 	this.label;
 	this.preview_image;
 	this.circle;
