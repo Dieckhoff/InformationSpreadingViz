@@ -14,8 +14,8 @@ body {
 
 /** Structure **/
 #wrap {
-	width: 980px;
-	margin: 20px auto;
+	width: 100 auto;
+	margin: auto;
 }
 
 #header {
@@ -25,7 +25,7 @@ body {
 
 #content {
 	padding: 10px;
-	min-height: 200px;
+	min-height: 400px;
 }
 
 #footer {

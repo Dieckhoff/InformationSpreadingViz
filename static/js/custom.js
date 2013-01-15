@@ -2,7 +2,7 @@ $(function() {
 	var paper = Raphael('draw', 0, 0);
 	arr = new Array();
 
-	var timeline = paper.path(["M15,200H500"]);
+	var timeline = paper.path(["M15,200H1000"]);
 	timeline.attr({
 		stroke: 'grey',
 		opacity: .7,
@@ -33,8 +33,8 @@ $(function() {
 	var max_importance = parseFloat(0.0009);
 	var min_importance = parseFloat(0.0004);
 
-	var max_date = new Date(1603798471000);
-	var min_date = new Date(109475599700);
+	var max_date = 1603798471000;
+	var min_date = 109475599700;
 
 	var posts = JSON.parse(posts_example);
 	links = JSON.parse(links_example);
@@ -53,7 +53,7 @@ $(function() {
 		console.log(post.size);
 
 		post.time = new Date(posts[i].postlastupdate);
-		post.x = parseInt(post.time);
+		post.x = calculate_position(min_date, max_date, post.time);
 		post.y = 200;
 
 		if (post.type == 'Facebook'){
@@ -112,7 +112,11 @@ $(function() {
 
 
 	function normalize_size(max, min, score){
-		return (score - min) * ( 1 / (max - min) )
+		return ( (score - min) * ( 1 / (max - min) ) )
+	}
+
+	function calculate_position(min, max, time){
+		return ( (time - min) * (1000))
 	}
 
 	// function simulateClick() {
