@@ -74,8 +74,9 @@ Post.prototype.draw_links = function (){
 			var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
 			var yy = endy + xdiff * 0.2;
 
-			var arrow = this.paper.path ("M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy);
-
+			var arrow = this.paper.path ("M" + start.x + " " + starty);
+			arrow.animate({path:"M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy},300, "easeOut")
+			
 			var color = end.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
 			arrow.attr({
 				'stroke': color,
@@ -103,8 +104,8 @@ Post.prototype.draw_links = function (){
 			var yx = end.x + xdiff * 0.25;
 			var yy = endy - xdiff * 0.2;
 
-			var path = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy);
-
+			var path = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty);
+			path.animate({path:"M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy},300,"easeOut")
 			path.attr({
 				'arrow-end': 'classic-wide-long',
 				'stroke': String(end.color),
