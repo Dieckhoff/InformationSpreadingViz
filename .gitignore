@@ -37,3 +37,15 @@ nosetests.xml
 venv
 *.pyc
 *.*~
+
+# Java and Eclipse Stuff
+.classpath
+.project
+.metadata
+.settings/
+/build/*
+*.tmp
+*.bak
+*.swp
+/WebContent/WEB-INF/lib/*
+
