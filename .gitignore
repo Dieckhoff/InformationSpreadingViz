@@ -47,5 +47,5 @@ venv
 *.tmp
 *.bak
 *.swp
-/WebContent/WEB-INF/lib/*
+/WebContent/WEB-INF/config.properties
 
