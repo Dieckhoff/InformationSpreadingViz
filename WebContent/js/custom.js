@@ -1,5 +1,5 @@
 $(function() {
-	var paper = Raphael('draw', 0, 0);
+	var paper = Raphael('draw',0,0);
 	arr = new Array();
 
 	var timeline = paper.path(["M15,200H500"]);
@@ -13,7 +13,7 @@ $(function() {
 
 	var posts_example = '[' +
 		'{ "Uuid":"hallo" , "title":"hallo" , "score":"0.0006" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postpubdate":"1003755997000" },' +
-		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"0.0009" , "blogtitle":"Some Blog" , "url":"www.df.de/blog" , "type":"blabla" , "postpubdate":"1070755997000" },' +
+		'{ "Uuid":"x" ,"title":"Qwertz" , "score":"0.0009" , "blogtitle":"Some Blog" , "url":"www.dfztig.de/bloghohioho" , "type":"blabla" , "postpubdate":"1070755997000" },' +
 		'{ "Uuid":"Qwertz" ,"title":"Qwertz" , "score":"0.0008" , "blogtitle":"buuuh" , "url":"www.df.de/blog" , "type":"Facebook" , "postpubdate":"1094755993000" },' +
 		'{ "Uuid":"jsdf", "title":"jsdf" , "score":"0.0007" , "blogtitle":"Ooohh" , "url":"www.df.de/blog" , "type":"Twitter" , "postpubdate":"1304756997000" },' +
 		'{ "Uuid":"q" ,"title":"Qwertz" , "score":"0.0004" , "blogtitle":"boooaaahhh!!!" , "url":"www.df.de/blog" , "type":"Facebook" , "postpubdate":"1603798471000" }' +
