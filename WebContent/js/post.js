@@ -21,7 +21,7 @@ function Post(id){
 }
 
 Post.prototype.show_preview = function(){
-	image = this.paper.image(this.image_source, this.x + 5, 7, 80, 80);
+	image = this.paper.image(this.image_source, this.x + 5, this.y - 185 , 80, 80);
 	return(image);
 }
 
@@ -82,7 +82,7 @@ Post.prototype.draw_links = function (){
 				'stroke-width': 1.5,
 			})
 
-			var arrowSet1 = this.paper.arrowSet(endx-8,endy-2,endx-1, endy-1,4);
+			var arrowSet1 = this.paper.arrowSet(endx-8,endy-2,endx-3, endy-1,4);
 			arrowSet1[0].attr({ "fill" : arrow.attr("stroke"), "stroke-width" : "0" });
 		}
 	}
@@ -151,9 +151,10 @@ Post.prototype.draw_circle = function (){
 	});
 
 	circle.glow({
-		width: '7',
+		width: '1',
 		fill: 'false',
 		color: String(this.color),
+		opacity: '0.5',
 	});
 
 	return(circle);
@@ -163,40 +164,54 @@ Post.prototype.draw_label = function (){
 	// var text = this.title + "\n" + this.blog + "\n" + this.url;
 	this.paper.setStart();
 
-	var box = this.paper.rect(this.x - 10, 5, 250, 100, 2);
+	var fontsize = 16;
+
+	var box = this.paper.rect(this.x - 15, 5, 250, 100, 5);
 	box.attr({
-		fill: 'lightgrey',
-		opacity: .7,
-		stroke: 'grey',
+		fill: '#F1F1F1',
+		opacity: 2,
+		stroke: 'none',
 	});
 
-	var title = this.paper.text(this.x + 100, 20, this.title);
+	console.log(box);
+
+	var title = this.paper.text(this.x + 100, this.y - 170, this.title);
 	title.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
 		'text-anchor': 'start',
-		fill: 'steelblue',
+		fill: 'black',
 		'font-size': 24,
 	});
 
-	var blog = this.paper.text(this.x + 115, 42, this.blog);
+	var blog = this.paper.text(this.x + 108, this.y - 150, this.blog);
 	blog.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
 		'text-anchor': 'start',
-		fill: 'black',
+		fill: '#ABA8A8',
 		'font-size': 16,
 	});
+		var newurl; 
+		var bwidth = box.getBBox().width +18;
 
-	var url = this.paper.text(this.x + 115, 60, this.url);
-	url.attr({
-		"font-family": "Arial, Helvetica, sans-serif",
-		origin: 'baseline',
-		'text-anchor': 'start',
-		fill: 'black',
-		'font-size': 16,
-		href: this.url,
-	});
+		if(this.url.length * fontsize  > bwidth)
+		{
+			var charsToCutOff = (this.url.length*fontsize -3 - bwidth) / fontsize + 3;
+			newurl = this.url.substring(0, this.url.length - charsToCutOff) + "...";
+			var url = this.paper.text(this.x + 108 , this.y - 135, newurl);
+		}else{
+			var url = this.paper.text(this.x + 108 , this.y - 135, this.url);
+		}	
+
+		url.attr({
+			"font-family": "Arial, Helvetica, sans-serif",
+			origin: 'baseline',
+			'text-anchor': 'start',
+			fill: '#ABA8A8',
+			'font-size': fontsize,
+			href: this.url,
+		});
 
 	var label = this.paper.setFinish();
 	return(label);
