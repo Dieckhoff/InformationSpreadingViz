@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.servlet.ServletConfig;
@@ -24,7 +25,9 @@ import com.google.gson.Gson;
 public class InformationSpreadingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	DBConnection conn = null;
-	private PreparedStatement stmt;
+	private PreparedStatement toUrlStmt;
+	private PreparedStatement fromUrlStmt;
+	private PreparedStatement scoreStmt;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -42,55 +45,161 @@ public class InformationSpreadingServlet extends HttpServlet {
 		}		
 		
 		try {
-			stmt = conn.getCon()
-					.prepareStatement("SELECT fromurl, tourl FROM SYSTEM.LINK WHERE tohost = ?");
+			toUrlStmt = conn.getCon()
+					.prepareStatement("SELECT TOP 20 ID, SCORE FROM (SELECT TOURL FROM SYSTEM.LINK WHERE FROMURL = ? ) AS A JOIN WEBPAGE ON A.TOURL = WEBPAGE.ID WHERE SCORE IS NOT NULL ORDER BY SCORE DESC");
+			fromUrlStmt = conn.getCon()
+					.prepareStatement("SELECT TOP 20 ID, SCORE FROM (SELECT FROMURL FROM SYSTEM.LINK WHERE TOURL = ? ) AS A JOIN WEBPAGE ON A.FROMURL = WEBPAGE.ID WHERE SCORE IS NOT NULL ORDER BY SCORE DESC");
+			scoreStmt = conn.getCon()
+					.prepareStatement("SELECT SCORE FROM SYSTEM.WEBPAGE WHERE ID = ?");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
-	public void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+//	public void doGet(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//
+//		try {
+//			String param = request.getParameter("tohost");
+//			String tohost = "";
+//			if (param != null) {
+//				tohost = URLDecoder.decode(param);
+//			}
+//
+////		byte[] csv = conn.getHeatMapAsTSV(keywords).getBytes();
+//			
+//			
+//			stmt.setString(1, tohost);
+//			ResultSet executeQuery = stmt.executeQuery();
+//			ArrayList<Link> list = new ArrayList<Link>();
+//			while(executeQuery.next()){
+//				String fromurl = executeQuery.getString(1);
+//				String tourl = executeQuery.getString(2);
+//				Link link = new Link(tourl, fromurl);
+//				list.add(link);			
+//			}
+//			
+//			Gson gson = new Gson();
+//			String json = gson.toJson(list);
+//			response.setContentType("text/json");
+//			response.addHeader("Access-Control-Allow-Origin", "*");
+//			response.getWriter().print(json);
+//		} catch (SQLException e) {
+//			e.printStackTrace(response.getWriter());
+//		}
+		
+		
+		public void doGet(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
 
-		try {
-			String param = request.getParameter("tohost");
-			String tohost = "";
+			String param = request.getParameter("id");
+			String id = "";
 			if (param != null) {
-				tohost = URLDecoder.decode(param);
+				id = URLDecoder.decode(param, "UTF-8");
+			}	
+			
+			String outputJson = "";
+			
+			//id = "de.zeit.www:http/digital/datenschutz/2012-11/google-transparency-report-2012";
+			InputJsonContainer inputContainer = fetchPostDataFromBlogIntelligenceServer(id);
+			
+			if(inputContainer.isResult()) {
+				
+				Float score = null;
+				ArrayList<String> outgoingLinks = null;
+				ArrayList<String> incomingLinks = null;
+				try {
+					score = fetchScoreFromDB(id);
+					outgoingLinks = fetchOutgoingLinksFromDB(id);
+					incomingLinks = fetchIncomingLinksFromDB(id);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}	
+				
+				inputContainer.getPost().setId(id);				
+				inputContainer.getPost().setScore(score);
+				inputContainer.getPost().setOutgoingLinks(outgoingLinks);
+				inputContainer.getPost().setIncomingLinks(incomingLinks);
+				
+				OutputJsonContainer outputContainer = new OutputJsonContainer();
+				ArrayList<Post> posts = new ArrayList<Post>();
+				posts.add(inputContainer.getPost());
+				outputContainer.setPosts(posts);
+				
+				outputJson = new Gson().toJson(outputContainer);
+			}
+			else {
+				outputJson = new Gson().toJson(inputContainer); 
 			}
 
-//		byte[] csv = conn.getHeatMapAsTSV(keywords).getBytes();
-			
-			
-			stmt.setString(1, tohost);
-			ResultSet executeQuery = stmt.executeQuery();
-			ArrayList<Link> list = new ArrayList<Link>();
-			while(executeQuery.next()){
-				String fromurl = executeQuery.getString(1);
-				String tourl = executeQuery.getString(2);
-				Link link = new Link(tourl, fromurl);
-				list.add(link);			
-			}
-			
-			Gson gson = new Gson();
-			String json = gson.toJson(list);
 			response.setContentType("text/json");
 			response.addHeader("Access-Control-Allow-Origin", "*");
-			response.getWriter().print(json);
-		} catch (SQLException e) {
-			e.printStackTrace(response.getWriter());
-		}
-		
-		
-		
-		
-
-		
+			response.getWriter().print(outputJson);		
 		
 
 	
 	}
+		
+	private InputJsonContainer fetchPostDataFromBlogIntelligenceServer(String id) {
+		
+		String link = "http://blog-intelligence.com:8080/bi_small/hc?type=post&id=" + id;
+		
+		String result = StaticHelpers.getContentFromUrl(link);			
+	
+		InputJsonContainer inputContainer = new Gson().fromJson(result, InputJsonContainer.class);
+	
+		return inputContainer;			
+	}
+	
+	private Float fetchScoreFromDB(String id) throws SQLException {
+		
+		String score = "";
+		
+		scoreStmt.setString(1, id);
+		ResultSet executeQuery = scoreStmt.executeQuery();
+		
+		while(executeQuery.next()){
+			score = executeQuery.getString(1);
+					
+		}
+		
+		if (score == null) return (float) 0;
+		else return Float.parseFloat(score);
+		
+	}
+	
+	private ArrayList<String> fetchOutgoingLinksFromDB(String id) throws SQLException {
+		
+		ArrayList<String> outgoingLinks = new ArrayList<String>();
+		
+		toUrlStmt.setString(1, id);
+		ResultSet executeQuery2 = toUrlStmt.executeQuery();
+		while(executeQuery2.next()){
+			String target = executeQuery2.getString(1);
+			outgoingLinks.add(target);			
+		}
+		
+		return outgoingLinks;
+	}
+	
+	private ArrayList<String> fetchIncomingLinksFromDB(String id) throws SQLException {
+		
+		ArrayList<String> incomingLinks = new ArrayList<String>();
+		
+		fromUrlStmt.setString(1, id);
+		ResultSet executeQuery3 = fromUrlStmt.executeQuery();
+		while(executeQuery3.next()){
+			String target = executeQuery3.getString(1);
+			incomingLinks.add(target);			
+		}
+		
+		
+		return incomingLinks;		
+		
+	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
