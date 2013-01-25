@@ -25,8 +25,7 @@ $(function() {
 		opacity: 0.5,
 		stroke: 'white'
 	});
-	
-	console.log(b.attr('cx'));
+
 	
 	var cx = c.attr('cx')
 	var cy = c.attr('cy')
