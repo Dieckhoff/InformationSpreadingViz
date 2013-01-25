@@ -1,8 +1,9 @@
 $(function() {
-	var paper = Raphael('draw',0,0);
+	var paper = Raphael('draw',"100%","100%");
 	arr = new Array();
+	
 
-	var timeline = paper.path(["M15,200H500"]);
+	var timeline = paper.path(["M0,200H1275"]);
 	timeline.attr({
 		stroke: 'grey',
 		opacity: .7,
@@ -10,6 +11,8 @@ $(function() {
 		'arrow-end': 'classic-wide-long',
 		'arrow-end': 'grey',
 	});
+	
+paper.setViewBox(0,0,700,700,false);
 
 	var posts_example = '[' +
 		'{ "Uuid":"hallo" , "title":"hallo" , "score":"0.0006" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postpubdate":"1003755997000" },' +
