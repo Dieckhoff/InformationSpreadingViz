@@ -1,9 +1,9 @@
 $(function() {
-	var paper = Raphael('draw',"100%","100%");
+	var paper = Raphael('draw',"500%","500%");
 	arr = new Array();
 	
 
-	var timeline = paper.path(["M0,200H1275"]);
+	timeline = paper.path(["M0,200H1200"]);
 	timeline.attr({
 		stroke: 'grey',
 		opacity: .7,
@@ -11,8 +11,7 @@ $(function() {
 		'arrow-end': 'classic-wide-long',
 		'arrow-end': 'grey',
 	});
-	
-paper.setViewBox(0,0,700,700,false);
+
 
 	var posts_example = '[' +
 		'{ "Uuid":"hallo" , "title":"hallo" , "score":"0.0006" , "blogtitle":"Stern" , "url":"www.stern.de/blog" , "type":"News" , "postpubdate":"1003755997000" },' +
@@ -103,6 +102,15 @@ paper.setViewBox(0,0,700,700,false);
 			post.circle.click(function(){
 				clearAll();
 				post.links = post.draw_links();
+				$.getJSON("http://localhost:8080/InformationSpreadingViz/InformationSpreading?id=" + post.Uuid,
+					function(result){
+						$.each(result, function(i, field){
+						console.log(this[0]);
+						console.log(post.Uuid);
+				    });
+				});
+				
+				
 			})
 		})(post);
 	};
@@ -153,4 +161,34 @@ paper.setViewBox(0,0,700,700,false);
 
 	//paper.setViewBox(0, 0, 300, 150, false);	//good for zooming
 	// simulateClick()
+});
+
+//Event Listener for Zooming in Firefox/Chrome/IE8 and IE9
+$(window).resize(function() {
+	var timelineLength = 1200;
+//	console.log(timeline.getTotalLength());
+	var zoom = detectZoom.zoom();
+	if(zoom > 0.75){
+		timeline.transform("s" + (1.0/zoom) * 3);
+		timelineLength = timelineLength * (1.0/zoom) * 3;
+	}
+	else{
+		timeline.transform("s"+(1.0/zoom) * 1.2);
+		timelineLength = timelineLength * (1.0/zoom) * 1.2;
+	}
+	for (var i = 0; i < arr.length; ++i) {
+//		console.log(arr[i].circle.attr('cx'));
+		//arr[i].circle.transform("s" + (1.0 / zoom));
+		var xcoord = arr[i].circle.attr('cx');
+		if(zoom > 0.75){
+			arr[i].circle.attr({
+				'cx' : xcoord * zoom,
+			});
+		}
+		else{
+			arr[i].circle.attr({
+				'cx' : xcoord * zoom,
+			});
+		}
+	}
 });
