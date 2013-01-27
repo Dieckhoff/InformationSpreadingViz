@@ -76,7 +76,6 @@ Post.prototype.draw_links = function (){
 
 			var color = end.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
 
-//			console.log(color);
 			arrow.attr({
 				'stroke': color,
 				'stroke-width': 1.5,
@@ -172,8 +171,6 @@ Post.prototype.draw_label = function (){
 		opacity: 2,
 		stroke: 'none',
 	});
-
-//	console.log(box);
 
 	var title = this.paper.text(this.x + 100, this.y - 170, this.title);
 	title.attr({
