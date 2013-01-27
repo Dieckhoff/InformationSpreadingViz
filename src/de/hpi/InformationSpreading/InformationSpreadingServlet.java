@@ -102,37 +102,39 @@ public class InformationSpreadingServlet extends HttpServlet {
 			String outputJson = "";
 			
 			//id = "de.zeit.www:http/digital/datenschutz/2012-11/google-transparency-report-2012";
-			InputJsonContainer inputContainer = fetchPostDataFromBlogIntelligenceServer(id);
+			InputJsonContainer inputContainer = null;
+			try {
+				inputContainer = fetchPostDataFromBlogIntelligenceServer(id);
+			} catch (Exception e) {
+				inputContainer = new InputJsonContainer();
+				inputContainer.setResult(false);
+				e.printStackTrace();
+			}
 			
 			if(inputContainer.isResult()) {
 				
-				Float score = null;
-				ArrayList<String> outgoingLinks = null;
-				ArrayList<String> incomingLinks = null;
-				try {
-					score = fetchScoreFromDB(id);
-					outgoingLinks = fetchOutgoingLinksFromDB(id);
-					incomingLinks = fetchIncomingLinksFromDB(id);
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}	
-				
-				inputContainer.getPost().setId(id);				
-				inputContainer.getPost().setScore(score);
-				inputContainer.getPost().setOutgoingLinks(outgoingLinks);
-				inputContainer.getPost().setIncomingLinks(incomingLinks);
-				
 				OutputJsonContainer outputContainer = new OutputJsonContainer();
 				ArrayList<Post> posts = new ArrayList<Post>();
-				posts.add(inputContainer.getPost());
 				outputContainer.setPosts(posts);
 				
-				outputJson = new Gson().toJson(outputContainer);
+				outputContainer.getPosts().add(populateContainerComplete(inputContainer, id).getPost());
+				
+				for (String link : inputContainer.getPost().getIncomingLinks()) {
+					outputContainer.getPosts().add(getPopulatedContainerWithScore(link).getPost());				
+				}
+				
+				for (String link : inputContainer.getPost().getOutgoingLinks()) {
+					outputContainer.getPosts().add(getPopulatedContainerWithScore(link).getPost());				
+				}				
+				
+				outputJson = new Gson().toJson(outputContainer);	
+				
 			}
 			else {
 				outputJson = new Gson().toJson(inputContainer); 
+			
 			}
+
 
 			response.setContentType("text/json");
 			response.addHeader("Access-Control-Allow-Origin", "*");
@@ -142,7 +144,7 @@ public class InformationSpreadingServlet extends HttpServlet {
 	
 	}
 		
-	private InputJsonContainer fetchPostDataFromBlogIntelligenceServer(String id) {
+	private InputJsonContainer fetchPostDataFromBlogIntelligenceServer(String id) throws Exception {
 		
 		String link = "http://blog-intelligence.com:8080/bi_small/hc?type=post&id=" + id;
 		
@@ -151,6 +153,65 @@ public class InformationSpreadingServlet extends HttpServlet {
 		InputJsonContainer inputContainer = new Gson().fromJson(result, InputJsonContainer.class);
 	
 		return inputContainer;			
+	}
+	
+	private InputJsonContainer populateContainerComplete(InputJsonContainer inputContainer, String id) {
+				
+		Float score = null;
+		ArrayList<String> outgoingLinks = null;
+		ArrayList<String> incomingLinks = null;
+		try {
+			score = fetchScoreFromDB(id);
+			outgoingLinks = fetchOutgoingLinksFromDB(id);
+			incomingLinks = fetchIncomingLinksFromDB(id);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+		
+		inputContainer.getPost().setId(id);				
+		inputContainer.getPost().setScore(score);
+		inputContainer.getPost().setOutgoingLinks(outgoingLinks);
+		inputContainer.getPost().setIncomingLinks(incomingLinks);
+		
+		return inputContainer;
+		
+	}
+	
+	private InputJsonContainer getPopulatedContainerWithScore(String id) {
+		
+		InputJsonContainer inputContainer = null;
+		try {
+			inputContainer = fetchPostDataFromBlogIntelligenceServer(id);
+			
+			if(inputContainer.isResult()) {
+			
+			Float score = null;
+			try {
+				score = fetchScoreFromDB(id);
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}	
+			
+			inputContainer.getPost().setId(id);				
+			inputContainer.getPost().setScore(score);
+	
+		}
+		else {
+			
+			inputContainer.setPost(new Post());
+			inputContainer.getPost().setId(id);
+			
+		}
+		} catch (Exception e1) {
+			inputContainer = new InputJsonContainer();
+			inputContainer.setResult(false);
+			
+		}
+
+		return inputContainer;		
 	}
 	
 	private Float fetchScoreFromDB(String id) throws SQLException {
