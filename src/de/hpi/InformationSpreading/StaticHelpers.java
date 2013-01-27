@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class StaticHelpers {
 	
-	public static String getContentFromUrl(String urlString) throws RuntimeException{
+	public static String getContentFromUrl(String urlString) throws Exception {
 		InputStream inputStream = null;
 		String line;
 		StringBuilder httpContent = new StringBuilder();
@@ -29,11 +29,11 @@ public class StaticHelpers {
 				httpContent.append("\n");
 			}
 		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
+			throw e;
 		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
+			throw e;
 		} catch (IOException e) {
-			throw new RuntimeException(e);
+			throw e;
 		} finally {
 			try {
 				inputStream.close();
