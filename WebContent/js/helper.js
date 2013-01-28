@@ -31,8 +31,8 @@ function initialize_posts(initial_post_id){
 	$.getJSON("http://localhost:8080/InformationSpreadingViz/InformationSpreading?id=" + initial_post_id,
 		function(result){
 			$.each(result, function(i, field){
-				initial_post = this[0];
-				posts = this[1];
+				initial_post	= this[0];
+				posts			= this[1];
 				console.log(this[0]);
 				console.log(this[1]);
 			});
@@ -46,7 +46,7 @@ function initialize_posts(initial_post_id){
 	var min_importance	= min_max_values[2];
 	var max_importance	= min_max_values[3];
 	
-	for (var i = 0; i < posts.length; ++i) {
+	for (var i = 0; i < posts.length; ++i) {	// drawing all the mentioned posts (including the initial (clicked) post
 		var post = new Post(posts[i].Uuid);
 
 		post.paper = paper;
@@ -81,13 +81,18 @@ function initialize_posts(initial_post_id){
 		post.preview_image.hide();
 		post.circle = post.draw_circle();
 
-		post.to = initial_post.incomingLinks;
-		post.from = initial_post.outgoingLinks;
+//		post.to = initial_post.incomingLinks;
+//		post.from = initial_post.outgoingLinks;
 
 		arr.push(post);
 	};
-//	
-//	initial_post.links = initial_post.draw_links();		geht so nicht... oben muss der 0. eine sonderbehnadlung bekommen...
+	
+	var clicked = arr[0];
+	
+	clicked.to = initial_post.incomingLinks;
+	clicked.from = initial_post.outgoingLinks;
+	
+	clicked.links = clicked.draw_links();
 }
 
 function initialize_functions(){
@@ -167,8 +172,10 @@ function calculate_position(max_pos_diff, min_pos_diff, current_pos){
 
 function clearAll(){
 	for(var i = 0; i < arr.length; i++) {
-		arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
-		if (arr[i].links != undefined)
-			arr[i].links.hide();
+		delete arr[i].circle;
+		delete arr[i].links;
+//		arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
+//		if (arr[i].links != undefined)
+//			arr[i].links.hide();
 	}
 }
