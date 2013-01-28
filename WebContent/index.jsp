@@ -14,6 +14,7 @@
     <script src="${pageContext.request.contextPath}/js/post.js"></script>
     <script src="${pageContext.request.contextPath}/js/custom.js"></script>
     <script src="${pageContext.request.contextPath}/js/plug_arrows.js"></script>
+    <script src="${pageContext.request.contextPath}/js/detect_zoom.js"></script>
 	</head>
 <body>
 

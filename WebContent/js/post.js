@@ -25,27 +25,27 @@ Post.prototype.show_preview = function(){
 	return(image);
 }
 
-Post.prototype.get_links_from_here = function(){
-	var list = [];
-	for (var i = 0; i < links.length; ++i){
-		var link = links[i];
-		if (link.from == this.Uuid){
-			list.push(link.to);
-		}
-	}
-	return(list);
-}
-
-Post.prototype.get_links_to_here = function(){
-	var list = [];
-	for (var i = 0; i < links.length; ++i){
-		var link = links[i];
-		if (link.to == this.Uuid){
-			list.push(link.from);
-		}
-	}
-	return(list);
-}
+//Post.prototype.get_links_from_here = function(){
+//	var list = [];
+//	for (var i = 0; i < links.length; ++i){
+//		var link = links[i];
+//		if (link.from == this.Uuid){
+//			list.push(link.to);
+//		}
+//	}
+//	return(list);
+//}
+//
+//Post.prototype.get_links_to_here = function(){
+//	var list = [];
+//	for (var i = 0; i < links.length; ++i){
+//		var link = links[i];
+//		if (link.to == this.Uuid){
+//			list.push(link.from);
+//		}
+//	}
+//	return(list);
+//}
 
 Post.prototype.draw_links = function (){
 	this.paper.setStart();
