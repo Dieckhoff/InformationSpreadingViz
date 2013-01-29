@@ -34,7 +34,6 @@ function initialize_posts(initial_post_id){
 		}.bind(this)
 	);
 	
-	
 };
 
 function initialize_post_callback(posts){
@@ -48,13 +47,14 @@ function initialize_post_callback(posts){
 	var max_importance	= min_max_values[3];
 	
 	for (var i = 0; i < posts.length; ++i) {	// drawing all the mentioned posts (including the initial (clicked) post
-		var post = new Post(posts[i].Uuid);
+		var post = new Post(posts[i].id);
 
 		post.paper = paper;
 		post.title = posts[i].title;
 		post.type = posts[i].type;
 		post.url = posts[i].url;
 		post.blog = posts[i].blog;
+		post.image_source = posts[i].image;
 
 		post.importance = parseFloat(posts[i].score);
 		post.size = normalize_size(max_importance, min_importance, post.importance);
@@ -96,9 +96,11 @@ function initialize_post_callback(posts){
 	clicked.from = initial_post.outgoingLinks;
 	
 	clicked.links = clicked.draw_links();
+	
+	initialize_functions(arr);
 }
 
-function initialize_functions(){
+function initialize_functions(arr){
 	for(var i = 0; i < arr.length; i++) {
 		var post = arr[i];
 		(function(post) {
@@ -122,7 +124,7 @@ function initialize_functions(){
 //						console.log(this[0]);
 //				    });
 //				});
-				initialize_post(post.Uuid);
+				initialize_posts(post.Uuid);
 			});
 		})(post);
 	};
