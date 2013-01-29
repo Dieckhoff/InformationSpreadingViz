@@ -38,12 +38,11 @@ function initialize_posts(initial_post_id){
 };
 
 function initialize_post_callback(posts){
-	console.log(posts);
+	
 	var initial_post = posts[0];
 	var min_max_values = get_min_max_values(posts);
 	
 	var min_date		= min_max_values[0];
-	console.log(min_date);
 	var max_date		= min_max_values[1];
 	var min_importance	= min_max_values[2];
 	var max_importance	= min_max_values[3];
@@ -60,9 +59,10 @@ function initialize_post_callback(posts){
 		post.importance = parseFloat(posts[i].score);
 		post.size = normalize_size(max_importance, min_importance, post.importance);
 
-		post.time = new Date(parseInt(posts[i].pubdate));
-		post.x = normalize_position(max_date, min_date, posts[i].pubdate);
-//		console.log(post.x);
+		post.time = new Date(parseInt(posts[i].pubDate));
+
+		post.x = normalize_position(max_date, min_date, parseInt(posts[i].pubDate));
+
 		post.y = 200;
 
 		if (post.type == 'Facebook'){
@@ -129,25 +129,25 @@ function initialize_functions(){
 }
 
 function get_min_max_values(posts){
+
 	var max_importance = 0;
 	var min_importance = parseFloat(posts[0].score);
 
 	var max_date = 0;
-	var min_date = posts[0].pubDate;
-	console.log((new Date(min_date)).getMilliseconds());
-	console.log((new Date(min_date)));
+	var min_date = parseInt(posts[0].pubDate);
+		
 	
-	console.log(posts);
-	for (var i = 0; i < posts.length; ++i){
+	for (var i = 0; i < posts.length; ++i){		
 		post = posts[i];
+
 		if (parseFloat(post.score) > max_importance)
 			max_importance = parseFloat(post.score);
 		if (parseFloat(post.score) < min_importance)
 			min_importance = parseFloat(post.score);
-		if (post.pubDate > max_date)
-			max_date = post.pubDate;
-		if (post.pubDate < min_date)
-			min_date = post.pubDate;
+		if (parseInt(post.pubDate) > max_date)
+			max_date = parseInt(post.pubDate);
+		if (parseInt(post.pubDate) < min_date)
+			min_date = parseInt(post.pubDate);
 	}
 	
 	var min_max_values = [];
