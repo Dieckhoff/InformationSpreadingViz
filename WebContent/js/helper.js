@@ -57,24 +57,19 @@ function initialize_post_callback(posts_JSON){
 		post.preview_image.hide();
 		post.circle = post.draw_circle();
 
-		post.to = initial_post_JSON.incomingLinks;
-		post.from = initial_post_JSON.outgoingLinks;
+		post.to = initial_post.incomingLinks;
+		post.from = initial_post.outgoingLinks;
 
 		arr.push(post);
 	};
 	
 	var clicked = arr[0];
 	
-	clicked.to = initial_post_JSON.incomingLinks;
-	clicked.from = initial_post_JSON.outgoingLinks;
-
-//	clicked.color = 'yellow';
-//	clicked.circle.glow({
-//		color: 'yellow',
-//	});
+	clicked.to = initial_post.incomingLinks;
+	clicked.from = initial_post.outgoingLinks;
 	
 	clicked.links = clicked.draw_links();
-//	clicked.circle.toFront();
+	
 	initialize_functions(arr);
 }
 
@@ -84,17 +79,24 @@ function initialize_functions(arr){
 		(function(post) {
 			post.circle.mouseover(
 				function () {
-//					this.animate({"opacity": .8}, 200);
+					this.animate({"opacity": .8}, 200);
 					post.label.show();
 					post.preview_image.show();
 				}).mouseout(function () {
-//					this.animate({"opacity": .5}, 200);
+					this.animate({"opacity": .5}, 200);
 					post.label.hide();
 					post.preview_image.hide();
 				}
 			);
 			post.circle.click(function(){
 				clearAll();
+//				post.links = post.draw_links();
+//				$.getJSON("http://localhost:8080/InformationSpreadingViz/InformationSpreading?id=" + post.Uuid,
+//					function(result){
+//						$.each(result, function(i, field){
+//						console.log(this[0]);
+//				    });
+//				});
 				initialize_posts(post.Uuid);
 			});
 		})(post);
@@ -102,6 +104,7 @@ function initialize_functions(arr){
 }
 
 function get_min_max_values(posts){
+
 	var max_importance = 0;
 	var min_importance = parseFloat(posts[0].score);
 
@@ -111,9 +114,8 @@ function get_min_max_values(posts){
 	
 	for (var i = 0; i < posts.length; ++i){		
 		var post = posts[i];
-		
-		var score = parseFloat(post.score);
-		var date = parseInt(post.pubDate);
+		var score = parseFloat(posts[i].score);
+		var date = parseInt(posts[i].pubDate);
 
 		if (score > max_importance)
 			max_importance = score;
@@ -150,26 +152,28 @@ function normalize_size(max, min, score){
 	return ( (score - min) * ( (50 - 20) / (max - min) ) + 20 );
 }
 
-function normalize_position(max, min, middle, current_time){
+function normalize_position(max, min, time){
 	var result = 30;
-	if (current_time < middle)
-		result = ( (current_time - min) * ((500 - 30) / (max - min)) + 30 );	// left side of the clicked post - from pixel 30 to pixel 500
-	else if (current_time > middle)
-		result = ( (current_time - min) * ((1000 - 500) / (max - min)) + 500 );	// right side of the clicked post - from pixel 500 to pixel 1000
-	else
-		result = 500;
+	if (time > 0) 
+		result = ( (time - min) * ((1000 - 60) / (max - min)) + 60 );		
 	return result;
+}
+
+function calculate_position(max_pos_diff, min_pos_diff, current_pos){
+	if ((max_pos_diff < 20) && (max_pos_diff > 300)){
+	}
+	else return current_pos;
 }
 
 function clearAll(){
 	for(var i = 0; i < arr.length; i++) {
-//		arr[i].color = "";		
+		paper.clear();
+		draw_timeline();
+		
 //		delete arr[i].circle;
 //		delete arr[i].links;
 //		arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
 //		if (arr[i].links != undefined)
 //			arr[i].links.hide();
 	}
-	paper.clear();
-	draw_timeline();
 }

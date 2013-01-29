@@ -29,6 +29,8 @@ Post.prototype.draw_links = function (){
 	this.paper.setStart();
 	from_links = this.from;
 	to_links = this.to;
+	
+
 
 // from here
 	var end;
@@ -40,6 +42,7 @@ Post.prototype.draw_links = function (){
 			var xdiff = start.x - parseInt(end.attr("cx"));	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
 			var starty = start.y + start.size;
+			var startx = start.x;
 			var endy = parseInt(end.attr("cy")) + parseInt(end.attr("r"));
 			var endx = end.attr("cx");
 
@@ -48,6 +51,13 @@ Post.prototype.draw_links = function (){
 
 			var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
 			var yy = endy + xdiff * 0.2;
+			
+			var controlpointx = (endx - startx) / 2;
+			var controlpointy = startx - endx;
+
+			var px = -200;//oder startx - endx
+
+			var c = this.paper.path("M" + startx + " "+ starty+ "q" + controlpointx+" "+ controlpointy+ " " + px + " "+ 0);
 
 			var arrow = this.paper.path ("M" + start.x + " " + starty);
 			arrow.animate({path:"M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy},300, "easeOut");
@@ -131,7 +141,7 @@ Post.prototype.draw_label = function (){
 
 	var box = this.paper.rect(this.x - 15, 5, 250, 100, 5);
 	box.attr({
-		fill: '#F1F1F1',
+		fill: 'transparent',
 		opacity: 2,
 		stroke: 'none',
 	});
@@ -154,11 +164,11 @@ Post.prototype.draw_label = function (){
 		'font-size': 16,
 	});
 		var newurl; 
-		var bwidth = box.getBBox().width +18;
+		var bwidth = box.getBBox().width;
 
 		if(this.url.length * fontsize  > bwidth)
 		{
-			var charsToCutOff = (this.url.length*fontsize -3 - bwidth) / fontsize + 3;
+			var charsToCutOff = (this.url.length*fontsize -3 - bwidth) / fontsize -20;
 			newurl = this.url.substring(0, this.url.length - charsToCutOff) + "...";
 			this.url = this.paper.text(this.x + 108 , this.y - 135, newurl);
 		}else{
