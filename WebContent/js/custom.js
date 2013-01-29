@@ -1,5 +1,5 @@
 $(function() {
-	var paper = Raphael('draw',"500%","500%");
+	paper = Raphael('draw',"500%","500%");
 	arr = new Array();
 		
 	timeline = paper.path(["M0,200H1200"]);

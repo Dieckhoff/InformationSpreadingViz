@@ -3,10 +3,14 @@ package de.hpi.InformationSpreading;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -171,11 +175,19 @@ public class InformationSpreadingServlet extends HttpServlet {
 		
 		inputContainer.getPost().setId(id);				
 		inputContainer.getPost().setScore(score);
+		//inputContainer.getPost().setPubDate(parseDateStringFromDbToMilliseconds(inputContainer.getPost().getPubDate()));
 		inputContainer.getPost().setOutgoingLinks(outgoingLinks);
 		inputContainer.getPost().setIncomingLinks(incomingLinks);
 		
 		return inputContainer;
 		
+	}
+	
+	private String parseDateStringFromDbToMilliseconds(String dateString){
+//		Date date = new Date()
+//		String.valueOf( Timestamp.valueOf( inputContainer.getPost().getPubDate() ).getTime() )
+//		
+		return "";
 	}
 	
 	private InputJsonContainer getPopulatedContainerWithScore(String id) {
