@@ -10,7 +10,7 @@ function Post(id){
 	this.time;
 	this.x;
 	this.y;
-	this.image_source = "static/graphics/Newpost.JPG"	//to be individualized...
+	this.image_source = "static/graphics/Newpost.JPG";	//to be individualized...
 	this.to;
 	this.from;
 	this.color;
@@ -23,29 +23,7 @@ function Post(id){
 Post.prototype.show_preview = function(){
 	image = this.paper.image(this.image_source, this.x + 5, this.y - 185 , 80, 80);
 	return(image);
-}
-
-//Post.prototype.get_links_from_here = function(){
-//	var list = [];
-//	for (var i = 0; i < links.length; ++i){
-//		var link = links[i];
-//		if (link.from == this.Uuid){
-//			list.push(link.to);
-//		}
-//	}
-//	return(list);
-//}
-//
-//Post.prototype.get_links_to_here = function(){
-//	var list = [];
-//	for (var i = 0; i < links.length; ++i){
-//		var link = links[i];
-//		if (link.to == this.Uuid){
-//			list.push(link.from);
-//		}
-//	}
-//	return(list);
-//}
+};
 
 Post.prototype.draw_links = function (){
 	this.paper.setStart();
@@ -72,14 +50,14 @@ Post.prototype.draw_links = function (){
 			var yy = endy + xdiff * 0.2;
 
 			var arrow = this.paper.path ("M" + start.x + " " + starty);
-			arrow.animate({path:"M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy},300, "easeOut")
+			arrow.animate({path:"M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy},300, "easeOut");
 
 			var color = end.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
 
 			arrow.attr({
 				'stroke': color,
 				'stroke-width': 1.5,
-			})
+			});
 
 			var arrowSet1 = this.paper.arrowSet(endx-8,endy-2,endx-3, endy-1,4);
 			arrowSet1[0].attr({ "fill" : arrow.attr("stroke"), "stroke-width" : "0" });
@@ -89,7 +67,7 @@ Post.prototype.draw_links = function (){
 // to here
 	end = this;
 	var start;
-	var pathId; 
+//	var pathId; 
 	for (var i = 0; i < to_links.length; ++i){
 		start = this.paper.getById(to_links[i]);
 
@@ -97,7 +75,7 @@ Post.prototype.draw_links = function (){
 
 			var xdiff = parseInt(start.attr("cx")) - end.x;	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
 
-			var starty = parseInt(start.attr("cy")) - parseInt(start.attr("r"))
+			var starty = parseInt(start.attr("cy")) - parseInt(start.attr("r"));
 			var endy = end.y - end.size;
 
 			var xx = parseInt(start.attr("cx")) - xdiff * 0.25;
@@ -108,19 +86,13 @@ Post.prototype.draw_links = function (){
 
 			var path = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty);
 
-			var endx_1 = end.x -2;
-			var endx5 = end.x -1;
-
-			var endy10 = endy -2;
-			var endy_1 = endy -1;
-			var endy5 = endy -1;
-			var endy_5 = endy +1;
-
-
-
-			
-
-
+//			var endx_1 = end.x -2;
+//			var endx5 = end.x -1;
+//
+//			var endy10 = endy -2;
+//			var endy_1 = endy -1;
+//			var endy5 = endy -1;
+//			var endy_5 = endy +1;
 
 			path.animate({path:"M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy},100,"easeOut");
 			var color = String(end.color) ;
@@ -132,7 +104,7 @@ Post.prototype.draw_links = function (){
 			path.attr({
 				'stroke': color,
 				'stroke-width': 1.0,
-			})
+			});
 		}
 	}
 	return( this.paper.setFinish() );
@@ -196,10 +168,10 @@ Post.prototype.draw_label = function (){
 		{
 			var charsToCutOff = (this.url.length*fontsize -3 - bwidth) / fontsize + 3;
 			newurl = this.url.substring(0, this.url.length - charsToCutOff) + "...";
-			var url = this.paper.text(this.x + 108 , this.y - 135, newurl);
+			this.url = this.paper.text(this.x + 108 , this.y - 135, newurl);
 		}else{
-			var url = this.paper.text(this.x + 108 , this.y - 135, this.url);
-		}	
+			this.url = this.paper.text(this.x + 108 , this.y - 135, this.url);
+		}
 
 		url.attr({
 			"font-family": "Arial, Helvetica, sans-serif",
