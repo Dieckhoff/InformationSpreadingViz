@@ -221,7 +221,7 @@ public class InformationSpreadingServlet extends HttpServlet {
 			
 			inputContainer.getPost().setId(id);				
 			inputContainer.getPost().setScore(score);
-	
+			inputContainer.getPost().setPubDate(parseDateStringFromDbToMilliseconds(inputContainer.getPost().getPubDate()));	
 		}
 		else {
 			
