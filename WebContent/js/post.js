@@ -109,16 +109,16 @@ Post.prototype.draw_circle = function (){
 	circle.attr({
 		fill: "r(0.75, 0.05)#fff-"+this.color+":150",
 		cursor: 'pointer',
-		opacity: 0.5,
+//		opacity: 0.5,
 		"stroke-width": 0,
 	});
 
-	circle.glow({
-		width: '1',
-		fill: 'false',
-		color: String(this.color),
-		opacity: '0.5',
-	});
+//	circle.glow({
+//		width: '1',
+//		fill: 'false',
+//		color: String(this.color),
+////		opacity: '0.5',
+//	});
 
 	return(circle);
 };
