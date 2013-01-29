@@ -8,6 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -175,7 +177,7 @@ public class InformationSpreadingServlet extends HttpServlet {
 		
 		inputContainer.getPost().setId(id);				
 		inputContainer.getPost().setScore(score);
-		//inputContainer.getPost().setPubDate(parseDateStringFromDbToMilliseconds(inputContainer.getPost().getPubDate()));
+		inputContainer.getPost().setPubDate(parseDateStringFromDbToMilliseconds(inputContainer.getPost().getPubDate()));
 		inputContainer.getPost().setOutgoingLinks(outgoingLinks);
 		inputContainer.getPost().setIncomingLinks(incomingLinks);
 		
@@ -184,10 +186,20 @@ public class InformationSpreadingServlet extends HttpServlet {
 	}
 	
 	private String parseDateStringFromDbToMilliseconds(String dateString){
+		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy h:mm:ss a");
+		Date date = new Date();
+		
+		try {
+			date = sdf.parse(dateString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 //		Date date = new Date()
 //		String.valueOf( Timestamp.valueOf( inputContainer.getPost().getPubDate() ).getTime() )
 //		
-		return "";
+		return String.valueOf(date.getTime());
 	}
 	
 	private InputJsonContainer getPopulatedContainerWithScore(String id) {
@@ -209,7 +221,7 @@ public class InformationSpreadingServlet extends HttpServlet {
 			
 			inputContainer.getPost().setId(id);				
 			inputContainer.getPost().setScore(score);
-	
+			inputContainer.getPost().setPubDate(parseDateStringFromDbToMilliseconds(inputContainer.getPost().getPubDate()));	
 		}
 		else {
 			

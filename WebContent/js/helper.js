@@ -34,35 +34,35 @@ function initialize_posts(initial_post_id){
 		}.bind(this)
 	);
 	
-	
 };
 
 function initialize_post_callback(posts){
-	console.log(posts);
+	
 	var initial_post = posts[0];
 	var min_max_values = get_min_max_values(posts);
 	
 	var min_date		= min_max_values[0];
-	console.log(min_date);
 	var max_date		= min_max_values[1];
 	var min_importance	= min_max_values[2];
 	var max_importance	= min_max_values[3];
 	
 	for (var i = 0; i < posts.length; ++i) {	// drawing all the mentioned posts (including the initial (clicked) post
-		var post = new Post(posts[i].Uuid);
+		var post = new Post(posts[i].id);
 
 		post.paper = paper;
 		post.title = posts[i].title;
 		post.type = posts[i].type;
 		post.url = posts[i].url;
 		post.blog = posts[i].blog;
+		post.image_source = posts[i].image;
 
 		post.importance = parseFloat(posts[i].score);
 		post.size = normalize_size(max_importance, min_importance, post.importance);
 
-		post.time = new Date(parseInt(posts[i].pubdate));
-		post.x = normalize_position(max_date, min_date, posts[i].pubdate);
-//		console.log(post.x);
+		post.time = new Date(parseInt(posts[i].pubDate));
+
+		post.x = normalize_position(max_date, min_date, parseInt(posts[i].pubDate));
+
 		post.y = 200;
 
 		if (post.type == 'Facebook'){
@@ -96,9 +96,11 @@ function initialize_post_callback(posts){
 	clicked.from = initial_post.outgoingLinks;
 	
 	clicked.links = clicked.draw_links();
+	
+	initialize_functions(arr);
 }
 
-function initialize_functions(){
+function initialize_functions(arr){
 	for(var i = 0; i < arr.length; i++) {
 		var post = arr[i];
 		(function(post) {
@@ -122,32 +124,32 @@ function initialize_functions(){
 //						console.log(this[0]);
 //				    });
 //				});
-				initialize_post(post.Uuid);
+				initialize_posts(post.Uuid);
 			});
 		})(post);
 	};
 }
 
 function get_min_max_values(posts){
+
 	var max_importance = 0;
 	var min_importance = parseFloat(posts[0].score);
 
 	var max_date = 0;
-	var min_date = posts[0].pubDate;
-	console.log((new Date(min_date)).getMilliseconds());
-	console.log((new Date(min_date)));
+	var min_date = parseInt(posts[0].pubDate);
+		
 	
-	console.log(posts);
-	for (var i = 0; i < posts.length; ++i){
+	for (var i = 0; i < posts.length; ++i){		
 		post = posts[i];
+
 		if (parseFloat(post.score) > max_importance)
 			max_importance = parseFloat(post.score);
 		if (parseFloat(post.score) < min_importance)
 			min_importance = parseFloat(post.score);
-		if (post.pubDate > max_date)
-			max_date = post.pubDate;
-		if (post.pubDate < min_date)
-			min_date = post.pubDate;
+		if (parseInt(post.pubDate) > max_date)
+			max_date = parseInt(post.pubDate);
+		if (parseInt(post.pubDate) < min_date)
+			min_date = parseInt(post.pubDate);
 	}
 	
 	var min_max_values = [];

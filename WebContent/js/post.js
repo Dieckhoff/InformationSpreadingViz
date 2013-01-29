@@ -10,7 +10,7 @@ function Post(id){
 	this.time;
 	this.x;
 	this.y;
-	this.image_source = "static/graphics/Newpost.JPG";	//to be individualized...
+	this.image_source;
 	this.to;
 	this.from;
 	this.color;
