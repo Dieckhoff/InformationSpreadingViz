@@ -7,33 +7,34 @@ function initialize_posts(initial_post_id){
 	);
 };
 
-function initialize_post_callback(posts){
+function initialize_post_callback(posts_JSON){
 	draw_timeline();
 	
-	var initial_post = posts[0];
-	var min_max_values = get_min_max_values(posts);
+	var initial_post_JSON = posts_JSON[0];
+	var min_max_values = get_min_max_values(posts_JSON);
 	
 	var min_date		= min_max_values[0];
 	var max_date		= min_max_values[1];
 	var min_importance	= min_max_values[2];
 	var max_importance	= min_max_values[3];
 	
-	for (var i = 0; i < posts.length; ++i) {	// drawing all the mentioned posts (including the initial (clicked) post
-		var post = new Post(posts[i].id);
+	for (var i = 0; i < posts_JSON.length; ++i) {	// drawing all the mentioned posts (including the initial (clicked) post
+		var post = new Post(posts_JSON[i].id);
 
 		post.paper = paper;
-		post.title = posts[i].title;
-		post.type = posts[i].type;
-		post.url = posts[i].url;
-		post.blog = posts[i].blog;
-		post.image_source = posts[i].image;
+		post.title = posts_JSON[i].title;
+		post.type = posts_JSON[i].type;
+		post.url = posts_JSON[i].url;
+		post.blog = posts_JSON[i].blog;
+		post.image_source = posts_JSON[i].image;
 
-		post.importance = parseFloat(posts[i].score);
+		post.importance = parseFloat(posts_JSON[i].score);
 		post.size = normalize_size(max_importance, min_importance, post.importance);
 
-		post.time = new Date(parseInt(posts[i].pubDate));
-
-		post.x = normalize_position(max_date, min_date, parseInt(posts[i].pubDate));
+		post.time = new Date(parseInt(posts_JSON[i].pubDate));
+		
+		middle_date = parseInt(initial_post_JSON.pubDate);
+		post.x = normalize_position(max_date, min_date, middle_date, parseInt(posts_JSON[i].pubDate));
 
 		post.y = 200;
 
@@ -56,16 +57,16 @@ function initialize_post_callback(posts){
 		post.preview_image.hide();
 		post.circle = post.draw_circle();
 
-		post.to = initial_post.incomingLinks;
-		post.from = initial_post.outgoingLinks;
+		post.to = initial_post_JSON.incomingLinks;
+		post.from = initial_post_JSON.outgoingLinks;
 
 		arr.push(post);
 	};
 	
 	var clicked = arr[0];
 	
-	clicked.to = initial_post.incomingLinks;
-	clicked.from = initial_post.outgoingLinks;
+	clicked.to = initial_post_JSON.incomingLinks;
+	clicked.from = initial_post_JSON.outgoingLinks;
 
 //	clicked.color = 'yellow';
 //	clicked.circle.glow({
@@ -110,8 +111,9 @@ function get_min_max_values(posts){
 	
 	for (var i = 0; i < posts.length; ++i){		
 		var post = posts[i];
-		var score = parseFloat(posts[i].score);
-		var date = parseInt(posts[i].pubDate);
+		
+		var score = parseFloat(post.score);
+		var date = parseInt(post.pubDate);
 
 		if (score > max_importance)
 			max_importance = score;
@@ -148,17 +150,15 @@ function normalize_size(max, min, score){
 	return ( (score - min) * ( (50 - 20) / (max - min) ) + 20 );
 }
 
-function normalize_position(max, min, time){
+function normalize_position(max, min, middle, current_time){
 	var result = 30;
-	if (time > 0) 
-		result = ( (time - min) * ((1000 - 60) / (max - min)) + 60 );		
+	if (current_time < middle)
+		result = ( (current_time - min) * ((500 - 30) / (max - min)) + 30 );	// left side of the clicked post - from pixel 30 to pixel 500
+	else if (current_time > middle)
+		result = ( (current_time - min) * ((1000 - 500) / (max - min)) + 500 );	// right side of the clicked post - from pixel 500 to pixel 1000
+	else
+		result = 500;
 	return result;
-}
-
-function calculate_position(max_pos_diff, min_pos_diff, current_pos){
-	if ((max_pos_diff < 20) && (max_pos_diff > 300)){
-	}
-	else return current_pos;
 }
 
 function clearAll(){
