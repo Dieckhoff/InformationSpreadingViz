@@ -37,6 +37,7 @@ function initialize_posts(initial_post_id){
 };
 
 function initialize_post_callback(posts){
+	draw_timeline();
 	
 	var initial_post = posts[0];
 	var min_max_values = get_min_max_values(posts);
@@ -75,7 +76,7 @@ function initialize_post_callback(posts){
 			post.color = 'orange';
 		}
 		else{
-			post.color = 'grey';
+			post.color = 'green';
 		}
 
 		post.label = post.draw_label();
@@ -140,16 +141,18 @@ function get_min_max_values(posts){
 		
 	
 	for (var i = 0; i < posts.length; ++i){		
-		post = posts[i];
+		var post = posts[i];
+		var score = parseFloat(posts[i].score);
+		var date = parseInt(posts[i].pubDate);
 
-		if (parseFloat(post.score) > max_importance)
-			max_importance = parseFloat(post.score);
-		if (parseFloat(post.score) < min_importance)
-			min_importance = parseFloat(post.score);
-		if (parseInt(post.pubDate) > max_date)
-			max_date = parseInt(post.pubDate);
-		if (parseInt(post.pubDate) < min_date)
-			min_date = parseInt(post.pubDate);
+		if (score > max_importance)
+			max_importance = score;
+		if (score < min_importance)
+			min_importance = score;
+		if ( (date > max_date) && (date > 0) )
+			max_date = date;
+		if ( (date < min_date) && (date > 0) )
+			min_date = date;
 	}
 	
 	var min_max_values = [];
@@ -162,13 +165,26 @@ function get_min_max_values(posts){
 	return min_max_values;
 }
 
+function draw_timeline(){
+	timeline = paper.path(["M0,200H1200"]);
+	timeline.attr({
+		stroke: 'grey',
+		opacity: .7,
+		'stroke-width': 4.0,
+		'arrow-end': 'classic-wide-long',
+		'arrow-end': 'grey',
+	});
+}
+
 function normalize_size(max, min, score){
 	return ( (score - min) * ( (50 - 20) / (max - min) ) + 20 );
 }
 
 function normalize_position(max, min, time){
-	var result = ( (time - min) * ((1000 - 30) / (max - min)) + 30 );
-	return parseInt(result);
+	var result = 30;
+	if (time > 0) 
+		result = ( (time - min) * ((1000 - 60) / (max - min)) + 60 );		
+	return result;
 }
 
 function calculate_position(max_pos_diff, min_pos_diff, current_pos){
@@ -179,8 +195,11 @@ function calculate_position(max_pos_diff, min_pos_diff, current_pos){
 
 function clearAll(){
 	for(var i = 0; i < arr.length; i++) {
-		delete arr[i].circle;
-		delete arr[i].links;
+		paper.clear();
+		draw_timeline();
+		
+//		delete arr[i].circle;
+//		delete arr[i].links;
 //		arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
 //		if (arr[i].links != undefined)
 //			arr[i].links.hide();
