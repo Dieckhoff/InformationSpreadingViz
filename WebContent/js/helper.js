@@ -25,23 +25,25 @@
 //	}
 
 function initialize_posts(initial_post_id){
-	var initial_post;
-	var posts;
+
 	
 	$.getJSON("http://localhost:8080/InformationSpreadingViz/InformationSpreading?id=" + initial_post_id,
 		function(result){
-			$.each(result, function(i, field){
-				initial_post	= this[0];
-				posts			= this[1];
-				console.log(this[0]);
-				console.log(this[1]);
-			});
-		}
+		var posts = result.posts;
+			initialize_post_callback(posts)
+		}.bind(this)
 	);
 	
+	
+};
+
+function initialize_post_callback(posts){
+	console.log(posts);
+	var initial_post = posts[0];
 	var min_max_values = get_min_max_values(posts);
 	
 	var min_date		= min_max_values[0];
+	console.log(min_date);
 	var max_date		= min_max_values[1];
 	var min_importance	= min_max_values[2];
 	var max_importance	= min_max_values[3];
@@ -60,6 +62,7 @@ function initialize_posts(initial_post_id){
 
 		post.time = new Date(parseInt(posts[i].pubdate));
 		post.x = normalize_position(max_date, min_date, posts[i].pubdate);
+//		console.log(post.x);
 		post.y = 200;
 
 		if (post.type == 'Facebook'){
@@ -81,8 +84,8 @@ function initialize_posts(initial_post_id){
 		post.preview_image.hide();
 		post.circle = post.draw_circle();
 
-//		post.to = initial_post.incomingLinks;
-//		post.from = initial_post.outgoingLinks;
+		post.to = initial_post.incomingLinks;
+		post.from = initial_post.outgoingLinks;
 
 		arr.push(post);
 	};
@@ -119,7 +122,7 @@ function initialize_functions(){
 //						console.log(this[0]);
 //				    });
 //				});
-				initialize_posts(post.Uuid);
+				initialize_post(post.Uuid);
 			});
 		})(post);
 	};
@@ -131,6 +134,8 @@ function get_min_max_values(posts){
 
 	var max_date = 0;
 	var min_date = posts[0].pubDate;
+	console.log((new Date(min_date)).getMilliseconds());
+	console.log((new Date(min_date)));
 	
 	console.log(posts);
 	for (var i = 0; i < posts.length; ++i){
@@ -147,10 +152,10 @@ function get_min_max_values(posts){
 	
 	var min_max_values = [];
 
-	min_max_values.pushBack(min_date);
-	min_max_values.pushBack(max_date);
-	min_max_values.pushBack(min_importance);
-	min_max_values.pushBack(max_importance);
+	min_max_values.push(min_date);
+	min_max_values.push(max_date);
+	min_max_values.push(min_importance);
+	min_max_values.push(max_importance);
 	
 	return min_max_values;
 }
