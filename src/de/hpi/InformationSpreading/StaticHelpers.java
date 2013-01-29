@@ -23,7 +23,7 @@ public class StaticHelpers {
 			DataInputStream dataInputStream = new DataInputStream(new BufferedInputStream(
 					inputStream));
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					dataInputStream));
+					dataInputStream, "UTF-8"));
 			while ((line = reader.readLine()) != null){
 				httpContent.append(line);
 				httpContent.append("\n");
