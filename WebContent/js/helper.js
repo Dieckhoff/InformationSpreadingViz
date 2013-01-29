@@ -1,39 +1,10 @@
-//	{
-//	    "posts": [
-//	        {
-//	            "id": "de.zeit.www:http/digital/datenschutz/2012-11/google-transparency-report-2012",
-//	            "title": "Google Transparency Report: Staatliche �?berwachung im Netz nimmt weltweit zu",
-//	            "blog": "http://www.zeit.de",
-//	            "content": "Petraeus ist nur einer von Tausenden, die vom Staat ausgespäht werden. Google berichtet: Nie wurde der Konzern aufgefordert, so viele Nutzerdaten auszuhändigen wie heute.",
-//	            "image": "http://images.zeit.de/digital/datenschutz/2012-11/general-david-petraeus/general-david-petraeus-148x84.jpg",
-//	            "url": "http://www.zeit.de/digital/datenschutz/2012-11/google-transparency-report-2012",
-//	            "author": "",
-//	            "pubDate": "Nov 14, 2012 1:17:15 PM",
-//	            "score": 3.8472834e-9,
-//	            "outgoingLinks": [
-//	                "de.zeit.www:http/digital/datenschutz/2012-11/ccc-kritik-antiterrordatei",
-//	                "de.zeit.zeitreisen:http/",
-//	                "de.zeit.www:http/karriere/beruf/index",
-//	            ],
-//	            "incomingLinks": [
-//	                "de.zeit.www:http/digital/datenschutz/index",
-//	                "de.zeit.www:http/digital/datenschutz/2012-11/google-transparency-report-2012"
-//	            ]
-//	        },
-//	       { ... Hier folgen die weiteren anzuzeigenden Posts. ... }
-//	    ]
-//	}
-
-function initialize_posts(initial_post_id){
-
-	
+function initialize_posts(initial_post_id){	
 	$.getJSON("http://localhost:8080/InformationSpreadingViz/InformationSpreading?id=" + initial_post_id,
 		function(result){
 		var posts = result.posts;
-			initialize_post_callback(posts)
+			initialize_post_callback(posts);
 		}.bind(this)
 	);
-	
 };
 
 function initialize_post_callback(posts){

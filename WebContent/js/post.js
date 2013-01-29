@@ -86,14 +86,6 @@ Post.prototype.draw_links = function (){
 
 			var path = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty);
 
-//			var endx_1 = end.x -2;
-//			var endx5 = end.x -1;
-//
-//			var endy10 = endy -2;
-//			var endy_1 = endy -1;
-//			var endy5 = endy -1;
-//			var endy_5 = endy +1;
-
 			path.animate({path:"M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy},100,"easeOut");
 			var color = String(end.color) ;
 
@@ -173,7 +165,7 @@ Post.prototype.draw_label = function (){
 			this.url = this.paper.text(this.x + 108 , this.y - 135, this.url);
 		}
 
-		url.attr({
+		this.url.attr({
 			"font-family": "Arial, Helvetica, sans-serif",
 			origin: 'baseline',
 			'text-anchor': 'start',
