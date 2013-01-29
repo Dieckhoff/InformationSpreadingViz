@@ -49,3 +49,4 @@ venv
 *.swp
 /WebContent/WEB-INF/config.properties
 
+config.properties
