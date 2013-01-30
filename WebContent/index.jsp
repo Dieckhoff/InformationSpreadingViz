@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/default.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/ui-lightness/jquery-ui.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/spinner.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/loading.css" />
     
     
 
@@ -36,6 +37,21 @@
 	<div id="content">
 	
 		<div id="draw"></div>
+    <div id="loading">
+      <div id="loading-box">
+        <div id="loading-animation">
+          <div id="circle">
+            <div id="circle_1" class="circle"></div>
+            <div id="circle_2" class="circle"></div>
+            <div id="circle_3" class="circle"></div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+        <div id="loading-caption">
+          Loading...
+        </div>
+      </div>
+    </div>
 	</div>
 <!-- end:Content -->
 </div>
