@@ -79,11 +79,13 @@ function initialize_post_callback(posts_JSON) {
 	clicked_post.circle.attr({
 		stroke: 'orange',
 		'stroke-width': 6.0,
+		'stroke-opacity': .5,
 	});
+	
+	clicked_post.circle.toFront();
 	
 	clicked_post.links = clicked_post.draw_links();
 	console.log(clicked_post);
-//	clicked_post.circle.toFront();
 
 	initialize_functions();
 }
