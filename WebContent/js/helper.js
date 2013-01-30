@@ -181,5 +181,4 @@ function clearAll(){
 //			arr[i].links.hide();
 	}
 	paper.clear();
-	draw_timeline();
 };
