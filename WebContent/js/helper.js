@@ -8,8 +8,6 @@ function initialize_posts(initial_post_id){
 };
 
 function initialize_post_callback(posts_JSON){
-	draw_timeline();
-	
 	var initial_post_JSON = posts_JSON[0];
 	var min_max_values = get_min_max_values(posts_JSON);
 	
@@ -62,6 +60,8 @@ function initialize_post_callback(posts_JSON){
 
 		arr.push(post);
 	};
+	
+	draw_timeline(min_date, max_date, middle_date);
 	
 	var clicked = arr[0];
 	
@@ -135,7 +135,7 @@ function get_min_max_values(posts){
 	return min_max_values;
 }
 
-function draw_timeline(){
+function draw_timeline(min, max, middle){
 	timeline = paper.path(["M0,200H1200"]);
 	timeline.attr({
 		stroke: 'grey',
@@ -144,6 +144,15 @@ function draw_timeline(){
 		'arrow-end': 'classic-wide-long',
 		'arrow-end': 'grey',
 	});
+	
+	// date labels:
+	var startdate = new Date(min);
+	var middledate = new Date(middle);
+	var enddate = new Date(max);
+	
+	var startlabel	= paper.text(30, 230, startdate.getDay() + "." + startdate.getMonth() + "." + startdate.getFullYear());
+	var middlelabel	= paper.text(500, 230, middledate.getDay() + "." + middledate.getMonth() + "." + middledate.getFullYear());
+	var endlabel	= paper.text(1000, 230, enddate.getDay() + "." + enddate.getMonth() + "." + enddate.getFullYear());
 }
 
 function normalize_size(max, min, score){
