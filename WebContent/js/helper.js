@@ -8,6 +8,7 @@ function initialize_posts(initial_post_id){
 };
 
 function initialize_post_callback(posts_JSON) {
+	post_array = [];
 	var initial_post_JSON = posts_JSON[0];
 	var min_max_values = get_min_max_values(posts_JSON);
 	
@@ -37,7 +38,7 @@ function initialize_post_callback(posts_JSON) {
 		post.y = 200;
 
 		if (post.type == 'Facebook'){
-			post.color = 'steelblue';
+			post.color = 'green';
 		}
 		else if (post.type == 'Twitter'){
 			post.color = 'purple';
@@ -46,7 +47,7 @@ function initialize_post_callback(posts_JSON) {
 			post.color = 'orange';
 		}
 		else{
-			post.color = 'green';
+			post.color = 'steelblue';
 		}
 
 		post.label = post.draw_label();
@@ -58,31 +59,38 @@ function initialize_post_callback(posts_JSON) {
 		post.to = initial_post_JSON.incomingLinks;
 		post.from = initial_post_JSON.outgoingLinks;
 
-		arr.push(post);
+		post_array.push(post);
 	};
 	
 	var timeline = draw_timeline(min_date, max_date, middle_date);
 	timeline.toBack();
 	
-	var clicked = arr[0];
+	var clicked_post = post_array[0];
 	
-	clicked.to = initial_post_JSON.incomingLinks;
-	clicked.from = initial_post_JSON.outgoingLinks;
+	clicked_post.to = initial_post_JSON.incomingLinks;
+	clicked_post.from = initial_post_JSON.outgoingLinks;
 
-//	clicked.color = 'yellow';
-//	clicked.circle.glow({
-//		color: 'yellow',
-//	});
+	clicked_post.circle.glow({
+		width: 40,
+		fill: true,
+		color: 'orange',
+	});
 	
-	clicked.links = clicked.draw_links();
-//	clicked.circle.toFront();
+	clicked_post.circle.attr({
+		stroke: 'orange',
+		'stroke-width': 6.0,
+	});
+	
+	clicked_post.links = clicked_post.draw_links();
+	console.log(clicked_post);
+//	clicked_post.circle.toFront();
 
-	initialize_functions(arr);
+	initialize_functions();
 }
 
-function initialize_functions(arr){
-	for(var i = 0; i < arr.length; i++) {
-		var post = arr[i];
+function initialize_functions(){
+	for(var i = 0; i < post_array.length; i++) {
+		var post = post_array[i];
 		(function(post) {
 			post.circle.mouseover(
 				function () {
@@ -156,7 +164,7 @@ function draw_timeline(min, max, middle) {
 	var middlelabel	= paper.text(500, 230, middledate.getDay() + "." + middledate.getMonth() + "." + middledate.getFullYear());
 	var endlabel	= paper.text(1000, 230, enddate.getDay() + "." + enddate.getMonth() + "." + enddate.getFullYear());
 	
-	return timeline
+	return timeline;
 }
 
 function normalize_size(max, min, score) {
@@ -175,7 +183,10 @@ function normalize_position(max, min, middle, current_time) {
 }
 
 function clearAll(){
-	for (var i = 0; i < arr.length; i++) {
+	for (var i = 0; i < post_array.length; ++i) {
+//		console.log(arr.length);
+//		console.log(arr);
+//		arr.pop();
 //		arr[i].color = "";
 //		delete arr[i].circle;
 //		delete arr[i].links;
@@ -183,5 +194,6 @@ function clearAll(){
 //		if (arr[i].links != undefined)
 //			arr[i].links.hide();
 	}
+	delete post_array;
 	paper.clear();
-};
+}

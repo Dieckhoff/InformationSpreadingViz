@@ -1,6 +1,6 @@
 $(function() {
 	paper = Raphael('draw',"500%","500%");
-	arr = new Array();
+//	post_array = new Array();
 
 	initialize_posts("de.zeit.www:http/digital/datenschutz/2012-11/google-transparency-report-2012");
 });
@@ -17,16 +17,16 @@ $(function() {
 //		timeline.transform("s"+(1.0/zoom) * 1.2);
 //		timelineLength = timelineLength * (1.0/zoom) * 1.2;
 //	}
-//	for (var i = 0; i < arr.length; ++i) {
-//		//arr[i].circle.transform("s" + (1.0 / zoom));
-//		var xcoord = arr[i].circle.attr('cx');
+//	for (var i = 0; i < post_array.length; ++i) {
+//		//post_array[i].circle.transform("s" + (1.0 / zoom));
+//		var xcoord = post_array[i].circle.attr('cx');
 //		if(zoom > 0.75){
-//			arr[i].circle.attr({
+//			post_array[i].circle.attr({
 //				'cx' : xcoord * zoom,
 //			});
 //		}
 //		else{
-//			arr[i].circle.attr({
+//			post_array[i].circle.attr({
 //				'cx' : xcoord * zoom,
 //			});
 //		}
