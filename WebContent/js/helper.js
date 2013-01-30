@@ -7,7 +7,7 @@ function initialize_posts(initial_post_id){
 	);
 };
 
-function initialize_post_callback(posts_JSON){
+function initialize_post_callback(posts_JSON) {
 	var initial_post_JSON = posts_JSON[0];
 	var min_max_values = get_min_max_values(posts_JSON);
 	
@@ -75,6 +75,7 @@ function initialize_post_callback(posts_JSON){
 	
 	clicked.links = clicked.draw_links();
 //	clicked.circle.toFront();
+
 	initialize_functions(arr);
 }
 
@@ -135,7 +136,7 @@ function get_min_max_values(posts){
 	return min_max_values;
 }
 
-function draw_timeline(min, max, middle){
+function draw_timeline(min, max, middle) {
 	timeline = paper.path(["M0,200H1200"]);
 	timeline.attr({
 		stroke: 'grey',
@@ -155,11 +156,11 @@ function draw_timeline(min, max, middle){
 	var endlabel	= paper.text(1000, 230, enddate.getDay() + "." + enddate.getMonth() + "." + enddate.getFullYear());
 }
 
-function normalize_size(max, min, score){
+function normalize_size(max, min, score) {
 	return ( (score - min) * ( (50 - 20) / (max - min) ) + 20 );
 }
 
-function normalize_position(max, min, middle, current_time){
+function normalize_position(max, min, middle, current_time) {
 	var result = 30;
 	if (current_time < middle)
 		result = ( (current_time - min) * ((500 - 30) / (max - min)) + 30 );	// left side of the clicked post - from pixel 30 to pixel 500
@@ -171,8 +172,8 @@ function normalize_position(max, min, middle, current_time){
 }
 
 function clearAll(){
-	for(var i = 0; i < arr.length; i++) {
-//		arr[i].color = "";		
+	for (var i = 0; i < arr.length; i++) {
+//		arr[i].color = "";
 //		delete arr[i].circle;
 //		delete arr[i].links;
 //		arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
@@ -181,4 +182,4 @@ function clearAll(){
 	}
 	paper.clear();
 	draw_timeline();
-}
+};
