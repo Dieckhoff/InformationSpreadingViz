@@ -1,6 +1,6 @@
 $(function() {
-	paper = new ScaleRaphael("draw", "500%", "500%");
-//	paper = Raphael('draw',"500%","500%");
+//	paper = new ScaleRaphael("draw", "500%", "500%");
+	paper = Raphael('draw',"500%","500%");
 //	post_array = new Array();
 
 	initialize_posts("de.zeit.www:http/digital/datenschutz/2012-11/google-transparency-report-2012");
