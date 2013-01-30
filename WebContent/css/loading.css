@@ -1,5 +1,5 @@
 #loading {
-  display: hidden;
+  display: none;
   position: absolute; /* for IE5-6 */
   z-index: 49;
   left: 0;
