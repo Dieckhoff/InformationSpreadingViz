@@ -52,13 +52,13 @@ Post.prototype.draw_links = function (){
 			var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
 			var yy = endy + xdiff * 0.2;
 			
-			var controlpointx = (endx - startx) / 2;
-			var controlpointy = startx - endx;
+//			var controlpointx = (endx - startx) / 2;
+//			var controlpointy = startx - endx;
+//
+//			var px = -200;//oder startx - endx
 
-			var px = -200;//oder startx - endx
-
-			var arrow = this.paper.path ("M" + start.x + " " + starty);
-			arrow.animate({path:"M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy},300, "easeOut");
+			var arrow = this.paper.path ("M" + startx + " " + starty);
+			arrow.animate({path:"M" + startx + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy},300, "easeOut");
 
 			var color = end.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
 
@@ -67,7 +67,7 @@ Post.prototype.draw_links = function (){
 				'stroke-width': 3.0,
 			});
 
-			var arrowSet1 = this.paper.arrowSet(endx-8,endy-2,endx-3, endy-1,4);
+			var arrowSet1 = this.paper.arrowSet(endx-8, endy-2, endx-3, endy-1, 4);
 			arrowSet1[0].attr({ "fill" : arrow.attr("stroke"), "stroke-width" : "0" });
 		}
 	}
@@ -95,11 +95,11 @@ Post.prototype.draw_links = function (){
 			var path = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty);
 
 			path.animate({path:"M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy},100,"easeOut");
+			
 			var color = String(end.color) ;
 
-			var arrowSet = this.paper.arrowSet(end.x-20,endy-5,end.x-1 , endy-1,3);
+			var arrowSet = this.paper.arrowSet(end.x-20, endy-5, end.x-1, endy-1, 3);
 			arrowSet[0].attr({ "fill" : color, "stroke-width" : "0" });
-
 
 			path.attr({
 				'stroke': color,
@@ -161,27 +161,27 @@ Post.prototype.draw_label = function (){
 		fill: '#ABA8A8',
 		'font-size': 16,
 	});
-		var newurl; 
+	
+	var newurl; 
 
-		var bwidth = box.getBBox().width;
+	var bwidth = box.getBBox().width;
 
-		if(this.url.length * fontsize  > bwidth)
-		{
-			var charsToCutOff = (this.url.length*fontsize -3 - bwidth) / fontsize -20;
-			newurl = this.url.substring(0, this.url.length - charsToCutOff) + "...";
-			this.url = this.paper.text(this.x + 108 , this.y - 135, newurl);
-		}else{
-			this.url = this.paper.text(this.x + 108 , this.y - 135, this.url);
-		}
+	if(this.url.length * fontsize  > bwidth) {
+		var charsToCutOff = (this.url.length*fontsize -3 - bwidth) / fontsize -20;
+		newurl = this.url.substring(0, this.url.length - charsToCutOff) + "...";
+		this.url = this.paper.text(this.x + 108 , this.y - 135, newurl);
+	}
+	else
+		this.url = this.paper.text(this.x + 108 , this.y - 135, this.url);
 
-		this.url.attr({
-			"font-family": "Arial, Helvetica, sans-serif",
-			origin: 'baseline',
-			'text-anchor': 'start',
-			fill: '#ABA8A8',
-			'font-size': fontsize,
-			href: this.url,
-		});
+	this.url.attr({
+		"font-family": "Arial, Helvetica, sans-serif",
+		origin: 'baseline',
+		'text-anchor': 'start',
+		fill: '#ABA8A8',
+		'font-size': fontsize,
+		href: this.url,
+	});
 
 	var label = this.paper.setFinish();
 	return(label);

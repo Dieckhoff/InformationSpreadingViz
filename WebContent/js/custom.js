@@ -1,8 +1,12 @@
 $(function() {
-	paper = Raphael('draw',"500%","500%");
+	paper = new ScaleRaphael("draw", "500%", "500%");
+//	paper = Raphael('draw',"500%","500%");
 //	post_array = new Array();
 
 	initialize_posts("de.zeit.www:http/digital/datenschutz/2012-11/google-transparency-report-2012");
+
+//	resizePaper();
+//	windowAddEvent("onresize", resizePaper, false);
 });
 
 //Event Listener for Zooming in Firefox/Chrome/IE8 and IE9
@@ -32,3 +36,19 @@ $(function() {
 //		}
 //	}
 //});
+
+//var windowAddEvent = window.attachEvent || window.addEventListener;
+//
+//function resizePaper(){
+//   var w = 0, h = 0;
+//   if (window.innerWidth){
+//      w = window.innerWidth;
+//      h = window.innerHeight;
+//   }else if(document.documentElement &&
+//           (document.documentElement.clientWidth || 
+//            document.documentElement.clientHeight)) { 
+//            w = document.documentElement.clientWidth;
+//            h = document.documentElement.clientHeight;
+//   }
+//   paper.changeSize(w, h, true, false);
+//}

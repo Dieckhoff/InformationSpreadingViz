@@ -19,6 +19,7 @@
     <script src="${pageContext.request.contextPath}/js/detect_zoom.js"></script>
     <script src="${pageContext.request.contextPath}/js/helper.js"></script>
     <script src="${pageContext.request.contextPath}/js/spinner.js"></script>
+    <script src="${pageContext.request.contextPath}/js/scale_raphael.js"></script>
 	</head>
 <body>
 
