@@ -61,7 +61,8 @@ function initialize_post_callback(posts_JSON) {
 		arr.push(post);
 	};
 	
-	draw_timeline(min_date, max_date, middle_date);
+	var timeline = draw_timeline(min_date, max_date, middle_date);
+	timeline.toBack();
 	
 	var clicked = arr[0];
 	
@@ -137,7 +138,7 @@ function get_min_max_values(posts){
 }
 
 function draw_timeline(min, max, middle) {
-	timeline = paper.path(["M0,200H1200"]);
+	var timeline = paper.path(["M0,200H1200"]);
 	timeline.attr({
 		stroke: 'grey',
 		opacity: .7,
@@ -154,6 +155,8 @@ function draw_timeline(min, max, middle) {
 	var startlabel	= paper.text(30, 230, startdate.getDay() + "." + startdate.getMonth() + "." + startdate.getFullYear());
 	var middlelabel	= paper.text(500, 230, middledate.getDay() + "." + middledate.getMonth() + "." + middledate.getFullYear());
 	var endlabel	= paper.text(1000, 230, enddate.getDay() + "." + enddate.getMonth() + "." + enddate.getFullYear());
+	
+	return timeline
 }
 
 function normalize_size(max, min, score) {
