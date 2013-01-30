@@ -66,7 +66,7 @@ Post.prototype.draw_links = function (){
 
 			arrow.attr({
 				'stroke': color,
-				'stroke-width': 1.5,
+				'stroke-width': 3.0,
 			});
 
 			var arrowSet1 = this.paper.arrowSet(endx-8,endy-2,endx-3, endy-1,4);
@@ -105,7 +105,7 @@ Post.prototype.draw_links = function (){
 
 			path.attr({
 				'stroke': color,
-				'stroke-width': 1.0,
+				'stroke-width': 3.0,
 			});
 		}
 	}
