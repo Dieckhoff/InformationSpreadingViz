@@ -57,8 +57,6 @@ Post.prototype.draw_links = function (){
 
 			var px = -200;//oder startx - endx
 
-			var c = this.paper.path("M" + startx + " "+ starty+ "q" + controlpointx+" "+ controlpointy+ " " + px + " "+ 0);
-
 			var arrow = this.paper.path ("M" + start.x + " " + starty);
 			arrow.animate({path:"M" + start.x + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy},300, "easeOut");
 
