@@ -31,24 +31,25 @@
 <!-- start:Content -->
 		<div id="holder" style= "width:"100%></div>
 
-	<div id="content">
+	<div id="InformationSpredingVisualization">
 	
 		<div id="draw"></div>
-    <div id="loading">
-      <div id="loading-box">
-        <div id="loading-animation">
-          <div id="circle">
-            <div id="circle_1" class="circle"></div>
-            <div id="circle_2" class="circle"></div>
-            <div id="circle_3" class="circle"></div>
-            <div class="clearfix"></div>
-          </div>
-        </div>
-        <div id="loading-caption">
-          Loading...
-        </div>
-      </div>
-    </div>
+	    <div id="loading">
+	      <div id="loading-box">
+	        <div id="loading-animation">
+	          <div id="circle">
+	            <div id="circle_1" class="circle"></div>
+	            <div id="circle_2" class="circle"></div>
+	            <div id="circle_3" class="circle"></div>
+	            <div class="clearfix"></div>
+	          </div>
+	        </div>
+	        <div id="loading-caption">
+	          Loading...
+	        </div>
+	      </div>
+	    </div>
+	    
 	</div>
 <!-- end:Content -->
 </div>
