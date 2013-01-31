@@ -27,86 +27,98 @@ Post.prototype.show_preview = function(){
 
 Post.prototype.draw_links = function (){
 	this.paper.setStart();
+	
 	from_links = this.from;
 	to_links = this.to;
 	
-
-
-// from here
-	var end;
-	var start = this;
-	for (var i = 0; i < from_links.length; ++i){
-		id = from_links[i];
-		end = this.paper.getById(from_links[i]);
-		if (end != null){
-			var xdiff = start.x - parseInt(end.attr("cx"));	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
-
-			var starty = start.y + start.size;
-			var startx = start.x;
-			var endy = parseInt(end.attr("cy")) + parseInt(end.attr("r"));
-			var endx = end.attr("cx");
-
-			var xx = start.x - xdiff * 0.25;
-			var xy = starty + xdiff * 0.2;
-
-			var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
-			var yy = endy + xdiff * 0.2;
-			
-//			var controlpointx = (endx - startx) / 2;
-//			var controlpointy = startx - endx;
+	// arrows from here:
+	for (var i = 0; i < from_links.length; ++i) {
+		var other_circle = this.paper.getById(from_links[i]);
+		draw_arrow(this.circle, other_circle, this.paper, "down");
+	}	
+	// arrows to here:
+	for (var i = 0; i < to_links.length; ++i) {
+		var other_circle = this.paper.getById(to_links[i]);
+		draw_arrow(this.circle, other_circle, this.paper, "up");
+	}
+	
 //
-//			var px = -200;//oder startx - endx
-
-			var arrow = this.paper.path ("M" + startx + " " + starty);
-			arrow.animate({path:"M" + startx + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy},300, "easeOut");
-
-			var color = end.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
-
-			arrow.attr({
-				'stroke': color,
-				'stroke-width': 3.0,
-			});
-
-			var arrowSet1 = this.paper.arrowSet(endx-8, endy-2, endx-3, endy-1, 4);
-			arrowSet1[0].attr({ "fill" : arrow.attr("stroke"), "stroke-width" : "0" });
-		}
-	}
-
-// to here
-	end = this;
-	var start;
-//	var pathId; 
-	for (var i = 0; i < to_links.length; ++i){
-		start = this.paper.getById(to_links[i]);
-
-		if (start != null){
-
-			var xdiff = parseInt(start.attr("cx")) - end.x;	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
-
-			var starty = parseInt(start.attr("cy")) - parseInt(start.attr("r"));
-			var endy = end.y - end.size;
-
-			var xx = parseInt(start.attr("cx")) - xdiff * 0.25;
-			var xy = starty - xdiff * 0.2;
-
-			var yx = end.x + xdiff * 0.25;
-			var yy = endy - xdiff * 0.2;
-
-			var path = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty);
-
-			path.animate({path:"M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy},100,"easeOut");
-			
-			var color = String(end.color) ;
-
-			var arrowSet = this.paper.arrowSet(end.x-20, endy-5, end.x-1, endy-1, 3);
-			arrowSet[0].attr({ "fill" : color, "stroke-width" : "0" });
-
-			path.attr({
-				'stroke': color,
-				'stroke-width': 3.0,
-			});
-		}
-	}
+//
+//// from here
+//	var end;
+//	var start = this;
+//	for (var i = 0; i < from_links.length; ++i){
+//		id = from_links[i];
+//		end = this.paper.getById(id);
+//		if (end != null){
+//			var xdiff = start.x - parseInt(end.attr("cx"));	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
+//
+//			var starty = start.y + start.size;
+//			var startx = start.x;
+//			var endy = parseInt(end.attr("cy")) + parseInt(end.attr("r"));
+//			var endx = end.attr("cx");
+//
+//			var xx = start.x - xdiff * 0.25;
+//			var xy = starty + xdiff * 0.2;
+//
+//			var yx = parseInt(end.attr("cx")) + xdiff * 0.25;
+//			var yy = endy + xdiff * 0.2;
+//			
+////			var controlpointx = (endx - startx) / 2;
+////			var controlpointy = startx - endx;
+////
+////			var px = -200;//oder startx - endx
+//
+//			var arrow = this.paper.path ("M" + startx + " " + starty);
+//			arrow.animate({path:"M" + startx + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + parseInt(end.attr("cx")) + " " + endy},300, "easeOut");
+//
+//			var color = end.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
+//
+//			arrow.attr({
+//				'stroke': color,
+//				'stroke-width': 3.0,
+//			});
+//
+//			var arrowSet1 = this.paper.arrowSet(endx-8, endy-2, endx-3, endy-1, 4);
+//			arrowSet1[0].attr({ "fill" : arrow.attr("stroke"), "stroke-width" : "0" });
+//		}
+//	}
+//
+//// to here
+//	end = this;
+//	var start;
+////	var pathId; 
+//	for (var i = 0; i < to_links.length; ++i){
+//		start = this.paper.getById(to_links[i]);
+//
+//		if (start != null){
+//
+//			var xdiff = parseInt(start.attr("cx")) - end.x;	//arrow always drawn leftwards, startcoordinate bigger than endcoordinate
+//
+//			var starty = parseInt(start.attr("cy")) - parseInt(start.attr("r"));
+//			var endy = end.y - end.size;
+//
+//			var xx = parseInt(start.attr("cx")) - xdiff * 0.25;
+//			var xy = starty - xdiff * 0.2;
+//
+//			var yx = end.x + xdiff * 0.25;
+//			var yy = endy - xdiff * 0.2;
+//
+//			var path = this.paper.path ("M" + parseInt(start.attr("cx")) + " " + starty);
+//
+//			path.animate({path:"M" + parseInt(start.attr("cx")) + " " + starty + "C" + xx + "," + xy + " " + yx + "," + yy + " " + end.x + " " + endy},100,"easeOut");
+//			
+//			var color = String(end.color) ;
+//
+//			var arrowSet = this.paper.arrowSet(end.x-20, endy-5, end.x-1, endy-1, 3);
+//			arrowSet[0].attr({ "fill" : color, "stroke-width" : "0" });
+//
+//			path.attr({
+//				'stroke': color,
+//				'stroke-width': 3.0,
+//			});
+//		}
+//	}
 	return( this.paper.setFinish() );
 };
 

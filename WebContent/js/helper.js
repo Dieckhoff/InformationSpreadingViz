@@ -173,28 +173,46 @@ function normalize_size(max, min, score) {
 }
 
 function normalize_position(max, min, middle, current_time) {
-	var result = 30;
-	if (current_time < middle)
+	var result;
+	
+	if (current_time == 0)
+		result = 30;	
+	else if (current_time < middle) {
 		result = ( (current_time - min) * ((500 - 30) / (max - min)) + 30 );	// left side of the clicked post - from pixel 30 to pixel 500
+	}
 	else if (current_time > middle)
 		result = ( (current_time - min) * ((1000 - 500) / (max - min)) + 500 );	// right side of the clicked post - from pixel 500 to pixel 1000
-	else
+	else {
 		result = 500;
+	}
+	
 	return result;
 }
 
 function clearAll(){
-	for (var i = 0; i < post_array.length; ++i) {
-//		console.log(arr.length);
-//		console.log(arr);
-//		arr.pop();
-//		arr[i].color = "";
-//		delete arr[i].circle;
-//		delete arr[i].links;
-//		arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
-//		if (arr[i].links != undefined)
-//			arr[i].links.hide();
-	}
 	delete post_array;
 	paper.clear();
+}
+
+function draw_arrow(start_circle, end_circle, paper, up_or_down) {
+	var start_x	= parseInt(start_circle.attr("cx"));
+	var end_x	=  parseInt(end_circle.attr("cx"));
+	var arrow;
+	
+	if (up_or_down == "up") {
+		var start_y	= parseInt(start_circle.attr("cy")) + parseInt(start_circle.attr("r"));
+		var end_y	= parseInt(end_circle.attr("cy")) + parseInt(start_circle.attr("r"));
+		arrow = paper.path("M" + start_x + "," + start_y + "A 3,2 0 0,1  " + end_x + "," + end_y);
+	}
+	else {
+		var start_y	= parseInt(start_circle.attr("cy")) - parseInt(start_circle.attr("r"));
+		var end_y	= parseInt(end_circle.attr("cy")) - parseInt(start_circle.attr("r"));
+		arrow = paper.path("M" + start_x + "," + start_y + "A 3,2 0 1,0  " + end_x + "," + end_y);	
+	}	
+
+	arrow.attr({
+		stroke: 'steelblue',
+		'stroke-width': 3.0,
+	});
+	arrow.toBack();
 }
