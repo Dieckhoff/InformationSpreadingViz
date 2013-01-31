@@ -130,9 +130,9 @@ function get_min_max_values(posts){
 			max_importance = score;
 		if (score < min_importance)
 			min_importance = score;
-		if ( (date > max_date) && (date > 0) )
+		if ( (date > max_date) )
 			max_date = date;
-		if ( (date < min_date) && (date > 0) )
+		if ( (date < min_date) )
 			min_date = date;
 	}
 	
@@ -153,16 +153,18 @@ function normalize_size(max, min, score) {
 function normalize_position(max, min, middle, current_time) {
 	var result;
 	
-	if (current_time == 0)
-		result = 30;	
-	else if (current_time < middle) {
-		result = ( (current_time - min) * ((500 - 30) / (max - min)) + 30 );	// left side of the clicked post - from pixel 30 to pixel 500
+	if (current_time > 0) {
+		if (current_time < middle) {
+			result = ( (current_time - min) * ((500 - 30) / (max - min)) + 30 );	// left side of the clicked post - from pixel 30 to pixel 500
+		}
+		else if (current_time > middle)
+			result = ( (current_time - min) * ((1000 - 500) / (max - min)) + 500 );	// right side of the clicked post - from pixel 500 to pixel 1000
+		else {
+			result = 500;
+		}
 	}
-	else if (current_time > middle)
-		result = ( (current_time - min) * ((1000 - 500) / (max - min)) + 500 );	// right side of the clicked post - from pixel 500 to pixel 1000
-	else {
-		result = 500;
-	}
+	else
+		result = 30;
 	
 	return result;
 }

@@ -34,12 +34,12 @@ Post.prototype.draw_links = function (){
 	// arrows from here:
 	for (var i = 0; i < from_links.length; ++i) {
 		var other_circle = this.paper.getById(from_links[i]);
-		draw_arrow(this.circle, other_circle, this.paper, "down");
+		draw_arrow(this.circle, other_circle, "down");
 	}	
 	// arrows to here:
 	for (var i = 0; i < to_links.length; ++i) {
 		var other_circle = this.paper.getById(to_links[i]);
-		draw_arrow(this.circle, other_circle, this.paper, "up");
+		draw_arrow(this.circle, other_circle, "up");
 	}
 	
 //
@@ -181,10 +181,10 @@ Post.prototype.draw_label = function (){
 	if(this.url.length * fontsize  > bwidth) {
 		var charsToCutOff = (this.url.length*fontsize -3 - bwidth) / fontsize -20;
 		newurl = this.url.substring(0, this.url.length - charsToCutOff) + "...";
-		this.url = this.paper.text(this.x + 108 , this.y - 135, newurl);
+		this.url = this.paper.text(this.x + 108, this.y - 135, newurl);
 	}
 	else
-		this.url = this.paper.text(this.x + 108 , this.y - 135, this.url);
+		this.url = this.paper.text(this.x + 108, this.y - 135, this.url);
 
 	this.url.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
@@ -194,6 +194,8 @@ Post.prototype.draw_label = function (){
 		'font-size': fontsize,
 		href: this.url,
 	});
+	
+//	var time = paper.text(this.x + 168, this.y - 80, this.time);	//only fo debugging
 
 	var label = this.paper.setFinish();
 	return(label);
