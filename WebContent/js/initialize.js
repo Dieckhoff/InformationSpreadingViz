@@ -109,7 +109,7 @@ function initialize_functions(){
 					post.preview_image.hide();
 				}
 			);
-			post.circle.click(function(){
+			post.circle.dblclick(function(){
 				clearAll();
 				initialize_posts(post.Uuid);
 			});
