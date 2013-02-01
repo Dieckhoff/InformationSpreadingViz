@@ -18,6 +18,7 @@
     <script src="${pageContext.request.contextPath}/js/plug_arrows.js"></script>
     <script src="${pageContext.request.contextPath}/js/detect_zoom.js"></script>
     <script src="${pageContext.request.contextPath}/js/helper.js"></script>
+    <script src="${pageContext.request.contextPath}/js/draw_helper.js"></script>
 	</head>
 <body>
 

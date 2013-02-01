@@ -1,45 +1,15 @@
-//	{
-//	    "posts": [
-//	        {
-//	            "id": "de.zeit.www:http/digital/datenschutz/2012-11/google-transparency-report-2012",
-//	            "title": "Google Transparency Report: Staatliche �?berwachung im Netz nimmt weltweit zu",
-//	            "blog": "http://www.zeit.de",
-//	            "content": "Petraeus ist nur einer von Tausenden, die vom Staat ausgespäht werden. Google berichtet: Nie wurde der Konzern aufgefordert, so viele Nutzerdaten auszuhändigen wie heute.",
-//	            "image": "http://images.zeit.de/digital/datenschutz/2012-11/general-david-petraeus/general-david-petraeus-148x84.jpg",
-//	            "url": "http://www.zeit.de/digital/datenschutz/2012-11/google-transparency-report-2012",
-//	            "author": "",
-//	            "pubDate": "Nov 14, 2012 1:17:15 PM",
-//	            "score": 3.8472834e-9,
-//	            "outgoingLinks": [
-//	                "de.zeit.www:http/digital/datenschutz/2012-11/ccc-kritik-antiterrordatei",
-//	                "de.zeit.zeitreisen:http/",
-//	                "de.zeit.www:http/karriere/beruf/index",
-//	            ],
-//	            "incomingLinks": [
-//	                "de.zeit.www:http/digital/datenschutz/index",
-//	                "de.zeit.www:http/digital/datenschutz/2012-11/google-transparency-report-2012"
-//	            ]
-//	        },
-//	       { ... Hier folgen die weiteren anzuzeigenden Posts. ... }
-//	    ]
-//	}
-
 function initialize_posts(initial_post_id){
-
 	$("#loading").show();
 	$.getJSON("http://localhost:8080/InformationSpreadingViz/InformationSpreading?id=" + initial_post_id,
-		function(result){
-		
-		$("#loading").hide();
-		var posts = result.posts;
+		function(result){		
+			$("#loading").hide();
+			var posts = result.posts;
 			initialize_post_callback(posts)
 		}.bind(this)
-	);
-	
+	);	
 };
 
-function initialize_post_callback(posts){
-	
+function initialize_post_callback(posts){	
 	var initial_post = posts[0];
 	var min_max_values = get_min_max_values(posts);
 	
@@ -62,8 +32,9 @@ function initialize_post_callback(posts){
 		post.size = normalize_size(max_importance, min_importance, post.importance);
 
 		post.time = new Date(parseInt(posts[i].pubDate));
+		middle_date = parseInt(initial_post.pubDate);
 
-		post.x = normalize_position(max_date, min_date, parseInt(posts[i].pubDate));
+		post.x = normalize_position(max_date, min_date, middle_date, parseInt(posts[i].pubDate));
 
 		post.y = 200;
 
@@ -91,6 +62,8 @@ function initialize_post_callback(posts){
 
 		arr.push(post);
 	};
+	
+	draw_timeline(max_date, min_date, middle_date);
 	
 	var clicked = arr[0];
 	
@@ -142,16 +115,18 @@ function get_min_max_values(posts){
 		
 	
 	for (var i = 0; i < posts.length; ++i){		
-		post = posts[i];
+		var post = posts[i];
+		var score = parseFloat(post.score);
+		var date = parseInt(post.pubDate);
 
-		if (parseFloat(post.score) > max_importance)
-			max_importance = parseFloat(post.score);
-		if (parseFloat(post.score) < min_importance)
-			min_importance = parseFloat(post.score);
-		if (parseInt(post.pubDate) > max_date)
-			max_date = parseInt(post.pubDate);
-		if (parseInt(post.pubDate) < min_date)
-			min_date = parseInt(post.pubDate);
+		if (score > max_importance)
+			max_importance = score;
+		if (score < min_importance)
+			min_importance = score;
+		if ( (date > max_date) && (date > 0) )
+			max_date = date;
+		if ( (date < min_date) && (date > 0) )
+			min_date = date;
 	}
 	
 	var min_max_values = [];
@@ -168,9 +143,15 @@ function normalize_size(max, min, score){
 	return ( (score - min) * ( (50 - 20) / (max - min) ) + 20 );
 }
 
-function normalize_position(max, min, time){
-	var result = ( (time - min) * ((1000 - 30) / (max - min)) + 30 );
-	return parseInt(result);
+function normalize_position(max, min, middle, current_time){
+	var result = 30;
+	if (current_time < middle)
+		result = ( (current_time - min) * ((500 - 30) / (max - min)) + 30 );	// left side of the clicked post - from pixel 30 to pixel 500
+	else if (current_time > middle)
+		result = ( (current_time - min) * ((1000 - 500) / (max - min)) + 500 );	// right side of the clicked post - from pixel 500 to pixel 1000
+	else
+		result = 500;
+	return result;
 }
 
 function calculate_position(max_pos_diff, min_pos_diff, current_pos){
@@ -180,11 +161,6 @@ function calculate_position(max_pos_diff, min_pos_diff, current_pos){
 }
 
 function clearAll(){
-	for(var i = 0; i < arr.length; i++) {
-		delete arr[i].circle;
-		delete arr[i].links;
-//		arr[i].circle.attr({"stroke-width": 0, "stroke": 'red'});
-//		if (arr[i].links != undefined)
-//			arr[i].links.hide();
-	}
+	paper.clear();
+	
 }
