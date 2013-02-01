@@ -26,9 +26,11 @@
 
 function initialize_posts(initial_post_id){
 
-	
+	$("#loading").show();
 	$.getJSON("http://localhost:8080/InformationSpreadingViz/InformationSpreading?id=" + initial_post_id,
 		function(result){
+		
+		$("#loading").hide();
 		var posts = result.posts;
 			initialize_post_callback(posts)
 		}.bind(this)

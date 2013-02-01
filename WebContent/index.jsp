@@ -7,6 +7,7 @@
 	<title>HTML Site Template</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/default.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/loading.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/ui-lightness/jquery-ui.css" />
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
@@ -30,6 +31,23 @@
     <li class="active">Aktueller Post</li>
     </ul>
 </div>
+
+				    <div id="loading">
+				      <div id="loading-box">
+				        <div id="loading-animation">
+				          <div id="circle">
+				            <div id="circle_1" class="circle"></div>
+				            <div id="circle_2" class="circle"></div>
+				            <div id="circle_3" class="circle"></div>
+				            <div class="clearfix"></div>
+				          </div>
+				        </div>
+		        <div id="loading-caption">
+		          Loading...
+		        </div>
+		      </div>
+		    </div>
+		    
 <!-- start:Wrap -->
 <div id="wrap">
 <!-- start:Content -->
@@ -39,6 +57,7 @@
 <!-- end:Content -->
 </div>
 <!-- end:Wrap -->
+
 <footer>
 <img src="${pageContext.request.contextPath}/graphics/Logo-white-background.png" width="368" alt="Logo">
 </footer>
