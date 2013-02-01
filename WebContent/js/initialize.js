@@ -42,13 +42,16 @@ function initialize_post_callback(posts){
 		post.y = 200;
 
 		if (post.type == 'Facebook'){
-			post.color = 'lightgreen';
+			post.color = 'forestgreen';
 		}
 		else if (post.type == 'Twitter'){
-			post.color = 'purple';
+			post.color = 'firebrick';
 		}
-		else if (post.type == 'News'){
-			post.color = 'orange';
+		else if (post.type == 'Newsportal'){
+			post.color = 'darkgray';
+		}
+		else if (post.type == 'Blog'){
+			post.color = 'steelblue';
 		}
 		else{
 			post.color = 'steelblue';
