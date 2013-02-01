@@ -64,6 +64,7 @@ function initialize_post_callback(posts){
 	};
 	
 	draw_timeline(max_date, min_date, middle_date);
+	timeline.toBack();
 	
 	var clicked = arr[0];
 	
