@@ -52,7 +52,7 @@
 <!-- start:Wrap -->
 <div id="wrap">
 <!-- start:Content -->
-	<div id="content">
+	<div id="InformationSpreadingViz">
 		<div id="draw"></div>
 	</div>
 <!-- end:Content -->

@@ -9,7 +9,9 @@ function initialize_posts(initial_post_id){
 	);	
 };
 
-function initialize_post_callback(posts){	
+function initialize_post_callback(posts){
+	arr = new Array();
+	
 	var initial_post = posts[0];
 	var min_max_values = get_min_max_values(posts);
 	
@@ -39,7 +41,7 @@ function initialize_post_callback(posts){
 		post.y = 200;
 
 		if (post.type == 'Facebook'){
-			post.color = 'steelblue';
+			post.color = 'lightgreen';
 		}
 		else if (post.type == 'Twitter'){
 			post.color = 'purple';
@@ -68,25 +70,41 @@ function initialize_post_callback(posts){
 	
 	var clicked = arr[0];
 	
+	console.log(clicked.circle);
+	
+	
+	clicked.circle.toFront();
+	
 	clicked.to = initial_post.incomingLinks;
 	clicked.from = initial_post.outgoingLinks;
 	
 	clicked.links = clicked.draw_links();
 	
-	initialize_functions(arr);
+	clicked.circle.glow({
+		width: 40,
+		fill: true,
+		color: 'orange',
+	});
+	
+	clicked.circle.attr({
+		stroke: 'orange',
+		'stroke-width': 6.0,
+	});
+	
+	initialize_functions();
 }
 
-function initialize_functions(arr){
+function initialize_functions(){
 	for(var i = 0; i < arr.length; i++) {
 		var post = arr[i];
 		(function(post) {
 			post.circle.mouseover(
 				function () {
-					this.animate({"opacity": .8}, 200);
+//					this.animate({"opacity": .8}, 200);
 					post.label.show();
 					post.preview_image.show();
 				}).mouseout(function () {
-					this.animate({"opacity": .5}, 200);
+//					this.animate({"opacity": .5}, 200);
 					post.label.hide();
 					post.preview_image.hide();
 				}
@@ -150,4 +168,5 @@ function normalize_position(max, min, middle, current_time){
 
 function clearAll(){
 	paper.clear();
+	delete arr;
 }

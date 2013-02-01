@@ -1,6 +1,5 @@
 $(function() {
 	paper = Raphael('draw',"500%","500%");
-	arr = new Array();
 	initialize_posts("de.zeit.www:http/digital/datenschutz/2012-11/google-transparency-report-2012");
 });
 //
