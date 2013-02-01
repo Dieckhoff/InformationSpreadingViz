@@ -21,7 +21,6 @@
 
 
 <header id="header">
-<img src="${pageContext.request.contextPath}/graphics/Logo-white-background.png" width="368" alt="Logo">
 </header>
 <!-- start:Wrap -->
 <div id="wrap">
@@ -32,5 +31,8 @@
 <!-- end:Content -->
 </div>
 <!-- end:Wrap -->
+<footer>
+<img src="${pageContext.request.contextPath}/graphics/Logo-white-background.png" width="368" alt="Logo">
+</footer>
 </body>
 </html>
