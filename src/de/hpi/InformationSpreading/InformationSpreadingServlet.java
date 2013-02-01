@@ -125,14 +125,30 @@ public class InformationSpreadingServlet extends HttpServlet {
 				
 				outputContainer.getPosts().add(populateContainerComplete(inputContainer, id).getPost());
 				
+				ArrayList<String> incominglinksToBeRemoved = new ArrayList<>();
+				ArrayList<String> outgoinglinksToBeRemoved = new ArrayList<>();
+								
 				for (String link : inputContainer.getPost().getIncomingLinks()) {
-					outputContainer.getPosts().add(getPopulatedContainerWithScore(link).getPost());				
+					Post post = getPopulatedContainerWithScore(link).getPost();
+					if (Long.valueOf(post.getPubDate()) == 0) {
+						incominglinksToBeRemoved.add(post.getId());
+					} else {
+						outputContainer.getPosts().add(post);	
+					}
+								
 				}
 				
 				for (String link : inputContainer.getPost().getOutgoingLinks()) {
-					outputContainer.getPosts().add(getPopulatedContainerWithScore(link).getPost());				
+					Post post = getPopulatedContainerWithScore(link).getPost();
+					if (Long.valueOf(post.getPubDate()) == 0) {
+						outgoinglinksToBeRemoved.add(post.getId());
+					} else {
+						outputContainer.getPosts().add(post);	
+					}			
 				}				
 				
+				outputContainer.getPosts().get(0).getIncomingLinks().removeAll(incominglinksToBeRemoved);
+				outputContainer.getPosts().get(0).getOutgoingLinks().removeAll(outgoinglinksToBeRemoved);
 				outputJson = new Gson().toJson(outputContainer);	
 				
 			}
