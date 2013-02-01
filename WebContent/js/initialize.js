@@ -23,7 +23,7 @@ function initialize_post_callback(posts){
 	for (var i = 0; i < posts.length; ++i) {	// drawing all the mentioned posts (including the initial (clicked) post
 		var post = new Post(posts[i].id);
 
-		post.paper = paper;
+		post.paper = my_paper;
 		post.title = posts[i].title;
 		post.type = posts[i].type;
 		post.url = posts[i].url;

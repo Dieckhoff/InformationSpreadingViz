@@ -33,12 +33,14 @@ Post.prototype.draw_links = function (){
 	
 	// from here:
 	for (var i = 0; i < from_links.length; ++i) {
+		console.log('from ' + from_links[i]);
 		other = this.paper.getById(from_links[i]);
 		draw_arrow(this.circle, other, 'down');
 	}
 	
 	// to here:
 	for (var i = 0; i < to_links.length; ++i) {
+		console.log('to ' + to_links[i]);
 		other = this.paper.getById(to_links[i]);
 		draw_arrow(other, this.circle, 'up');
 	}
@@ -90,26 +92,28 @@ Post.prototype.draw_label = function (){
 		fill: '#ABA8A8',
 		'font-size': 16,
 	});
-		var newurl; 
-		var bwidth = box.getBBox().width +18;
+	var newurl; 
+	var bwidth = box.getBBox().width +18;
 
-		if(this.url.length * fontsize  > bwidth)
-		{
-			var charsToCutOff = (this.url.length*fontsize -3 - bwidth) / fontsize + 3;
-			newurl = this.url.substring(0, this.url.length - charsToCutOff) + "...";
-			var url = this.paper.text(this.x + 108 , this.y - 135, newurl);
-		}else{
-			var url = this.paper.text(this.x + 108 , this.y - 135, this.url);
-		}	
+	if(this.url.length * fontsize  > bwidth)
+	{
+		var charsToCutOff = (this.url.length*fontsize -3 - bwidth) / fontsize + 3;
+		newurl = this.url.substring(0, this.url.length - charsToCutOff) + "...";
+		var url = this.paper.text(this.x + 108 , this.y - 135, newurl);
+	}else{
+		var url = this.paper.text(this.x + 108 , this.y - 135, this.url);
+	}	
 
-		url.attr({
-			"font-family": "Arial, Helvetica, sans-serif",
-			origin: 'baseline',
-			'text-anchor': 'start',
-			fill: '#ABA8A8',
-			'font-size': fontsize,
-			href: this.url,
-		});
+	url.attr({
+		"font-family": "Arial, Helvetica, sans-serif",
+		origin: 'baseline',
+		'text-anchor': 'start',
+		fill: '#ABA8A8',
+		'font-size': fontsize,
+		href: this.url,
+	});
+	
+	var time = this.paper.text(this.x + 50, this.y - 50, this.time);	//only for debugging
 
 	var label = this.paper.setFinish();
 	return(label);

@@ -20,6 +20,7 @@
     <script src="${pageContext.request.contextPath}/js/helper.js"></script>
     <script src="${pageContext.request.contextPath}/js/draw_helper.js"></script>
     <script src="${pageContext.request.contextPath}/js/initialize.js"></script>
+    <script src="${pageContext.request.contextPath}/js/scale_raphael.js"></script>
 	</head>
 <body>
 
