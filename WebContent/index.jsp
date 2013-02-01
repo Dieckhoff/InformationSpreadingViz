@@ -23,7 +23,13 @@
 
 <header id="header">
 </header>
-
+<div id="info-container">
+    <ul class="breadcrumb">
+    <li><a href="#">Vorletzter Post</a> <span class="divider">/</span></li>
+    <li><a href="#">Letzter Post</a> <span class="divider">/</span></li>
+    <li class="active">Aktueller Post</li>
+    </ul>
+</div>
 <!-- start:Wrap -->
 <div id="wrap">
 <!-- start:Content -->
