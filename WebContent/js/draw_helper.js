@@ -44,8 +44,8 @@ function draw_arrow(start_circle, end_circle, up_or_down) {
 		'stroke-width': 3.0,
 	});
 
-//	head.toBack();
-//	arrow.toBack();
+	head.toBack();
+	arrow.toBack();
 }
 
 function draw_arrow_head(x, y, color, up_or_down){
