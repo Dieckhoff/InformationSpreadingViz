@@ -6,8 +6,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>HTML Site Template</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/default.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/ui-lightness/jquery-ui.css" />
-
+	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
     <script src="${pageContext.request.contextPath}/js/raphael.js"></script>
@@ -22,6 +23,7 @@
 
 <header id="header">
 </header>
+
 <!-- start:Wrap -->
 <div id="wrap">
 <!-- start:Content -->
