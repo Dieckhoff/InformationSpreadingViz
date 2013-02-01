@@ -25,28 +25,6 @@ Post.prototype.show_preview = function(){
 	return(image);
 }
 
-//Post.prototype.get_links_from_here = function(){
-//	var list = [];
-//	for (var i = 0; i < links.length; ++i){
-//		var link = links[i];
-//		if (link.from == this.Uuid){
-//			list.push(link.to);
-//		}
-//	}
-//	return(list);
-//}
-//
-//Post.prototype.get_links_to_here = function(){
-//	var list = [];
-//	for (var i = 0; i < links.length; ++i){
-//		var link = links[i];
-//		if (link.to == this.Uuid){
-//			list.push(link.from);
-//		}
-//	}
-//	return(list);
-//}
-
 Post.prototype.draw_links = function (){
 	this.paper.setStart();
 	from_links = this.from;
@@ -78,7 +56,7 @@ Post.prototype.draw_links = function (){
 
 			arrow.attr({
 				'stroke': color,
-				'stroke-width': 1.5,
+				'stroke-width': 3.0,
 			})
 
 			var arrowSet1 = this.paper.arrowSet(endx-8,endy-2,endx-3, endy-1,4);
@@ -131,7 +109,7 @@ Post.prototype.draw_links = function (){
 
 			path.attr({
 				'stroke': color,
-				'stroke-width': 1.0,
+				'stroke-width': 3.0,
 			})
 		}
 	}
@@ -145,15 +123,8 @@ Post.prototype.draw_circle = function (){
 	circle.attr({
 		fill: "r(0.75, 0.05)#fff-"+this.color+":150",
 		cursor: 'pointer',
-		opacity: 0.5,
+		opacity: 1.0,
 		"stroke-width": 0,
-	});
-
-	circle.glow({
-		width: '1',
-		fill: 'false',
-		color: String(this.color),
-		opacity: '0.5',
 	});
 
 	return(circle);

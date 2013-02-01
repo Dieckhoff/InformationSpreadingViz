@@ -48,7 +48,7 @@ function initialize_post_callback(posts){
 			post.color = 'orange';
 		}
 		else{
-			post.color = 'grey';
+			post.color = 'steelblue';
 		}
 
 		post.label = post.draw_label();
@@ -92,13 +92,6 @@ function initialize_functions(arr){
 			);
 			post.circle.click(function(){
 				clearAll();
-//				post.links = post.draw_links();
-//				$.getJSON("http://localhost:8080/InformationSpreadingViz/InformationSpreading?id=" + post.Uuid,
-//					function(result){
-//						$.each(result, function(i, field){
-//						console.log(this[0]);
-//				    });
-//				});
 				initialize_posts(post.Uuid);
 			});
 		})(post);
@@ -154,13 +147,6 @@ function normalize_position(max, min, middle, current_time){
 	return result;
 }
 
-function calculate_position(max_pos_diff, min_pos_diff, current_pos){
-	if ((max_pos_diff < 20) && (max_pos_diff > 300)){
-	}
-	else return current_pos;
-}
-
 function clearAll(){
 	paper.clear();
-	
 }
