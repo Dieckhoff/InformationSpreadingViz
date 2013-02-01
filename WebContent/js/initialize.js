@@ -1,4 +1,5 @@
 function initialize_posts(initial_post_id){
+	draw_timeline();
 	$("#loading").show();
 	$.getJSON("http://localhost:8080/InformationSpreadingViz/InformationSpreading?id=" + initial_post_id,
 		function(result){		
@@ -65,7 +66,7 @@ function initialize_post_callback(posts){
 		arr.push(post);
 	};
 	
-	draw_timeline(max_date, min_date, middle_date);
+	draw_timeline_labels(max_date, min_date, middle_date);
 	timeline.toBack();
 	
 	var clicked = arr[0];
@@ -80,17 +81,17 @@ function initialize_post_callback(posts){
 	
 	clicked.links = clicked.draw_links();
 	
-	clicked.circle.glow({
+	clicked.circle.g = clicked.circle.glow({
 		width: 40,
 		fill: true,
 		color: 'orange',
 	});
 	
-	clicked.circle.attr({
-		stroke: 'orange',
-		'stroke-width': 6.0,
-	});
-	
+//	clicked.circle.attr({
+//		stroke: 'orange',
+//		'stroke-width': 6.0,
+//	});
+//	
 	initialize_functions();
 }
 
@@ -98,20 +99,34 @@ function initialize_functions(){
 	for(var i = 0; i < arr.length; i++) {
 		var post = arr[i];
 		(function(post) {
-			post.circle.mouseover(
-				function () {
-//					this.animate({"opacity": .8}, 200);
-					post.label.show();
-					post.preview_image.show();
-				}).mouseout(function () {
+			post.circle.mouseover(function() {
+//				this.animate({"opacity": .8}, 200);
+				post.label.show();
+				post.preview_image.show();
+			}).mouseout(function () {
 //					this.animate({"opacity": .5}, 200);
-					post.label.hide();
-					post.preview_image.hide();
-				}
-			);
-			post.circle.dblclick(function(){
+				post.label.hide();
+				post.preview_image.hide();
+			});
+			post.circle.dblclick(function() {
+				var pos_x	= parseInt(this.attr('cx'));
+				var radius	= parseInt(this.attr('r'));
+				var color	= parseInt(this.attr('fill'));
 				clearAll();
+				draw_timeline();
+				clicked_circle = my_paper.circle(pos_x, 200, radius);
+				clicked_circle.attr({
+					stroke: .0,
+					fill: color,
+				});
 				initialize_posts(post.Uuid);
+			});
+			post.circle.click(function() {
+				clear_marking();
+				this.g = this.glow({
+					color: 'orange',
+					width: 90.0,
+				});
 			});
 		})(post);
 	};

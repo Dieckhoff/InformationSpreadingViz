@@ -1,5 +1,4 @@
 function get_min_max_values(posts){
-
 	var max_importance = 0;
 	var min_importance = parseFloat(posts[0].score);
 

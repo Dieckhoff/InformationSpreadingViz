@@ -1,4 +1,4 @@
-function draw_timeline(min, max, middle) {
+function draw_timeline() {
 	timeline = my_paper.path(["M0,200H1200"]);
 	timeline.attr({
 		stroke: 'grey',
@@ -7,8 +7,9 @@ function draw_timeline(min, max, middle) {
 		'arrow-end': 'classic-wide-long',
 		'arrow-end': 'grey',
 	});
-	
-	// date labels:
+}
+
+function draw_timeline_labels(min, max, middle) {
 	var startdate = new Date(min);
 	var middledate = new Date(middle);
 	var enddate = new Date(max);
@@ -70,4 +71,16 @@ function draw_arrow_head(x, y, color, up_or_down){
 function clearAll(){
 	my_paper.clear();
 	delete arr;
+	delete timeline;
+}
+
+function clear_marking() {
+	for(var i = 0; i < arr.length; i++) {
+		if (arr[i].circle.g != null)
+			arr[i].circle.g.remove();
+		
+		arr[i].circle.attr({
+			'stroke-width': 0.0,
+		});
+	}
 }
