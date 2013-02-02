@@ -13,7 +13,7 @@ function initialize_posts(initial_post_id){
 function initialize_post_callback(posts){
 	arr = new Array();
 	
-	var initial_post = posts[0];
+	var initial_post = posts[0];	
 	var min_max_values = get_min_max_values(posts);
 	
 	var min_date		= min_max_values[0];
@@ -96,6 +96,7 @@ function initialize_post_callback(posts){
 //	});
 //	
 	initialize_functions();
+	populate_info_box(arr[0]);
 }
 
 function initialize_functions(){

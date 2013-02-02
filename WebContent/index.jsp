@@ -21,6 +21,7 @@
     <script src="${pageContext.request.contextPath}/js/draw_helper.js"></script>
     <script src="${pageContext.request.contextPath}/js/initialize.js"></script>
     <script src="${pageContext.request.contextPath}/js/scale_raphael.js"></script>
+    <script src="${pageContext.request.contextPath}/js/info_box.js"></script>
 	</head>
 <body>
 
@@ -35,21 +36,16 @@
     </ul>
 </div>
 
-				    <div id="loading">
-				      <div id="loading-box">
-				        <div id="loading-animation">
-				          <div id="circle">
-				            <div id="circle_1" class="circle"></div>
-				            <div id="circle_2" class="circle"></div>
-				            <div id="circle_3" class="circle"></div>
-				            <div class="clearfix"></div>
-				          </div>
-				        </div>
-		        <div id="loading-caption">
-		          Loading...
-		        </div>
-		      </div>
-		    </div>
+<div id="is-info-box">
+	<div id="is-info-box-bg">&nbsp;</div>
+	<div id="is-info-box-text-container">
+	<h5 class="is-info-box-text" id="is-post-title"></h5>
+	<h5 class="is-info-box-text"id="is-post-details-line1"></h5>
+	<h5 class="is-info-box-text" id="is-post-details-line2"></h5>
+	</div>
+</div>
+
+
 		    
 <!-- start:Wrap -->
 <div id="wrap">
@@ -60,6 +56,22 @@
 <!-- end:Content -->
 </div>
 <!-- end:Wrap -->
+
+<div id="loading">
+<div id="loading-box">
+<div id="loading-animation">
+<div id="circle">
+<div id="circle_1" class="circle"></div>
+<div id="circle_2" class="circle"></div>
+<div id="circle_3" class="circle"></div>
+<div class="clearfix"></div>
+</div>
+</div>
+<div id="loading-caption">
+Loading...
+</div>
+</div>
+</div>
 
 <footer>
 <img src="${pageContext.request.contextPath}/graphics/Logo-white-background.png" width="368" alt="Logo">

@@ -61,3 +61,37 @@
 .ml, table.ml tr td {margin-left: 10px;}
 .mr, table.mr tr td {margin-right: 10px;}
 .mb, table.mb tr td {margin-bottom: 10px;}
+
+#is-info-box {
+	position: relative;
+	margin-left: 20px;
+	display:-moz-inline-stack;
+	display:inline-block;
+	*display:inline;
+}
+	
+#is-info-box-bg {		
+	zoom: 1;
+	filter: alpha(opacity=50);
+	opacity: 0.5;	
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left:0;
+    position: absolute;
+    z-index: -1;
+}
+
+#is-info-box-text-container {
+	padding: 10px 30px;
+}
+
+.is-divider {
+	width: 300px; 
+	background-color: white; 
+	height:5px;
+  	margin-left: 20px;
+  	text-align:right; 
+  	
+}
