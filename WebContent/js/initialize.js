@@ -56,6 +56,12 @@ function initialize_post_callback(posts){
 		else{
 			post.color = 'steelblue';
 		}
+		
+		var img = new Image();
+		img.src = post.image_source;
+
+		post.imgwidth = img.width;
+		post.imgheight = img.height;
 
 		post.label = post.draw_label();
 		post.label.hide();

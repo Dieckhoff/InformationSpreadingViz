@@ -19,17 +19,12 @@ function Post(id){
 	this.circle;
 	this.links;
 	this.isSelected = false;
+	this.imgwidth;
+	this.imgheight;
 }
 
 Post.prototype.show_preview = function(){
-	var imgURL = this.image_source;
-
-	var img = new Image();
-	img.src = imgURL;
-
-	var width = img.width;
-	var height = img.height;
-	image = this.paper.image(imgURL, this.x + 5, this.y - 185, width, height);
+	image = this.paper.image(this.image_source, this.x + 5, this.y - 185, this.imgwidth, this.imgheight);
 	return(image);
 };
 
@@ -75,14 +70,9 @@ Post.prototype.draw_label = function (){
 	this.paper.setStart();
 
 	var fontsize = 14;
-	var titlefontsize = 20;
-	
-	var imgURL = this.image_source;
-	var img = new Image();
-	img.src = imgURL;
-	var imgwidth = img.width;
+	var titlefontsize = 20;	
 
-	var box = this.paper.rect(this.x - 15, 5, 400 + imgwidth, 100, 5);
+	var box = this.paper.rect(this.x - 15, 5, 400 + this.imgwidth, 100, 5);
 	box.attr({
 		fill: '#ffffff',
 		opacity: 0.95,
@@ -97,7 +87,7 @@ Post.prototype.draw_label = function (){
 
 	
 	var titletext = this.title.substring(0, 35) + "...";
-	var title = this.paper.text(this.x + 30 + imgwidth, this.y - 175, titletext);		
+	var title = this.paper.text(this.x + 30 + this.imgwidth, this.y - 175, titletext);		
 	title.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
@@ -107,7 +97,7 @@ Post.prototype.draw_label = function (){
 	});
 
 	var line2text = type_string + " vom " + date.getDay() + "." + date.getMonth() + "." + date.getFullYear();
-	var line2 = this.paper.text(this.x + 28 + imgwidth, this.y - 152, line2text);
+	var line2 = this.paper.text(this.x + 28 + this.imgwidth, this.y - 152, line2text);
 	line2.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
@@ -117,7 +107,7 @@ Post.prototype.draw_label = function (){
 	});
 	
 	var line3text = "veröffentlicht auf " + this.blog;
-	var line3 = this.paper.text(this.x + 28 + imgwidth, this.y - 132, line3text);
+	var line3 = this.paper.text(this.x + 28 + this.imgwidth, this.y - 132, line3text);
 	line3.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
@@ -128,7 +118,7 @@ Post.prototype.draw_label = function (){
 	});
 	
 	var line4text = type_string + " lesen ...";
-	var line4 = this.paper.text(this.x + 28 + imgwidth, this.y - 112, line4text);
+	var line4 = this.paper.text(this.x + 28 + this.imgwidth, this.y - 112, line4text);
 	line4.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
