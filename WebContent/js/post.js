@@ -86,7 +86,7 @@ Post.prototype.draw_label = function (){
 
 
 	
-	var titletext = this.title.substring(0, 35) + "...";
+	var titletext = this.title.substring(0, 30) + "...";
 	var title = this.paper.text(this.x + 30 + this.imgwidth, this.y - 175, titletext);		
 	title.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
