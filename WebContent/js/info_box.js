@@ -7,8 +7,12 @@ function populate_info_box(post){
 	var date = new Date(post.time);
 	
 	$("#is-post-title").html(post.title);
-	$("#is-post-details-line1").html(type_string + " vom " + date.getDay() + "." + date.getMonth() + "." + date.getFullYear());
-	$("#is-post-details-line2").html("veröffentlicht auf " + post.blog );
+	
+	var content = type_string + " vom " + date.getDay() + "." + date.getMonth() + "." + date.getFullYear() + "<br/>" + 
+				"veröffentlicht auf " + post.blog + "<br/>" + 
+				"<a href=\"" + post.url + "\" target=\"_blank\">" + type_string + " lesen ... </a>";
+	
+	$("#is-post-details").html(content);
 	
 	$("#is-info-box-img").attr("src", post.image_source); 
 	

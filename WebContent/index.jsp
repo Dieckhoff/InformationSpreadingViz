@@ -41,8 +41,7 @@
 	<div id="is-info-box-img-div"><img id="is-info-box-img"></div>
 	<div id="is-info-box-text-container">
 	<h5 class="is-info-box-text" id="is-post-title"></h5>
-	<h5 class="is-info-box-text"id="is-post-details-line1"></h5>
-	<h5 class="is-info-box-text" id="is-post-details-line2"></h5>
+	<h5 class="is-info-box-text" id="is-post-details"></h5>
 	</div>
 </div>
 

@@ -97,7 +97,7 @@ Post.prototype.draw_label = function (){
 
 	
 	var titletext = this.title.substring(0, 35) + "...";
-	var title = this.paper.text(this.x + 30 + imgwidth, this.y - 170, titletext);		
+	var title = this.paper.text(this.x + 30 + imgwidth, this.y - 175, titletext);		
 	title.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
@@ -107,7 +107,7 @@ Post.prototype.draw_label = function (){
 	});
 
 	var line2text = type_string + " vom " + date.getDay() + "." + date.getMonth() + "." + date.getFullYear();
-	var line2 = this.paper.text(this.x + 28 + imgwidth, this.y - 145, line2text);
+	var line2 = this.paper.text(this.x + 28 + imgwidth, this.y - 152, line2text);
 	line2.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
@@ -117,7 +117,7 @@ Post.prototype.draw_label = function (){
 	});
 	
 	var line3text = "veröffentlicht auf " + this.blog;
-	var line3 = this.paper.text(this.x + 28 + imgwidth, this.y - 125, line3text);
+	var line3 = this.paper.text(this.x + 28 + imgwidth, this.y - 132, line3text);
 	line3.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
@@ -126,6 +126,17 @@ Post.prototype.draw_label = function (){
 		'font-size': fontsize,
 		
 	});
+	
+	var line4text = type_string + " lesen ...";
+	var line4 = this.paper.text(this.x + 28 + imgwidth, this.y - 112, line4text);
+	line4.attr({
+		"font-family": "Arial, Helvetica, sans-serif",
+		origin: 'baseline',
+		'text-anchor': 'start',
+		fill: '#ABA8A8',
+		'font-size': fontsize,
+		href: this.url,		
+	});	
 	
 	var time = this.paper.text(this.x + 50, this.y - 50, this.time);	//only for debugging
 
