@@ -62,6 +62,10 @@
 .mr, table.mr tr td {margin-right: 10px;}
 .mb, table.mb tr td {margin-bottom: 10px;}
 
+#breadcrumb-nav-container {
+	margin-left: 20px;
+}
+
 #is-info-box {
 	position: relative;
 	margin-left: 20px;
@@ -104,10 +108,13 @@
 }
 
 .is-divider {
-	width: 300px; 
+	width: 1000px; 
 	background-color: white; 
-	height:5px;
+	height:3px;
   	margin-left: 20px;
   	text-align:right; 
+  	filter: alpha(opacity=60);
+	opacity: 0.6;	
+    background-color: #FFFFFF;
   	
 }

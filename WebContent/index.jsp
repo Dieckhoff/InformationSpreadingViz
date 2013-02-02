@@ -22,21 +22,21 @@
     <script src="${pageContext.request.contextPath}/js/initialize.js"></script>
     <script src="${pageContext.request.contextPath}/js/scale_raphael.js"></script>
     <script src="${pageContext.request.contextPath}/js/info_box.js"></script>
+    <script src="${pageContext.request.contextPath}/js/nav_element.js"></script>
 	</head>
 <body>
 
 
 <header id="header">
 </header>
-<div id="info-container">
-    <ul class="breadcrumb">
-    <li><a href="#">Vorletzter Post</a> <span class="divider">/</span></li>
-    <li><a href="#">Letzter Post</a> <span class="divider">/</span></li>
-    <li class="active">Aktueller Post</li>
-    </ul>
+<div id="breadcrumb-nav-container">
+<h4>Letzte angezeigte Posts:</h4>
 </div>
 
-<div id="is-info-box">
+<hr class="is-divider">
+
+<h4 style="margin-left: 20px;">Aktuell angezeiger Post:</h4>
+<div id="is-info-box">	
 	<div id="is-info-box-bg">&nbsp;</div>
 	<div id="is-info-box-img-div"><img id="is-info-box-img"></div>
 	<div id="is-info-box-text-container">

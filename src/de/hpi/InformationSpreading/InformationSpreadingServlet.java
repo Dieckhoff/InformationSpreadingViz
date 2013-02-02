@@ -34,10 +34,12 @@ public class InformationSpreadingServlet extends HttpServlet {
 	private PreparedStatement toUrlStmt;
 	private PreparedStatement fromUrlStmt;
 	private PreparedStatement scoreStmt;
+	private ArrayList<VisitedPost> visitedPosts = null;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
+		visitedPosts = new ArrayList<VisitedPost>();
 		
 		Properties p;
 		try {
@@ -98,6 +100,8 @@ public class InformationSpreadingServlet extends HttpServlet {
 		
 		public void doGet(HttpServletRequest request, HttpServletResponse response)
 				throws ServletException, IOException {
+			
+			
 
 			String param = request.getParameter("id");
 			String id = "";
@@ -123,7 +127,12 @@ public class InformationSpreadingServlet extends HttpServlet {
 				ArrayList<Post> posts = new ArrayList<Post>();
 				outputContainer.setPosts(posts);
 				
-				outputContainer.getPosts().add(populateContainerComplete(inputContainer, id).getPost());
+				Post cache = populateContainerComplete(inputContainer, id).getPost();
+				outputContainer.getPosts().add(cache);
+				
+				
+				// Add Post to list for nav
+				addToVisitedLinks(cache);
 				
 				ArrayList<String> incominglinksToBeRemoved = new ArrayList<>();
 				ArrayList<String> outgoinglinksToBeRemoved = new ArrayList<>();
@@ -149,6 +158,7 @@ public class InformationSpreadingServlet extends HttpServlet {
 				
 				outputContainer.getPosts().get(0).getIncomingLinks().removeAll(incominglinksToBeRemoved);
 				outputContainer.getPosts().get(0).getOutgoingLinks().removeAll(outgoinglinksToBeRemoved);
+				outputContainer.setVisitedPosts(visitedPosts);
 				outputJson = new Gson().toJson(outputContainer);	
 				
 			}
@@ -164,6 +174,17 @@ public class InformationSpreadingServlet extends HttpServlet {
 		
 
 	
+	}
+		
+	private void addToVisitedLinks(Post post) {
+		VisitedPost visitedPost = new VisitedPost();
+		visitedPost.setId(post.getId());
+		visitedPost.setTitle(post.getTitle());
+		
+		if(visitedPosts.contains(visitedPost)) {
+			visitedPosts.remove(visitedPost);
+		}
+		visitedPosts.add(visitedPost);
 	}
 		
 	private InputJsonContainer fetchPostDataFromBlogIntelligenceServer(String id) throws Exception {

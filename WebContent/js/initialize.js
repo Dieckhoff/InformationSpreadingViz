@@ -5,12 +5,15 @@ function initialize_posts(initial_post_id){
 		function(result){		
 			$("#loading").hide();
 			var posts = result.posts;
-			initialize_post_callback(posts);
+			var visitedPosts = result.visitedPosts; 
+			initialize_post_callback(posts, visitedPosts);
 		}.bind(this)
 	);	
 };
 
-function initialize_post_callback(posts){
+function initialize_post_callback(posts, visitedPosts){
+	initialize_nav_bar(visitedPosts);
+	
 	arr = new Array();
 	
 	var initial_post = posts[0];	
@@ -103,6 +106,25 @@ function initialize_post_callback(posts){
 //	
 	initialize_functions();
 	populate_info_box(arr[0]);
+}
+
+function initialize_nav_bar(visitedPosts) {
+	navBarElements = new Array();
+	
+	for (var i = 0; i < visitedPosts.length; ++i) {	
+		var navbarelement = new nav_element(visitedPosts[i].id);
+		navbarelement.title = visitedPosts[i].title;	
+		navBarElements.push(navbarelement);
+	}
+		
+	var html = '<ul class="breadcrumb">';
+	for (var i = 0; i < navBarElements.length; i++) {
+	    html += ' <li><span class="divider">/</span><a href="#">' + navBarElements[i].title + '</a></li>';
+	}
+	html += '</ul>';
+	
+	$('.breadcrumb').remove();
+	$('#breadcrumb-nav-container').append(html);		
 }
 
 function initialize_functions(){
