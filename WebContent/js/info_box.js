@@ -10,5 +10,7 @@ function populate_info_box(post){
 	$("#is-post-details-line1").html(type_string + " vom " + date.getDay() + "." + date.getMonth() + "." + date.getFullYear());
 	$("#is-post-details-line2").html("veröffentlicht auf " + post.blog );
 	
+	$("#is-info-box-img").attr("src", post.image_source); 
+	
 }
 

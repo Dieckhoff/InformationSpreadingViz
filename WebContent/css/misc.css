@@ -83,8 +83,24 @@
     z-index: -1;
 }
 
+#is-info-box-img-div {
+	float: left;
+	padding-left: 20px;
+	padding-right: 0px;
+}
+
+#is-info-box-img {
+	margin:auto; /* Required */
+	position:absolute; /* Required */
+	top:0;bottom:0; /* Aligns Vertically */
+}
+
+
 #is-info-box-text-container {
-	padding: 10px 30px;
+	padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 30px;
+    padding-left: 190px;
 }
 
 .is-divider {
