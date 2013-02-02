@@ -129,15 +129,16 @@ function initialize_functions(){
 				initialize_posts(post.Uuid);
 			});
 			post.circle.click(function() {
-				if(post.isSelected == true) {
-					post.label.hide();
-					post.preview_image.hide();
-					post.isSelected = false;
-				}
-				else {
+				current_selected_post = get_selected_post();
+				if(current_selected_post == null) {
 					post.label.show();
 					post.preview_image.show();
 					post.isSelected = true;
+				}
+				else {
+					current_selected_post.label.hide();
+					current_selected_post.preview_image.hide();
+					current_selected_post.isSelected = false;	
 				}
 
 				clear_marking();

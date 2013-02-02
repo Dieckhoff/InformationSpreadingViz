@@ -84,3 +84,15 @@ function clear_marking() {
 		});
 	}
 }
+
+function get_selected_post() {
+	var selected_post = null
+	for(var i = 0; i < arr.length; i++) {
+			if (arr[i].isSelected == true) {
+				selected_post = arr[i];
+			}	
+			
+	}	
+	return selected_post;
+	
+}

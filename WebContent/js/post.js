@@ -22,7 +22,14 @@ function Post(id){
 }
 
 Post.prototype.show_preview = function(){
-	image = this.paper.image(this.image_source, this.x + 5, this.y - 185 , 80, 80);
+	var imgURL = this.image_source;
+
+	var img = new Image();
+	img.src = imgURL;
+
+	var width = img.width;
+	var height = img.height;
+	image = this.paper.image(imgURL, this.x + 5, this.y - 185, width, height);
 	return(image);
 };
 
@@ -67,51 +74,57 @@ Post.prototype.draw_label = function (){
 	// var text = this.title + "\n" + this.blog + "\n" + this.url;
 	this.paper.setStart();
 
-	var fontsize = 16;
+	var fontsize = 14;
+	var titlefontsize = 20;
+	
+	var imgURL = this.image_source;
+	var img = new Image();
+	img.src = imgURL;
+	var imgwidth = img.width;
 
-	var box = this.paper.rect(this.x - 15, 5, 250, 100, 5);
+	var box = this.paper.rect(this.x - 15, 5, 400 + imgwidth, 100, 5);
 	box.attr({
-		fill: '#F1F1F1',
-		opacity: 2,
-		stroke: 'none',
+		fill: '#ffffff',
+		opacity: 0.95,
+		"stroke-width": 0,	
 	});
+	
+	var type_string;
+	if (this.type != null) type_string = this.type;
+	else type_string = "Beitrag";
+	var date = new Date(this.time);
 
-	var title = this.paper.text(this.x + 100, this.y - 170, this.title);
+
+	
+	var titletext = this.title.substring(0, 35) + "...";
+	var title = this.paper.text(this.x + 30 + imgwidth, this.y - 170, titletext);		
 	title.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
 		'text-anchor': 'start',
 		fill: 'black',
-		'font-size': 24,
+		'font-size': titlefontsize,
 	});
 
-	var blog = this.paper.text(this.x + 108, this.y - 150, this.blog);
-	blog.attr({
-		"font-family": "Arial, Helvetica, sans-serif",
-		origin: 'baseline',
-		'text-anchor': 'start',
-		fill: '#ABA8A8',
-		'font-size': 16,
-	});
-	var newurl; 
-	var bwidth = box.getBBox().width +18;
-
-	if(this.url.length * fontsize  > bwidth)
-	{
-		var charsToCutOff = (this.url.length*fontsize -3 - bwidth) / fontsize + 3;
-		newurl = this.url.substring(0, this.url.length - charsToCutOff) + "...";
-		var url = this.paper.text(this.x + 108 , this.y - 135, newurl);
-	}else{
-		var url = this.paper.text(this.x + 108 , this.y - 135, this.url);
-	}	
-
-	url.attr({
+	var line2text = type_string + " vom " + date.getDay() + "." + date.getMonth() + "." + date.getFullYear();
+	var line2 = this.paper.text(this.x + 28 + imgwidth, this.y - 145, line2text);
+	line2.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
 		'text-anchor': 'start',
 		fill: '#ABA8A8',
 		'font-size': fontsize,
-		href: this.url,
+	});
+	
+	var line3text = "veröffentlicht auf " + this.blog;
+	var line3 = this.paper.text(this.x + 28 + imgwidth, this.y - 125, line3text);
+	line3.attr({
+		"font-family": "Arial, Helvetica, sans-serif",
+		origin: 'baseline',
+		'text-anchor': 'start',
+		fill: '#ABA8A8',
+		'font-size': fontsize,
+		
 	});
 	
 	var time = this.paper.text(this.x + 50, this.y - 50, this.time);	//only for debugging
