@@ -108,9 +108,12 @@ function initialize_functions(){
 				post.label.show();
 				post.preview_image.show();
 			}).mouseout(function () {
+				if(post.isSelected == false) {
+					post.label.hide();
+					post.preview_image.hide();
+				}
 //					this.animate({"opacity": .5}, 200);
-				post.label.hide();
-				post.preview_image.hide();
+
 			});
 			post.circle.dblclick(function() {
 				var pos_x	= parseInt(this.attr('cx'));
@@ -126,6 +129,17 @@ function initialize_functions(){
 				initialize_posts(post.Uuid);
 			});
 			post.circle.click(function() {
+				if(post.isSelected == true) {
+					post.label.hide();
+					post.preview_image.hide();
+					post.isSelected = false;
+				}
+				else {
+					post.label.show();
+					post.preview_image.show();
+					post.isSelected = true;
+				}
+
 				clear_marking();
 				this.g = this.glow({
 					color: 'orange',

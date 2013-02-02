@@ -18,6 +18,7 @@ function Post(id){
 	this.preview_image;
 	this.circle;
 	this.links;
+	this.isSelected = false;
 }
 
 Post.prototype.show_preview = function(){
