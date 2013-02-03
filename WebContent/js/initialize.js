@@ -119,7 +119,7 @@ function initialize_nav_bar(visitedPosts) {
 		
 	var html = '<ul class="breadcrumb">';
 	for (var i = 0; i < navBarElements.length; i++) {
-	    html += ' <li><span class="divider">/</span><a href="#">' + navBarElements[i].title + '</a></li>';
+	    html += ' <li id=' + navBarElements[i].Uuid + ' class="navelement"><span class="divider">/</span><a href="#">' + navBarElements[i].title + '</a></li>';
 	}
 	html += '</ul>';
 	
@@ -177,4 +177,9 @@ function initialize_functions(){
 			});
 		})(post);
 	};
+	$(".navelement").click(function(event) {
+		clearAll();
+		draw_timeline();
+		initialize_posts($(this).attr('id'));
+		});
 }

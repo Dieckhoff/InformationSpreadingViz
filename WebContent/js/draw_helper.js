@@ -72,6 +72,7 @@ function clearAll(){
 	my_paper.clear();
 	delete arr;
 	delete timeline;
+	delete navBarElements;
 }
 
 function clear_marking() {
