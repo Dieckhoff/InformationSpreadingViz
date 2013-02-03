@@ -158,7 +158,7 @@ public class InformationSpreadingServlet extends HttpServlet {
 				
 				outputContainer.getPosts().get(0).getIncomingLinks().removeAll(incominglinksToBeRemoved);
 				outputContainer.getPosts().get(0).getOutgoingLinks().removeAll(outgoinglinksToBeRemoved);
-				outputContainer.setVisitedPosts(visitedPosts);
+				outputContainer.setVisitedPosts(visitedPosts.subList(0, visitedPosts.size()-1));
 				outputJson = new Gson().toJson(outputContainer);	
 				
 			}
