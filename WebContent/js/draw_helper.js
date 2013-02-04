@@ -30,21 +30,21 @@ function draw_arrow(start_circle, end_circle, up_or_down) {
 		var start_y	= parseInt(start_circle.attr("cy")) - parseInt(start_circle.attr("r"));
 		var end_y	= parseInt(end_circle.attr("cy")) - parseInt(start_circle.attr("r"));
 		arrow = my_paper.path("M" + start_x + "," + start_y + "A 3,2 0 1,0  " + end_x + "," + end_y);
-		head = draw_arrow_head(end_x, end_y, color, "down");
+//		head = draw_arrow_head(end_x, end_y, color, "down");
 	}
 	else {
 		console.log('down');
 		var start_y	= parseInt(start_circle.attr("cy")) + parseInt(start_circle.attr("r"));
 		var end_y	= parseInt(end_circle.attr("cy")) + parseInt(start_circle.attr("r"));
 		arrow = my_paper.path("M" + start_x + "," + start_y + "A 3,2 0 0,1  " + end_x + "," + end_y);
-		head = draw_arrow_head(end_x, end_y, color, "up");
+//		head = draw_arrow_head(end_x, end_y, color, "up");
 	}	
 	arrow.attr({
 		stroke: color,
 		'stroke-width': 3.0,
 	});
 
-	head.toBack();
+//	head.toBack();
 	arrow.toBack();
 }
 
