@@ -9,7 +9,7 @@ function Post(id){
 	this.size;
 	this.time;
 	this.x;
-	this.y;
+	this.y = 225;
 	this.image_source;
 	this.to;
 	this.from;
@@ -72,7 +72,7 @@ Post.prototype.draw_label = function (){
 	var fontsize = 14;
 	var titlefontsize = 20;	
 
-	var box = this.paper.rect(this.x - 15, 5, 400 + this.imgwidth, 100, 5);
+	var box = this.paper.rect(this.x - 15, 30, 400 + this.imgwidth, 100, 5);
 	box.attr({
 		fill: '#ffffff',
 		opacity: 0.95,
@@ -83,8 +83,6 @@ Post.prototype.draw_label = function (){
 	if (this.type != null) type_string = this.type;
 	else type_string = "Beitrag";
 	var date = new Date(this.time);
-
-
 	
 	var titletext = this.title.substring(0, 30) + "...";
 	var title = this.paper.text(this.x + 30 + this.imgwidth, this.y - 175, titletext);		
@@ -128,8 +126,6 @@ Post.prototype.draw_label = function (){
 		href: this.url,		
 	});	
 	
-	var time = this.paper.text(this.x + 50, this.y - 50, this.time);	//only for debugging
-
 	var label = this.paper.setFinish();
 	return(label);
 };

@@ -42,8 +42,6 @@ function initialize_post_callback(posts, visitedPosts){
 
 		post.x = normalize_position(max_date, min_date, middle_date, parseInt(posts[i].pubDate));
 
-		post.y = 200;
-
 		if (post.type == 'Facebook'){
 			post.color = 'forestgreen';
 		}
@@ -92,12 +90,6 @@ function initialize_post_callback(posts, visitedPosts){
 	
 	clicked.links = clicked.draw_links();
 	
-	
-//	clicked.circle.attr({
-//		stroke: 'orange',
-//		'stroke-width': 6.0,
-//	});
-//	
 	clear_marking();
 	
 	clicked.circle.g = clicked.circle.glow({

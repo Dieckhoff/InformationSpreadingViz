@@ -29,33 +29,40 @@
 
 <header id="header">
 </header>
-<div id="breadcrumb-nav-container">
-<h4>Letzte angezeigte Posts:</h4>
-</div>
-
-<hr class="is-divider">
-
-<h4 style="margin-left: 20px;">Aktuell angezeiger Post:</h4>
-<div id="is-info-box">	
-	<div id="is-info-box-bg">&nbsp;</div>
-	<div id="is-info-box-img-div"><img id="is-info-box-img"></div>
-	<div id="is-info-box-text-container">
-	<h5 class="is-info-box-text" id="is-post-title"></h5>
-	<h5 class="is-info-box-text" id="is-post-details"></h5>
-	</div>
-</div>
-
-
-		    
+	    
 <!-- start:Wrap -->
 <div id="wrap">
 <!-- start:Content -->
-	<div id="InformationSpreadingViz">
-		<div id="draw"></div>
+
+
+<div id="InformationSpreadingViz">
+	<div id="breadcrumb-nav-container">
+		<h4>Letzte angezeigte Posts:</h4>
 	</div>
-<!-- end:Content -->
+		
+	<hr class="is-divider">
+	
+	<h4 style="margin-left: 20px;">Aktuell angezeiger Post:</h4>
+	<div id="is-info-box">	
+		<div id="is-info-box-bg">&nbsp;</div>
+		<div id="is-info-box-img-div"><img id="is-info-box-img"></div>
+		<div id="is-info-box-text-container">
+			<h5 class="is-info-box-text" id="is-post-title"></h5>
+			<h5 class="is-info-box-text" id="is-post-details"></h5>
+		</div>
+	</div>
+	<div id="draw">
+		<script> 
+			init_paper();
+			console.log($("#draw").height());
+		</script>
+	</div>
 </div>
+<!-- end:Content -->
+
+
 <!-- end:Wrap -->
+</div>
 
 <div id="loading">
 <div id="loading-box">
@@ -74,7 +81,7 @@ Loading...
 </div>
 
 <footer>
-<img src="${pageContext.request.contextPath}/graphics/Logo-white-background.png" width="368" alt="Logo">
+	<img src="${pageContext.request.contextPath}/graphics/Logo-white-background.png" width="368" alt="Logo">
 </footer>
 </body>
 </html>
