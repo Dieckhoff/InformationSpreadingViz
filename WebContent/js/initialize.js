@@ -93,7 +93,7 @@ function initialize_post_callback(posts, visitedPosts){
 	clear_marking();
 	
 	clicked.circle.g = clicked.circle.glow({
-		width: 40,
+		width: 90,
 		fill: true,
 		color: 'orange',
 	});
@@ -101,13 +101,6 @@ function initialize_post_callback(posts, visitedPosts){
 	initialize_functions();
 	populate_info_box(clicked);
 	clicked.isSelected = true;
-	if (get_selected_post() != clicked) {
-		arr[0].circle.yellow_glow = arr[0].circle.glow({
-			width: 40,
-			fill: true,
-			color: 'yellow',
-		});
-	}
 }
 
 function initialize_nav_bar(visitedPosts) {
@@ -163,6 +156,13 @@ function initialize_functions(){
 				clear_marking();
 				post.isSelected = true;
 				populate_info_box(post);
+				if (arr[0].circle.yellow_glow == null) {
+					arr[0].circle.yellow_glow = arr[0].circle.glow({
+						width: 90,
+						fill: true,
+						color: 'yellow',
+					});
+				}
 //				current_selected_post = get_selected_post();
 //				if(current_selected_post == null) {
 //					post.label.show();
@@ -177,7 +177,7 @@ function initialize_functions(){
 
 				this.g = this.glow({
 					color: 'orange',
-					width: 90.0,
+					width: 90,
 				});
 			});
 		})(post);
