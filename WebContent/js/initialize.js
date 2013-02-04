@@ -8,7 +8,7 @@ function initialize_posts(initial_post_id){
 			var visitedPosts = result.visitedPosts; 
 			initialize_post_callback(posts, visitedPosts);
 		}.bind(this)
-	);	
+	);
 };
 
 function initialize_post_callback(posts, visitedPosts){
@@ -140,16 +140,23 @@ function initialize_functions(){
 			});
 			post.circle.dblclick(function() {
 				populate_info_box(post);
+				
 				var pos_x	= parseInt(this.attr('cx'));
 				var radius	= parseInt(this.attr('r'));
-				var color	= parseInt(this.attr('fill'));
+				var color	= this.attr('fill');
+				console.log(color);
+				
 				clearAll();
 				draw_timeline();
-//				clicked_circle = my_paper.circle(pos_x, 200, radius);
-//				clicked_circle.attr({
-//					stroke: .0,
-//					fill: color,
-//				});
+				
+				loading_circle = my_paper.circle(pos_x, 225, radius);
+				loading_circle.attr({
+					stroke: .0,
+					fill: color,
+				});
+				loading_circle.animate({cx: 500, cy: 225}, 1000);
+				console.log(loading_circle.attr('cx'));
+				
 				initialize_posts(post.Uuid);
 			});
 			post.circle.click(function() {
