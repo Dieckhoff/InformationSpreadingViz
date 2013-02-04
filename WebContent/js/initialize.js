@@ -104,8 +104,10 @@ function initialize_post_callback(posts, visitedPosts){
 //		'stroke-width': 6.0,
 //	});
 //	
+	clear_marking();
 	initialize_functions();
 	populate_info_box(arr[0]);
+	arr[0].isSelected = true;
 }
 
 function initialize_nav_bar(visitedPosts) {
@@ -132,44 +134,47 @@ function initialize_functions(){
 		var post = arr[i];
 		(function(post) {
 			post.circle.mouseover(function() {
-//				this.animate({"opacity": .8}, 200);
-				post.label.show();
-				post.preview_image.show();
-			}).mouseout(function () {
 				if(post.isSelected == false) {
+					post.label.show();
+					post.preview_image.show();
+				}
+			}).mouseout(function () {
+//				if(post.isSelected == false) {
 					post.label.hide();
 					post.preview_image.hide();
-				}
-//					this.animate({"opacity": .5}, 200);
+//				}
 
 			});
 			post.circle.dblclick(function() {
+				populate_info_box(post);
 				var pos_x	= parseInt(this.attr('cx'));
 				var radius	= parseInt(this.attr('r'));
 				var color	= parseInt(this.attr('fill'));
 				clearAll();
 				draw_timeline();
-				clicked_circle = my_paper.circle(pos_x, 200, radius);
-				clicked_circle.attr({
-					stroke: .0,
-					fill: color,
-				});
+//				clicked_circle = my_paper.circle(pos_x, 200, radius);
+//				clicked_circle.attr({
+//					stroke: .0,
+//					fill: color,
+//				});
 				initialize_posts(post.Uuid);
 			});
 			post.circle.click(function() {
-				current_selected_post = get_selected_post();
-				if(current_selected_post == null) {
-					post.label.show();
-					post.preview_image.show();
-					post.isSelected = true;
-				}
-				else {
-					current_selected_post.label.hide();
-					current_selected_post.preview_image.hide();
-					current_selected_post.isSelected = false;	
-				}
-
 				clear_marking();
+				post.isSelected = true;
+				populate_info_box(post);
+//				current_selected_post = get_selected_post();
+//				if(current_selected_post == null) {
+//					post.label.show();
+//					post.preview_image.show();
+//					post.isSelected = true;
+//				}
+//				else {
+//					current_selected_post.label.hide();
+//					current_selected_post.preview_image.hide();
+//					current_selected_post.isSelected = false;	
+//				}
+
 				this.g = this.glow({
 					color: 'orange',
 					width: 90.0,

@@ -83,6 +83,8 @@ function clear_marking() {
 		arr[i].circle.attr({
 			'stroke-width': 0.0,
 		});
+		
+		arr[i].isSelected = false;
 	}
 }
 
