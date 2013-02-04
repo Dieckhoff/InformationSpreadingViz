@@ -36,16 +36,14 @@ Post.prototype.draw_links = function (){
 	
 	// from here:
 	for (var i = 0; i < from_links.length; ++i) {
-		console.log('from ' + from_links[i]);
 		other = this.paper.getById(from_links[i]);
-		draw_arrow(this.circle, other, 'down');
+		draw_arrow(this.circle, other);
 	}
 	
 	// to here:
 	for (var i = 0; i < to_links.length; ++i) {
-		console.log('to ' + to_links[i]);
 		other = this.paper.getById(to_links[i]);
-		draw_arrow(other, this.circle, 'up');
+		draw_arrow(this.circle, other);
 	}
 	
 	return( this.paper.setFinish() );
@@ -55,8 +53,9 @@ Post.prototype.draw_circle = function (){
 	var circle = this.paper.circle(this.x, this.y, this.size);
 	circle.id = this.Uuid;
 
+	console.log(this.size);
 	circle.attr({
-		fill: "r(0.75, 0.05)#fff-"+this.color+":150",
+		fill: "r(0.75, 0.05)#fff-" + this.color + ":150",
 		cursor: 'pointer',
 		opacity: 1.0,
 		"stroke-width": 0,

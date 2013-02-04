@@ -45,33 +45,35 @@ function draw_timeline_labels(min, max, middle) {
 	});
 }
 
-function draw_arrow(start_circle, end_circle, up_or_down) {
+function draw_arrow(start_circle, end_circle) {
 	var start_x	= parseInt(start_circle.attr("cx"));
 	var end_x	=  parseInt(end_circle.attr("cx"));
 	var arrow, head;
 	var color = start_circle.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
 
-	if (up_or_down == "up") {
-		console.log('up');
+	if (start_x < end_x) {
 		var start_y	= parseInt(start_circle.attr("cy")) - parseInt(start_circle.attr("r"));
-		var end_y	= parseInt(end_circle.attr("cy")) - parseInt(start_circle.attr("r"));
-		arrow = my_paper.path("M" + start_x + "," + start_y + "A 3,2 0 1,0  " + end_x + "," + end_y);
+		var end_y	= parseInt(end_circle.attr("cy")) - parseInt(end_circle.attr("r"));
+		arrow = my_paper.path("M" + start_x + "," + start_y + "A 2,1 0 0,1  " + end_x + "," + end_y);
 //		head = draw_arrow_head(end_x, end_y, color, "down");
 	}
-	else {
-		console.log('down');
+	else if (start_x > end_x){
 		var start_y	= parseInt(start_circle.attr("cy")) + parseInt(start_circle.attr("r"));
-		var end_y	= parseInt(end_circle.attr("cy")) + parseInt(start_circle.attr("r"));
-		arrow = my_paper.path("M" + start_x + "," + start_y + "A 3,2 0 0,1  " + end_x + "," + end_y);
+		var end_y	= parseInt(end_circle.attr("cy")) + parseInt(end_circle.attr("r"));
+		arrow = my_paper.path("M" + start_x + "," + start_y + "A 2,1 0 0,1  " + end_x + "," + end_y);
 //		head = draw_arrow_head(end_x, end_y, color, "up");
-	}	
-	arrow.attr({
-		stroke: color,
-		'stroke-width': 3.0,
-	});
+	}
+	else {
+		return 1;
+	}
+	if (arrow != undefined)
+		arrow.attr({
+			stroke: color,
+			'stroke-width': 3.0,
+		});
 
 //	head.toBack();
-	arrow.toBack();
+//	arrow.toBack();
 }
 
 function draw_arrow_head(x, y, color, up_or_down){

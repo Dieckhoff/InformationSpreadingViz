@@ -161,6 +161,7 @@ function initialize_functions(){
 			});
 			post.circle.click(function() {
 				post.label.hide();
+				post.preview_image.hide();
 				clear_marking();
 				post.isSelected = true;
 				populate_info_box(post);
