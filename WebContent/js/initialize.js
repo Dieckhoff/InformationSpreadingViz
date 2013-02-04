@@ -83,8 +83,7 @@ function initialize_post_callback(posts, visitedPosts){
 	
 	var clicked = arr[0];
 	
-	console.log(clicked.circle);
-	
+	console.log(clicked.circle);	
 	
 	clicked.circle.toFront();
 	
@@ -93,11 +92,6 @@ function initialize_post_callback(posts, visitedPosts){
 	
 	clicked.links = clicked.draw_links();
 	
-	clicked.circle.g = clicked.circle.glow({
-		width: 40,
-		fill: true,
-		color: 'orange',
-	});
 	
 //	clicked.circle.attr({
 //		stroke: 'orange',
@@ -105,9 +99,23 @@ function initialize_post_callback(posts, visitedPosts){
 //	});
 //	
 	clear_marking();
+	
+	clicked.circle.g = clicked.circle.glow({
+		width: 40,
+		fill: true,
+		color: 'orange',
+	});
+	
 	initialize_functions();
-	populate_info_box(arr[0]);
-	arr[0].isSelected = true;
+	populate_info_box(clicked);
+	clicked.isSelected = true;
+	if (get_selected_post() != clicked) {
+		arr[0].circle.yellow_glow = arr[0].circle.glow({
+			width: 40,
+			fill: true,
+			color: 'yellow',
+		});
+	}
 }
 
 function initialize_nav_bar(visitedPosts) {

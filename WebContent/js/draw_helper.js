@@ -86,6 +86,13 @@ function clear_marking() {
 		
 		arr[i].isSelected = false;
 	}
+	if (get_selected_post() == null) {
+		arr[0].circle.yellow_glow = arr[0].circle.glow({
+			width: 40,
+			fill: true,
+			color: 'yellow',
+		});
+	}
 }
 
 function get_selected_post() {
