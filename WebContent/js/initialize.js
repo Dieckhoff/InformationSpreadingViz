@@ -160,6 +160,7 @@ function initialize_functions(){
 				initialize_posts(post.Uuid);
 			});
 			post.circle.click(function() {
+				post.label.hide();
 				clear_marking();
 				post.isSelected = true;
 				populate_info_box(post);
