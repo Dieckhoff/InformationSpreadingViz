@@ -1,5 +1,5 @@
 function draw_timeline() {
-	timeline = my_paper.path(["M0,200H1200"]);
+	timeline = my_paper.path(["M0,225H1200"]);
 	timeline.attr({
 		stroke: 'grey',
 		opacity: .7,
@@ -14,9 +14,35 @@ function draw_timeline_labels(min, max, middle) {
 	var middledate = new Date(middle);
 	var enddate = new Date(max);
 
-	var startlabel	= my_paper.text(30, 230, startdate.getDay() + "." + startdate.getMonth() + "." + startdate.getFullYear());
-	var middlelabel	= my_paper.text(500, 230, middledate.getDay() + "." + middledate.getMonth() + "." + middledate.getFullYear());
-	var endlabel	= my_paper.text(1000, 230, enddate.getDay() + "." + enddate.getMonth() + "." + enddate.getFullYear());
+	var startlabel	= my_paper.text(30, 370, startdate.getDay() + "." + startdate.getMonth() + "." + startdate.getFullYear());
+	var middlelabel	= my_paper.text(500, 370, middledate.getDay() + "." + middledate.getMonth() + "." + middledate.getFullYear());
+	var endlabel	= my_paper.text(1000, 370, enddate.getDay() + "." + enddate.getMonth() + "." + enddate.getFullYear());
+	
+	var fontsize = 14;
+	
+	startlabel.attr({
+		"font-family": "Arial, Helvetica, sans-serif",
+		origin: 'baseline',
+		'text-anchor': 'start',
+		fill: '#ABA8A8',
+		'font-size': fontsize,
+	});
+	
+	middlelabel.attr({
+		"font-family": "Arial, Helvetica, sans-serif",
+		origin: 'baseline',
+		'text-anchor': 'start',
+		fill: '#ABA8A8',
+		'font-size': fontsize,
+	});
+	
+	endlabel.attr({
+		"font-family": "Arial, Helvetica, sans-serif",
+		origin: 'baseline',
+		'text-anchor': 'start',
+		fill: '#ABA8A8',
+		'font-size': fontsize,
+	});
 }
 
 function draw_arrow(start_circle, end_circle, up_or_down) {
@@ -86,13 +112,6 @@ function clear_marking() {
 		
 		arr[i].isSelected = false;
 	}
-	if (get_selected_post() == null) {
-		arr[0].circle.yellow_glow = arr[0].circle.glow({
-			width: 40,
-			fill: true,
-			color: 'yellow',
-		});
-	}
 }
 
 function get_selected_post() {
@@ -100,9 +119,7 @@ function get_selected_post() {
 	for(var i = 0; i < arr.length; i++) {
 			if (arr[i].isSelected == true) {
 				selected_post = arr[i];
-			}	
-			
+			}			
 	}	
-	return selected_post;
-	
+	return selected_post;	
 }
