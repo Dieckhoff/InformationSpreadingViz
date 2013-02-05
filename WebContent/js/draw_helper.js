@@ -18,7 +18,7 @@ function draw_timeline_labels(min, max, middle) {
 	var middlelabel	= my_paper.text(500, 370, middledate.getDay() + "." + middledate.getMonth() + "." + middledate.getFullYear());
 	var endlabel	= my_paper.text(1000, 370, enddate.getDay() + "." + enddate.getMonth() + "." + enddate.getFullYear());
 	
-	var fontsize = 14;
+	var fontsize = 20;
 	
 	startlabel.attr({
 		"font-family": "Arial, Helvetica, sans-serif",

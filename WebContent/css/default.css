@@ -54,6 +54,12 @@ body {
 	height: 20px;
 }
 
+#legend-text{
+	color: darkgrey;
+	font-size: 19px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
 .infoBox{
 }
 

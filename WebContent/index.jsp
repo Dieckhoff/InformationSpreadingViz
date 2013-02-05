@@ -54,19 +54,19 @@
 		<div id="legend">
 			<div id="legend-entry">
 				<div class="blue_circle"></div>
-				<h5>Blog Post</h5>
+				<h5 id="legend-text">Blog Post</h5>
 			</div>
 			<div id="legend-entry">
 				<div class="green_circle"></div>
-				<h5>Twitter Post</h5>
+				<h5 id="legend-text">Twitter Post</h5>
 			</div>			
 			<div id="legend-entry">
 				<div class="red_circle"></div>
-				<h5>Facebook Post</h5>
+				<h5 id="legend-text">Facebook Post</h5>
 			</div>
 			<div id="legend-entry">
 				<div class="grey_circle"></div>
-				<h5>Newsportal Post</h5>
+				<h5 id="legend-text">Newsportal Post</h5>
 			</div>
 		</div>
 	</div>
