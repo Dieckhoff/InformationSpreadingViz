@@ -81,9 +81,7 @@ function initialize_post_callback(posts, visitedPosts){
 	timeline.toBack();
 	
 	var clicked = arr[0];
-	
-	console.log(clicked.circle);	
-	
+		
 	clicked.circle.toFront();
 	
 	clicked.to = initial_post.incomingLinks;

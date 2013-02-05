@@ -53,7 +53,6 @@ Post.prototype.draw_circle = function (){
 	var circle = this.paper.circle(this.x, this.y, this.size);
 	circle.id = this.Uuid;
 
-	console.log(this.size);
 	circle.attr({
 		fill: "r(0.75, 0.05)#fff-" + this.color + ":150",
 		cursor: 'pointer',

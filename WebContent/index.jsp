@@ -26,10 +26,6 @@
 	</head>
 <body>
 
-
-<header id="header">
-</header>
-	    
 <!-- start:Wrap -->
 <div id="wrap">
 <!-- start:Content -->
@@ -42,19 +38,42 @@
 		
 	<hr class="is-divider">
 	
-	<h4 style="margin-left: 20px;">Aktuell angezeiger Post:</h4>
-	<div id="is-info-box">	
-		<div id="is-info-box-bg">&nbsp;</div>
-		<div id="is-info-box-img-div"><img id="is-info-box-img"></div>
-		<div id="is-info-box-text-container">
-			<h5 class="is-info-box-text" id="is-post-title"></h5>
-			<h5 class="is-info-box-text" id="is-post-details"></h5>
+	<div id="infos">
+		<div id="infoBox">
+			<h4 style="margin-left: 20px;">Aktuell angezeiger Post:</h4>
+			<div id="is-info-box">	
+				<div id="is-info-box-bg">&nbsp;</div>
+				<div id="is-info-box-img-div"><img id="is-info-box-img"></div>
+				<div id="is-info-box-text-container">
+					<h5 class="is-info-box-text" id="is-post-title"></h5>
+					<h5 class="is-info-box-text" id="is-post-details"></h5>
+				</div>
+			</div>
+		</div>
+		
+		<div id="legend">
+			<div id="legend-entry">
+				<div class="blue_circle"></div>
+				<h5>Blog Post</h5>
+			</div>
+			<div id="legend-entry">
+				<div class="green_circle"></div>
+				<h5>Twitter Post</h5>
+			</div>			
+			<div id="legend-entry">
+				<div class="red_circle"></div>
+				<h5>Facebook Post</h5>
+			</div>
+			<div id="legend-entry">
+				<div class="grey_circle"></div>
+				<h5>Newsportal Post</h5>
+			</div>
 		</div>
 	</div>
+	
 	<div id="draw">
 		<script> 
 			init_paper();
-			console.log($("#draw").height());
 		</script>
 	</div>
 </div>

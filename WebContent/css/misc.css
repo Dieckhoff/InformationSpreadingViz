@@ -67,8 +67,9 @@
 }
 
 #is-info-box {
-	position: relative;
+	float: left;
 	margin-left: 20px;
+	margin-right: 100px;
 	display:-moz-inline-stack;
 	display:inline-block;
 	*display:inline;
@@ -94,9 +95,9 @@
 }
 
 #is-info-box-img {
-	margin:auto; /* Required */
-	position:absolute; /* Required */
-	top:0;bottom:0; /* Aligns Vertically */
+	margin: auto; /* Required */
+	position: relative; /* Required */
+	margin-top: 20px;
 }
 
 

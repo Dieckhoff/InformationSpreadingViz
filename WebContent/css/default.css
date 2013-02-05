@@ -19,11 +19,6 @@ body {
 	margin: auto;
 }
 
-#header {
-	padding: 20px;
-	background: transparent;
-}
-
 #InformationSpreadingViz {
 	padding: 10px;
 	height: auto;
@@ -40,6 +35,70 @@ body {
 #draw {
 	height: 400px;
 	width: 100%;
+}
+
+.infos{
+	color: #000;
+	width: 100%;
+	background-color: red;
+}
+
+.legend{
+	margin-left: 100px;
+	padding-left: 100px;
+}
+
+#legend-entry{
+	padding: 5px;
+	margin-top: 10px;
+	height: 20px;
+}
+
+.infoBox{
+}
+
+.blue_circle{
+  margin-right: 15px;
+  float: left;
+  background-color: steelblue;
+  width:30px;
+  height:30px;
+  border-radius: 50%;
+  opacity:0.8;
+  margin-top: 10px;
+}
+
+.red_circle{
+  margin-right: 15px;
+  float: left;
+  background-color: firebrick;
+  width:30px;
+  height:30px;
+  border-radius: 50%;
+  opacity:0.8;
+  margin-top: 10px;
+}
+
+.green_circle{
+  margin-right: 15px;
+  float: left;
+  background-color: forestgreen;
+  width:30px;
+  height:30px;
+  border-radius: 50%;
+  opacity:0.8;
+  margin-top: 10px;
+}
+
+.grey_circle{
+  margin-right: 15px;
+  float: left;
+  background-color: darkgrey;
+  width:30px;
+  height:30px;
+  border-radius: 50%;
+  opacity:0.8;
+  margin-top: 10px;
 }
 
 /** Links **/
