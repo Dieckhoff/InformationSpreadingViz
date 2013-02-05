@@ -45,3 +45,13 @@ function normalize_position(max, min, middle, current_time){
 		result = 500;
 	return result;
 }
+
+function get_selected_post() {
+	var selected_post = null;
+	for(var i = 0; i < arr.length; i++) {
+			if (arr[i].isSelected == true) {
+				selected_post = arr[i];
+			}
+	}	
+	return selected_post;
+}

@@ -71,9 +71,6 @@ function draw_arrow(start_circle, end_circle) {
 			stroke: color,
 			'stroke-width': 3.0,
 		});
-
-//	head.toBack();
-//	arrow.toBack();
 }
 
 function draw_arrow_head(x, y, color, up_or_down){
@@ -111,17 +108,5 @@ function clear_marking() {
 		arr[i].circle.attr({
 			'stroke-width': 0.0,
 		});
-		
-		arr[i].isSelected = false;
 	}
-}
-
-function get_selected_post() {
-	var selected_post = null
-	for(var i = 0; i < arr.length; i++) {
-			if (arr[i].isSelected == true) {
-				selected_post = arr[i];
-			}			
-	}	
-	return selected_post;	
 }

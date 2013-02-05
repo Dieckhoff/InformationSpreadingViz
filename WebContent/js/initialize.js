@@ -16,7 +16,8 @@ function initialize_post_callback(posts, visitedPosts){
 	
 	arr = new Array();
 	
-	var initial_post = posts[0];	
+	var initial_post = posts[0];
+	
 	var min_max_values = get_min_max_values(posts);
 	
 	var min_date		= min_max_values[0];
@@ -100,7 +101,6 @@ function initialize_post_callback(posts, visitedPosts){
 	
 	initialize_functions();
 	populate_info_box(clicked);
-	clicked.isSelected = true;
 }
 
 function initialize_nav_bar(visitedPosts) {
@@ -125,26 +125,24 @@ function initialize_nav_bar(visitedPosts) {
 function initialize_functions(){
 	for(var i = 0; i < arr.length; i++) {
 		var post = arr[i];
+		
 		(function(post) {
 			post.circle.mouseover(function() {
-				if(post.isSelected == false) {
 					post.label.show();
+					post.label.toFront();
 					post.preview_image.show();
-				}
+					post.preview_image.toFront();
 			}).mouseout(function () {
-//				if(post.isSelected == false) {
+				if (post.isSelected == false) {
 					post.label.hide();
 					post.preview_image.hide();
-//				}
-
+				}
 			});
+			
 			post.circle.dblclick(function() {
-				populate_info_box(post);
-				
 				var pos_x	= parseInt(this.attr('cx'));
 				var radius	= parseInt(this.attr('r'));
 				var color	= this.attr('fill');
-				console.log(color);
 				
 				clearAll();
 				draw_timeline();
@@ -153,18 +151,28 @@ function initialize_functions(){
 				loading_circle.attr({
 					stroke: .0,
 					fill: color,
-				});
+				});				
 				loading_circle.animate({cx: 500, cy: 225}, 1000);
-				console.log(loading_circle.attr('cx'));
 				
 				initialize_posts(post.Uuid);
 			});
+			
 			post.circle.click(function() {
-				post.label.hide();
-				post.preview_image.hide();
-				clear_marking();
+				current_selected_post = get_selected_post();
+				
+				if (current_selected_post != null) {
+					current_selected_post.label.hide();
+					current_selected_post.preview_image.hide();
+					current_selected_post.isSelected = false;
+				}
+				
+				post.label.show();
+				post.label.toFront();
+				post.preview_image.show();
+				post.preview_image.toFront();
 				post.isSelected = true;
-				populate_info_box(post);
+				
+				clear_marking();
 				if (arr[0].circle.yellow_glow == null) {
 					arr[0].circle.yellow_glow = arr[0].circle.glow({
 						width: 90,
@@ -172,17 +180,6 @@ function initialize_functions(){
 						color: 'yellow',
 					});
 				}
-//				current_selected_post = get_selected_post();
-//				if(current_selected_post == null) {
-//					post.label.show();
-//					post.preview_image.show();
-//					post.isSelected = true;
-//				}
-//				else {
-//					current_selected_post.label.hide();
-//					current_selected_post.preview_image.hide();
-//					current_selected_post.isSelected = false;	
-//				}
 
 				this.g = this.glow({
 					color: 'orange',
@@ -191,6 +188,7 @@ function initialize_functions(){
 			});
 		})(post);
 	};
+	
 	$(".navelement").click(function(event) {
 		clearAll();
 		draw_timeline();
