@@ -12,6 +12,7 @@ public class Post {
 	private String url;
 	private String author;
 	private String pubDate;
+	private String type;
 	
 	private float score;
 	private List<String> outgoingLinks;
@@ -22,31 +23,31 @@ public class Post {
 		
 	}
 	
-	public Post(String title, String blog, String content, String url,
-			String author, String pubDate) {
-		super();
-		this.title = title;
-		this.blog = blog;
-		this.content = content;
-		this.url = url;
-		this.author = author;
-		this.pubDate = pubDate;
-	}
-	
-	public Post(String title, String blog, String content, String url,
-			String author, String pubDate, float score,
-			List<String> outgoingLinks, List<String> incomingLinks) {
-		super();
-		this.title = title;
-		this.blog = blog;
-		this.content = content;
-		this.url = url;
-		this.author = author;
-		this.pubDate = pubDate;
-		this.score = score;
-		this.outgoingLinks = outgoingLinks;
-		this.incomingLinks = incomingLinks;
-	}
+//	public Post(String title, String blog, String content, String url,
+//			String author, String pubDate) {
+//		super();
+//		this.title = title;
+//		this.blog = blog;
+//		this.content = content;
+//		this.url = url;
+//		this.author = author;
+//		this.pubDate = pubDate;
+//	}
+//	
+//	public Post(String title, String blog, String content, String url,
+//			String author, String pubDate, float score,
+//			List<String> outgoingLinks, List<String> incomingLinks) {
+//		super();
+//		this.title = title;
+//		this.blog = blog;
+//		this.content = content;
+//		this.url = url;
+//		this.author = author;
+//		this.pubDate = pubDate;
+//		this.score = score;
+//		this.outgoingLinks = outgoingLinks;
+//		this.incomingLinks = incomingLinks;
+//	}
 	
 	public String getId() {
 		return id;
@@ -134,6 +135,14 @@ public class Post {
 
 	public void setIncomingLinks(List<String> incomingLinks) {
 		this.incomingLinks = incomingLinks;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

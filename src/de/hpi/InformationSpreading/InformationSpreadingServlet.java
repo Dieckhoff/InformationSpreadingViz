@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -35,10 +36,12 @@ public class InformationSpreadingServlet extends HttpServlet {
 	private PreparedStatement fromUrlStmt;
 	private PreparedStatement scoreStmt;
 	private ArrayList<VisitedPost> visitedPosts = null;
+	Random random = null;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
+		random = new Random();
 		visitedPosts = new ArrayList<VisitedPost>();
 		
 		Properties p;
@@ -128,6 +131,7 @@ public class InformationSpreadingServlet extends HttpServlet {
 				outputContainer.setPosts(posts);
 				
 				Post cache = populateContainerComplete(inputContainer, id).getPost();
+				getPostType(cache);
 				outputContainer.getPosts().add(cache);
 				
 				
@@ -142,6 +146,7 @@ public class InformationSpreadingServlet extends HttpServlet {
 					if (Long.valueOf(post.getPubDate()) == 0) {
 						incominglinksToBeRemoved.add(post.getId());
 					} else {
+						getPostType(post);
 						outputContainer.getPosts().add(post);	
 					}
 								
@@ -152,6 +157,7 @@ public class InformationSpreadingServlet extends HttpServlet {
 					if (Long.valueOf(post.getPubDate()) == 0) {
 						outgoinglinksToBeRemoved.add(post.getId());
 					} else {
+						getPostType(post);
 						outputContainer.getPosts().add(post);	
 					}			
 				}				
@@ -174,6 +180,33 @@ public class InformationSpreadingServlet extends HttpServlet {
 		
 
 	
+	}
+		
+	private void getPostType(Post post) {
+		String type = "";
+		int num = random.nextInt(6)+1;
+		switch (num) {
+		case 1:
+			type = "Facebook";			
+			break;
+		case 2:
+			type = "Twitter";
+			break;
+		case 3: 
+			type = "Newsportal";
+			break;
+		case 4:
+		case 5:
+		case 6:
+			type = "Blog";
+			break;			
+		default:
+			type = "Blog";
+			break;
+		}
+		post.setType(type);
+		
+		
 	}
 		
 	private void addToVisitedLinks(Post post) {
