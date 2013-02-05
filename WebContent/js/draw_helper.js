@@ -49,7 +49,7 @@ function draw_arrow(start_circle, end_circle) {
 	var start_x	= parseInt(start_circle.attr("cx"));
 	var end_x	=  parseInt(end_circle.attr("cx"));
 	var arrow, head;
-	var color = start_circle.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
+	var color = end_circle.attr('fill').replace('r(0.75, 0.05)#fff-', '').replace(':150', '');
 
 	if (start_x < end_x) {
 		var start_y	= parseInt(start_circle.attr("cy")) - parseInt(start_circle.attr("r"));
