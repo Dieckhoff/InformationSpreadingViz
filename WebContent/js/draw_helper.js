@@ -55,13 +55,13 @@ function draw_arrow(start_circle, end_circle) {
 		var start_y	= parseInt(start_circle.attr("cy")) - parseInt(start_circle.attr("r"));
 		var end_y	= parseInt(end_circle.attr("cy")) - parseInt(end_circle.attr("r"));
 		arrow = my_paper.path("M" + start_x + "," + start_y + "A 2,1 0 0,1  " + end_x + "," + end_y);
-//		head = draw_arrow_head(end_x, end_y, color, "down");
+		head = draw_arrow_head(start_x, start_y, color, "down");
 	}
 	else if (start_x > end_x){
 		var start_y	= parseInt(start_circle.attr("cy")) + parseInt(start_circle.attr("r"));
 		var end_y	= parseInt(end_circle.attr("cy")) + parseInt(end_circle.attr("r"));
 		arrow = my_paper.path("M" + start_x + "," + start_y + "A 2,1 0 0,1  " + end_x + "," + end_y);
-//		head = draw_arrow_head(end_x, end_y, color, "up");
+		head = draw_arrow_head(end_x, end_y, color, "up");
 	}
 	else {
 		return 1;
@@ -75,16 +75,16 @@ function draw_arrow(start_circle, end_circle) {
 
 function draw_arrow_head(x, y, color, up_or_down){
 	var head;
-	var x2 = x + 2;
+//	var x2 = x + 2;
 	if (up_or_down == "down") {
-		head = my_paper.path("M" + x2 + "," + y + "l -2,-8 l 8,2 z");
+		head = my_paper.path("M" + x + "," + y + "l -6,-10 l 10,0 z");
 		head.attr({
 			fill: color,
 			stroke: color,
 		});
 	}
 	else {
-		head = my_paper.path("M" + x2 + "," + y + "l 2,8 l 2,-8 z");
+		head = my_paper.path("M" + x + "," + y + "l -6,10 l 10,0 z");
 		head.attr({
 			fill: color,
 			stroke: color,
