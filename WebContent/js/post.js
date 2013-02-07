@@ -23,7 +23,7 @@ function Post(id){
 	this.imgheight;
 }
 
-Post.prototype.show_preview = function(){
+Post.prototype.show_preview = function (){
 	image = this.paper.image(this.image_source, this.x + 5, this.y - 185, this.imgwidth, this.imgheight);
 	return(image);
 };

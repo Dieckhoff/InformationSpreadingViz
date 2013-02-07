@@ -73,7 +73,7 @@ function draw_arrow(start_circle, end_circle) {
 		});
 }
 
-function draw_arrow_head(x, y, color, up_or_down){
+function draw_arrow_head(x, y, color, up_or_down) {
 	var head;
 //	var x2 = x + 2;
 	if (up_or_down == "down") {
@@ -93,7 +93,7 @@ function draw_arrow_head(x, y, color, up_or_down){
 	return head;
 }
 
-function clearAll(){
+function clearAll() {
 	my_paper.clear();
 	delete arr;
 	delete timeline;

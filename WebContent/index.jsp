@@ -5,24 +5,24 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>HTML Site Template</title>
+	
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/default.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/loading.css" />
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/js/ui-lightness/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/ui-lightness/jquery-ui.css" />
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/raphael.js"></script>
+	
+    <script src="${pageContext.request.contextPath}/js/lib/raphael.js"></script>
+    <script src="${pageContext.request.contextPath}/js/lib/scale_raphael.js"></script>
+    
+    <script src="${pageContext.request.contextPath}/js/main.js"></script>
     <script src="${pageContext.request.contextPath}/js/post.js"></script>
-    <script src="${pageContext.request.contextPath}/js/custom.js"></script>
-    <script src="${pageContext.request.contextPath}/js/plug_arrows.js"></script>
-    <script src="${pageContext.request.contextPath}/js/detect_zoom.js"></script>
-    <script src="${pageContext.request.contextPath}/js/helper.js"></script>
-    <script src="${pageContext.request.contextPath}/js/draw_helper.js"></script>
+    <script src="${pageContext.request.contextPath}/js/calculate.js"></script>
+    <script src="${pageContext.request.contextPath}/js/draw.js"></script>
     <script src="${pageContext.request.contextPath}/js/initialize.js"></script>
-    <script src="${pageContext.request.contextPath}/js/scale_raphael.js"></script>
-    <script src="${pageContext.request.contextPath}/js/info_box.js"></script>
-    <script src="${pageContext.request.contextPath}/js/nav_element.js"></script>
+    <script src="${pageContext.request.contextPath}/js/inform.js"></script>
 	</head>
 <body>
 

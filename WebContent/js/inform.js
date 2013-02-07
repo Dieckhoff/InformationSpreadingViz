@@ -1,5 +1,4 @@
-function populate_info_box(post){
-	
+function populate_info_box(post){	
 	var type_string;
 	if (post.type != null) type_string = post.type;
 	else type_string = "Beitrag";
@@ -14,7 +13,10 @@ function populate_info_box(post){
 	
 	$("#is-post-details").html(content);
 	
-	$("#is-info-box-img").attr("src", post.image_source); 
-	
+	$("#is-info-box-img").attr("src", post.image_source);	
 }
 
+function nav_element(id){
+	this.Uuid = id;
+	this.title;	
+}
