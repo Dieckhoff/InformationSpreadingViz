@@ -51,22 +51,22 @@
 			</div>
 		</div>
 		
-		<div id="legend">
-			<div id="legend-entry">
+		<div id="color-key">
+			<div id="key-entry">
 				<div class="blue_circle"></div>
-				<h5 id="legend-text">Blog Post</h5>
+				<h5 id="entry-label">Blog Post</h5>
 			</div>
-			<div id="legend-entry">
+			<div id="key-entry">
 				<div class="green_circle"></div>
-				<h5 id="legend-text">Twitter Post</h5>
+				<h5 id="entry-label">Twitter Post</h5>
 			</div>			
-			<div id="legend-entry">
+			<div id="key-entry">
 				<div class="red_circle"></div>
-				<h5 id="legend-text">Facebook Post</h5>
+				<h5 id="entry-label">Facebook Post</h5>
 			</div>
-			<div id="legend-entry">
+			<div id="key-entry">
 				<div class="grey_circle"></div>
-				<h5 id="legend-text">Newsportal Post</h5>
+				<h5 id="entry-label">Newsportal Post</h5>
 			</div>
 		</div>
 	</div>
