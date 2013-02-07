@@ -64,7 +64,6 @@ Post.prototype.draw_circle = function (){
 };
 
 Post.prototype.draw_label = function (){
-	// var text = this.title + "\n" + this.blog + "\n" + this.url;
 	this.paper.setStart();
 
 	var fontsize = 14;

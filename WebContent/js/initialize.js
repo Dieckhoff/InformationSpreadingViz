@@ -191,5 +191,5 @@ function initialize_functions(){
 		clearAll();
 		draw_timeline();
 		initialize_posts($(this).attr('id'));
-		});
+	});
 }

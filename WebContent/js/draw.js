@@ -75,7 +75,6 @@ function draw_arrow(start_circle, end_circle) {
 
 function draw_arrow_head(x, y, color, up_or_down) {
 	var head;
-//	var x2 = x + 2;
 	if (up_or_down == "down") {
 		head = my_paper.path("M" + x + "," + y + "l -6,-10 l 10,0 z");
 		head.attr({
