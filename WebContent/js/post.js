@@ -1,6 +1,5 @@
 function Post(id){
 	this.Uuid = id;
-	this.paper;
 	this.title;
 	this.type;
 	this.url;
@@ -24,33 +23,33 @@ function Post(id){
 }
 
 Post.prototype.show_preview = function (){
-	image = this.paper.image(this.image_source, this.x + 5, this.y - 185, this.imgwidth, this.imgheight);
+	image = my_paper.image(this.image_source, this.x + 5, this.y - 185, this.imgwidth, this.imgheight);
 	return(image);
 };
 
 Post.prototype.draw_links = function (){
-	this.paper.setStart();
+	my_paper.setStart();
 	from_links = this.from;
 	to_links = this.to;
 	var other;
 	
 	// from here:
 	for (var i = 0; i < from_links.length; ++i) {
-		other = this.paper.getById(from_links[i]);
+		other = my_paper.getById(from_links[i]);
 		draw_arrow(this.circle, other);
 	}
 	
 	// to here:
 	for (var i = 0; i < to_links.length; ++i) {
-		other = this.paper.getById(to_links[i]);
+		other = my_paper.getById(to_links[i]);
 		draw_arrow(this.circle, other);
 	}
 	
-	return( this.paper.setFinish() );
+	return( my_paper.setFinish() );
 };
 
 Post.prototype.draw_circle = function (){
-	var circle = this.paper.circle(this.x, this.y, this.size);
+	var circle = my_paper.circle(this.x, this.y, this.size);
 	circle.id = this.Uuid;
 
 	circle.attr({
@@ -64,12 +63,12 @@ Post.prototype.draw_circle = function (){
 };
 
 Post.prototype.draw_label = function (){
-	this.paper.setStart();
+	my_paper.setStart();
 
 	var fontsize = 14;
 	var titlefontsize = 20;	
 
-	var box = this.paper.rect(this.x - 15, 30, 400 + this.imgwidth, 100, 5);
+	var box = my_paper.rect(this.x - 15, 30, 400 + this.imgwidth, 100, 5);
 	box.attr({
 		fill: '#ffffff',
 		opacity: 0.95,
@@ -82,7 +81,7 @@ Post.prototype.draw_label = function (){
 	var date = new Date(this.time);
 	
 	var titletext = this.title.substring(0, 30) + "...";
-	var title = this.paper.text(this.x + 30 + this.imgwidth, this.y - 175, titletext);		
+	var title = my_paper.text(this.x + 30 + this.imgwidth, this.y - 175, titletext);		
 	title.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
@@ -92,7 +91,7 @@ Post.prototype.draw_label = function (){
 	});
 
 	var line2text = type_string + " vom " + date.getDay() + "." + date.getMonth() + "." + date.getFullYear();
-	var line2 = this.paper.text(this.x + 28 + this.imgwidth, this.y - 152, line2text);
+	var line2 = my_paper.text(this.x + 28 + this.imgwidth, this.y - 152, line2text);
 	line2.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
@@ -102,7 +101,7 @@ Post.prototype.draw_label = function (){
 	});
 	
 	var line3text = "veröffentlicht auf " + this.blog;
-	var line3 = this.paper.text(this.x + 28 + this.imgwidth, this.y - 132, line3text);
+	var line3 = my_paper.text(this.x + 28 + this.imgwidth, this.y - 132, line3text);
 	line3.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
@@ -113,7 +112,7 @@ Post.prototype.draw_label = function (){
 	});
 	
 	var line4text = type_string + " lesen ...";
-	var line4 = this.paper.text(this.x + 28 + this.imgwidth, this.y - 112, line4text);
+	var line4 = my_paper.text(this.x + 28 + this.imgwidth, this.y - 112, line4text);
 	line4.attr({
 		"font-family": "Arial, Helvetica, sans-serif",
 		origin: 'baseline',
@@ -123,6 +122,6 @@ Post.prototype.draw_label = function (){
 		href: this.url,		
 	});	
 	
-	var label = this.paper.setFinish();
+	var label = my_paper.setFinish();
 	return(label);
 };

@@ -48,9 +48,9 @@ function normalize_position(max, min, middle, current_time) {
 
 function get_selected_post() {
 	var selected_post = null;
-	for(var i = 0; i < arr.length; i++) {
-			if (arr[i].isSelected == true) {
-				selected_post = arr[i];
+	for(var i = 0; i < global_post_array.length; i++) {
+			if (global_post_array[i].isSelected == true) {
+				selected_post = global_post_array[i];
 			}
 	}	
 	return selected_post;

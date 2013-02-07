@@ -94,17 +94,17 @@ function draw_arrow_head(x, y, color, up_or_down) {
 
 function clearAll() {
 	my_paper.clear();
-	delete arr;
+	delete global_post_array;
 	delete timeline;
 	delete navBarElements;
 }
 
 function clear_marking() {
-	for(var i = 0; i < arr.length; i++) {
-		if (arr[i].circle.g != null)
-			arr[i].circle.g.remove();
+	for(var i = 0; i < global_post_array.length; i++) {
+		if (global_post_array[i].circle.g != null)
+			global_post_array[i].circle.g.remove();
 		
-		arr[i].circle.attr({
+		global_post_array[i].circle.attr({
 			'stroke-width': 0.0,
 		});
 	}
