@@ -1,4 +1,4 @@
-function get_min_max_values(posts){
+function get_min_max_values(posts) {
 	var max_importance = 0;
 	var min_importance = parseFloat(posts[0].score);
 
@@ -31,11 +31,11 @@ function get_min_max_values(posts){
 	return min_max_values;
 }
 
-function normalize_size(max, min, score){
+function normalize_size(max, min, score) {
 	return ( (score - min) * ( (50 - 20) / (max - min) ) + 20 );
 }
 
-function normalize_position(max, min, middle, current_time){
+function normalize_position(max, min, middle, current_time) {
 	var result = 30;
 	if (current_time < middle)
 		result = ( (current_time - min) * ((500 - 30) / (max - min)) + 30 );	// left side of the clicked post - from pixel 30 to pixel 500
@@ -48,9 +48,9 @@ function normalize_position(max, min, middle, current_time){
 
 function get_selected_post() {
 	var selected_post = null;
-	for(var i = 0; i < arr.length; i++) {
-			if (arr[i].isSelected == true) {
-				selected_post = arr[i];
+	for(var i = 0; i < global_post_array.length; i++) {
+			if (global_post_array[i].isSelected == true) {
+				selected_post = global_post_array[i];
 			}
 	}	
 	return selected_post;

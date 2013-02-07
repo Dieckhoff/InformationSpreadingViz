@@ -14,7 +14,7 @@ function initialize_posts(initial_post_id){
 function initialize_post_callback(posts, visitedPosts){
 	initialize_nav_bar(visitedPosts);
 	
-	arr = new Array();
+	global_post_array = new Array();
 	
 	var initial_post = posts[0];
 	
@@ -28,7 +28,6 @@ function initialize_post_callback(posts, visitedPosts){
 	for (var i = 0; i < posts.length; ++i) {	// drawing all the mentioned posts (including the initial (clicked) post
 		var post = new Post(posts[i].id);
 
-		post.paper = my_paper;
 		post.title = posts[i].title;
 		post.type = posts[i].type;
 		post.url = posts[i].url;
@@ -74,13 +73,13 @@ function initialize_post_callback(posts, visitedPosts){
 		post.to = initial_post.incomingLinks;
 		post.from = initial_post.outgoingLinks;
 
-		arr.push(post);
+		global_post_array.push(post);
 	};
 	
 	draw_timeline_labels(max_date, min_date, middle_date);
 	timeline.toBack();
 	
-	var clicked = arr[0];
+	var clicked = global_post_array[0];
 		
 	clicked.circle.toFront();
 	
@@ -121,8 +120,8 @@ function initialize_nav_bar(visitedPosts) {
 }
 
 function initialize_functions(){
-	for(var i = 0; i < arr.length; i++) {
-		var post = arr[i];
+	for(var i = 0; i < global_post_array.length; i++) {
+		var post = global_post_array[i];
 		
 		(function(post) {
 			post.circle.mouseover(function() {
@@ -171,8 +170,8 @@ function initialize_functions(){
 				post.isSelected = true;
 				
 				clear_marking();
-				if (arr[0].circle.yellow_glow == null) {
-					arr[0].circle.yellow_glow = arr[0].circle.glow({
+				if (global_post_array[0].circle.yellow_glow == null) {
+					global_post_array[0].circle.yellow_glow = global_post_array[0].circle.glow({
 						width: 90,
 						fill: true,
 						color: 'yellow',
@@ -191,5 +190,5 @@ function initialize_functions(){
 		clearAll();
 		draw_timeline();
 		initialize_posts($(this).attr('id'));
-		});
+	});
 }
