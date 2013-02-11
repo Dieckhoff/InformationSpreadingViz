@@ -63,9 +63,9 @@ public class InformationSpreadingServlet extends HttpServlet {
 			detailsStmt = toUrlStmt = conn.getCon()
 					.prepareStatement("SELECT SCORE, POSTCONTENT, TYPE, POSTPUBDATE, HOST, POSTTITLE, BASEURL FROM SYSTEM.WEBPAGE WHERE ID = ?");
 			toUrlStmt = conn.getCon()
-					.prepareStatement("SELECT TOP 20 ID, SCORE FROM (SELECT TOURL FROM SYSTEM.LINK WHERE FROMURL = ? ) AS A JOIN SYSTEM.WEBPAGE AS B ON A.TOURL = B.ID WHERE SCORE IS NOT NULL ORDER BY SCORE DESC");
+					.prepareStatement("SELECT TOP 20 ID, SCORE FROM (SELECT TOURL FROM SYSTEM.LINK WHERE FROMURL = ? ) AS A JOIN SYSTEM.WEBPAGE AS B ON A.TOURL = B.ID WHERE SCORE IS NOT NULL AND POSTPUBDATE IS NOT NULL ORDER BY SCORE DESC");
 			fromUrlStmt = conn.getCon()
-					.prepareStatement("SELECT TOP 20 ID, SCORE FROM (SELECT FROMURL FROM SYSTEM.LINK WHERE TOURL = ? ) AS A JOIN SYSTEM.WEBPAGE AS B ON A.FROMURL = B.ID WHERE SCORE IS NOT NULL ORDER BY SCORE DESC");
+					.prepareStatement("SELECT TOP 20 ID, SCORE FROM (SELECT FROMURL FROM SYSTEM.LINK WHERE TOURL = ? ) AS A JOIN SYSTEM.WEBPAGE AS B ON A.FROMURL = B.ID WHERE SCORE IS NOT NULL AND POSTPUBDATE IS NOT NULL ORDER BY SCORE DESC");
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -249,34 +249,18 @@ public class InformationSpreadingServlet extends HttpServlet {
 	
 	private void addPostsOfIncomingLinks(Post rootPost, OutputJsonContainer outputContainer) throws SQLException, IOException {
 		
-		ArrayList<String> incominglinksToBeRemoved = new ArrayList<>();	
-		
 		for (String id : rootPost.getIncomingLinks()) {
 			Post post = addDetails(new Post(id));
-			if (Long.valueOf(post.getPostpubdate()) == 0) {
-				incominglinksToBeRemoved.add(post.getId());
-			} else {
-				outputContainer.getPosts().add(post);	
-			}
-						
-		}
-		
-		rootPost.getIncomingLinks().removeAll(incominglinksToBeRemoved);
+			outputContainer.getPosts().add(post);									
+		}		
 	}
 	
 	private void addPostsOfOutgoingLinks(Post rootPost, OutputJsonContainer outputContainer) throws SQLException, IOException {
-		ArrayList<String> outgoinglinksToBeRemoved = new ArrayList<>();
 		
 		for (String id : rootPost.getOutgoingLinks()) {
 			Post post = addDetails(new Post(id));
-			if (Long.valueOf(post.getPostpubdate()) == 0) {
-				outgoinglinksToBeRemoved.add(post.getId());
-			} else {
-				outputContainer.getPosts().add(post);	
-			}			
+			outputContainer.getPosts().add(post);							
 		}								
-		
-		rootPost.getOutgoingLinks().removeAll(outgoinglinksToBeRemoved);
 	}
 	
 	private void addToVisitedLinks(Post post) {
