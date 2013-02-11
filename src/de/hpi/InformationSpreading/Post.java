@@ -1,5 +1,6 @@
 package de.hpi.InformationSpreading;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class Post {
@@ -13,7 +14,7 @@ public class Post {
 	private String postpubdate;
 	private String type;
 	private String baseurl;	
-	private float score;
+	private String score;
 	
 	private List<String> outgoingLinks;
 	private List<String> incomingLinks;
@@ -111,22 +112,18 @@ public class Post {
 		this.baseurl = baseurl;
 	}
 
-	public float getScore() {
+	public String getScore() {
 		return score;
 	}
 	
 	public void setScore(String score) {
 		if (score == null) 
-			this.score = (float) 0;
+			this.score = String.valueOf(0);
 		else 
-			this.score = Float.parseFloat(score);		
+			this.score = new BigDecimal(score).toPlainString();		
 		
 	}
 
-	public void setScore(float score) {
-		
-		this.score = score;
-	}
 
 	public List<String> getOutgoingLinks() {
 		return outgoingLinks;
