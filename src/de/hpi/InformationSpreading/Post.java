@@ -5,50 +5,29 @@ import java.util.List;
 public class Post {
 	
 	private String id;
-	private String title;
-	private String blog;
-	private String content;
+	private String posttitle;
+	private String host;
+	private String postcontent;
 	private String image;
 	private String url;
-	private String author;
-	private String pubDate;
+	private String postpubdate;
 	private String type;
-	
+	private String baseurl;	
 	private float score;
+	
 	private List<String> outgoingLinks;
 	private List<String> incomingLinks;
 	
 	
 	public Post() {
-		
+		super();
+	}	
+
+	public Post(String id) {
+		super();
+		this.id = id;
 	}
-	
-//	public Post(String title, String blog, String content, String url,
-//			String author, String pubDate) {
-//		super();
-//		this.title = title;
-//		this.blog = blog;
-//		this.content = content;
-//		this.url = url;
-//		this.author = author;
-//		this.pubDate = pubDate;
-//	}
-//	
-//	public Post(String title, String blog, String content, String url,
-//			String author, String pubDate, float score,
-//			List<String> outgoingLinks, List<String> incomingLinks) {
-//		super();
-//		this.title = title;
-//		this.blog = blog;
-//		this.content = content;
-//		this.url = url;
-//		this.author = author;
-//		this.pubDate = pubDate;
-//		this.score = score;
-//		this.outgoingLinks = outgoingLinks;
-//		this.incomingLinks = incomingLinks;
-//	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -57,28 +36,28 @@ public class Post {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getPosttitle() {
+		return posttitle;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setPosttitle(String posttitle) {
+		this.posttitle = posttitle;
 	}
 
-	public String getBlog() {
-		return blog;
+	public String getHost() {
+		return host;
 	}
 
-	public void setBlog(String blog) {
-		this.blog = blog;
+	public void setHost(String host) {
+		this.host = host;
 	}
 
-	public String getContent() {
-		return content;
+	public String getPostcontent() {
+		return postcontent;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setPostcontent(String postcontent) {
+		this.postcontent = postcontent;
 	}
 
 	public String getImage() {
@@ -97,27 +76,55 @@ public class Post {
 		this.url = url;
 	}
 
-	public String getAuthor() {
-		return author;
+	public String getPostpubdate() {
+		return postpubdate;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setPostpubdate(String postpubdate) {
+		if(postpubdate == null) 
+			this.postpubdate = String.valueOf(0);
+		else
+			this.postpubdate = postpubdate;
+		//this.postpubdate = StaticHelpers.parseHANADateStringToMilliseconds(dateString);
+	}
+	
+	public void setPostpubdate(int postpubdate) {
+		this.postpubdate = String.valueOf(postpubdate);
 	}
 
-	public String getPubDate() {
-		return pubDate;
+	public String getType() {
+		return type;
 	}
 
-	public void setPubDate(String pubDate) {
-		this.pubDate = pubDate;
+	public void setType(String type) {
+		if(type == null) 
+			this.type = StaticHelpers.getFakedPostType();
+		else
+			this.type = type;
+	}
+
+	public String getBaseurl() {
+		return baseurl;
+	}
+
+	public void setBaseurl(String baseurl) {
+		this.baseurl = baseurl;
 	}
 
 	public float getScore() {
 		return score;
 	}
+	
+	public void setScore(String score) {
+		if (score == null) 
+			this.score = (float) 0;
+		else 
+			this.score = Float.parseFloat(score);		
+		
+	}
 
 	public void setScore(float score) {
+		
 		this.score = score;
 	}
 
@@ -135,14 +142,6 @@ public class Post {
 
 	public void setIncomingLinks(List<String> incomingLinks) {
 		this.incomingLinks = incomingLinks;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
 	}
 
 }

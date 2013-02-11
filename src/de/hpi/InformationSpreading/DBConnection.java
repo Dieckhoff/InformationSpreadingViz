@@ -29,6 +29,7 @@ public class DBConnection {
 
 		String url = DB_URL;
 		con1 = DriverManager.getConnection(url, DB_USER, DB_PASSWORD);
+		
 		} catch (InstantiationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
