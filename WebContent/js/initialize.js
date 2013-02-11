@@ -28,19 +28,19 @@ function initialize_post_callback(posts, visitedPosts){
 	for (var i = 0; i < posts.length; ++i) {	// drawing all the mentioned posts (including the initial (clicked) post
 		var post = new Post(posts[i].id);
 
-		post.title = posts[i].title;
+		post.title = posts[i].posttitle;
 		post.type = posts[i].type;
-		post.url = posts[i].url;
-		post.blog = posts[i].blog;
+		post.url = posts[i].baseurl;
+		post.blog = posts[i].host;
 		post.image_source = posts[i].image;
 
 		post.importance = parseFloat(posts[i].score);
 		post.size = normalize_size(max_importance, min_importance, post.importance);
 
-		post.time = new Date(parseInt(posts[i].pubDate));
-		middle_date = parseInt(initial_post.pubDate);
+		post.time = new Date(parseInt(posts[i].postpubdate));
+		middle_date = parseInt(initial_post.postpubdate);
 
-		post.x = normalize_position(max_date, min_date, middle_date, parseInt(posts[i].pubDate));
+		post.x = normalize_position(max_date, min_date, middle_date, parseInt(posts[i].postpubdate));
 
 		if (post.type == 'Facebook'){
 			post.color = 'forestgreen';
