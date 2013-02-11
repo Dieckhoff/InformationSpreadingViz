@@ -1,6 +1,10 @@
-function init_paper() {
+$(function() {
+	init_information_spreading("de.stern.www:http/politik/ausland/afghanistan-bundeswehr-uebergibt-verantwortung-in-kundus-1855821.html");
+});
+
+function init_information_spreading(initial_post_id) {
 	my_paper = new ScaleRaphael($("#draw").attr("id"), $("#draw").width(), $("#draw").height());
-	initialize_posts("de.zeit.www:http/digital/datenschutz/2012-11/google-transparency-report-2012");
+	initialize_posts(initial_post_id);
 //	resizePaper();
 };
 
@@ -10,3 +14,4 @@ function resizePaper(){
 }
 
 //$(window).resize(resizePaper);
+
