@@ -194,7 +194,7 @@ public class InformationSpreadingServlet extends HttpServlet {
 		if(inputContainer.isResult()) {
 			return inputContainer.getPost().getImage();		
 		}
-		else return "";
+		else return "/InformationSpreadingViz/graphics/placeholder.jpg";
 			
 	}
 		
