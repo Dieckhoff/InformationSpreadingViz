@@ -68,7 +68,7 @@
 
 #is-info-box {
 	float: left;
-	margin-left: 20px;
+	margin-left: 0px;
 	margin-right: 100px;
 	display:-moz-inline-stack;
 	display:inline-block;
@@ -91,13 +91,17 @@
 #is-info-box-img-div {
 	float: left;
 	padding-left: 20px;
-	padding-right: 0px;
+	padding-right: 20px;
+	height: 150px;
+	width: 200px;
+	text-align: center;
 }
 
 #is-info-box-img {
 	margin: auto; /* Required */
 	position: relative; /* Required */
 	margin-top: 20px;
+	margin-left: 20px;
 }
 
 #is-info-box-text-container {

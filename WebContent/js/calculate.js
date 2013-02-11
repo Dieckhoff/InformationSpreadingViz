@@ -3,13 +3,13 @@ function get_min_max_values(posts) {
 	var min_importance = parseFloat(posts[0].score);
 
 	var max_date = 0;
-	var min_date = parseInt(posts[0].pubDate);
+	var min_date = parseInt(posts[0].postpubdate);
 		
 	
 	for (var i = 0; i < posts.length; ++i){		
 		var post = posts[i];
 		var score = parseFloat(post.score);
-		var date = parseInt(post.pubDate);
+		var date = parseInt(post.postpubdate);
 
 		if (score > max_importance)
 			max_importance = score;

@@ -8,7 +8,7 @@ function populate_info_box(post){
 	$("#is-post-title").html(post.title);
 	
 	var content = type_string + " vom " + date.getDay() + "." + date.getMonth() + "." + date.getFullYear() + "<br/>" + 
-				"veröffentlicht auf " + post.blog + "<br/>" + 
+				"veröffentlicht auf " + post.blog + "<br/>" +
 				"<a href=\"" + post.url + "\" target=\"_blank\">" + type_string + " lesen ... </a>";
 	
 	$("#is-post-details").html(content);
