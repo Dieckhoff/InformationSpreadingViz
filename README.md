@@ -3,6 +3,8 @@ InformationSpreadingViz
 
 InformationSpreadingViz visualizes references between blog posts and shows how a topic spreads from its original source to other blogs or media.
 
+See it deployed here: [http://information-spreading-viz.sesuso.com](http://information-spreading-viz.sesuso.com// "http://information-spreading-viz.sesuso.com/") 
+
 Motivation
 ---------------
 
